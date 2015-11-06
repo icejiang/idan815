@@ -4,5 +4,6 @@
     <string name="app_name">iDan</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+     <string name="headline">大众租车司机端登录</string>
 
 </resources>
