@@ -50,9 +50,9 @@ public final class R {
         public static final int textView16=0x7f080016;
         public static final int textView17=0x7f08001c;
         public static final int textView2=0x7f080005;
-        public static final int textView20=0x7f08001e;
-        public static final int textView21=0x7f08001f;
-        public static final int textView22=0x7f080020;
+        public static final int textView20=0x7f080020;
+        public static final int textView21=0x7f08001e;
+        public static final int textView22=0x7f08001f;
         public static final int textView3=0x7f080004;
         public static final int textView4=0x7f080006;
         public static final int textView5=0x7f080007;
