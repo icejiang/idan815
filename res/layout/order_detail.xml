@@ -359,6 +359,7 @@
         android:background="#000000" />
 
      <Button
+         android:id="@+id/btn_start"
          android:layout_width="wrap_content"
          android:layout_height="40dp"
          android:gravity="center_vertical"
@@ -369,5 +370,18 @@
          android:paddingRight="20dp"
          android:paddingLeft="20dp"
          android:text="开始本次业务" />
+     <Button
+         android:id="@+id/btn_end"
+         android:layout_width="wrap_content"
+         android:layout_height="40dp"
+         android:gravity="center_vertical"
+         android:layout_gravity="center"
+         android:background="#808080"
+         android:textColor="#ffffff"
+         android:textSize="20dp"
+         android:paddingRight="20dp"
+         android:paddingLeft="20dp"
+         android:visibility="gone"
+         android:text="结束本次业务" />
 
 </LinearLayout>
