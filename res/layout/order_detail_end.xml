@@ -164,10 +164,11 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/tv_mile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="30公里"
+                android:text="0公里"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -189,7 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="7小时"
+                android:text="0小时"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -268,9 +269,11 @@
                     android:textSize="16dp" />
 
                 <TextView
+                    android:id="@+id/tv_road"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                     android:inputType="number"
                     android:text="0元"
                     android:textSize="16dp" />
             </LinearLayout>
@@ -293,9 +296,11 @@
                     android:textSize="16dp" />
 
                 <TextView
+                    android:id="@+id/tv_parking"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                     android:inputType="number"
                     android:text="0元"
                     android:textSize="16dp" />
             </LinearLayout>
@@ -313,14 +318,16 @@
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="误餐费:"
+                    android:text="餐费:"
                     android:textScaleX="0.9"
                     android:textSize="16dp" />
 
                 <TextView
+                    android:id="@+id/tv_meals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                     android:inputType="number"
                     android:text="0元"
                     android:textSize="16dp" />
             </LinearLayout>
@@ -342,9 +349,11 @@
                     android:textSize="16dp" />
 
                 <TextView
+                    android:id="@+id/tv_other"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                     android:inputType="number"
                     android:text="0元"
                     android:textSize="16dp" />
             </LinearLayout>
@@ -393,7 +402,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/tv_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
