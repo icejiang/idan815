@@ -1,17 +1,29 @@
 package com.dazhong.idan;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OrderDetailEnd extends Activity {
 	
 	private TextView tv_addPay;
 	private Button btn_confirmEnd;
+	private TextView tv_road;
+	private TextView tv_meals;
+	private TextView tv_parking;
+	private TextView tv_other;
+	private TextView tv_all;
+	private TextView tv_mile;
+	
+	
+	public final static int REQUEST_CODE = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +31,10 @@ public class OrderDetailEnd extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.order_detail_end);
-		tv_addPay = (TextView) findViewById(R.id.add_pay);
-		btn_confirmEnd = (Button) findViewById(R.id.confirm_end);
+		findView();
+		Intent intent = getIntent();
+		int mile = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
+		tv_mile.setText(mile+"公里");
 		
 		tv_addPay.setOnClickListener(new OnClickListener() {
 			
@@ -28,7 +42,7 @@ public class OrderDetailEnd extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(getApplicationContext(), AddPay.class);
-				startActivity(intent);
+				startActivityForResult(intent, REQUEST_CODE);
 				
 			}
 		});
@@ -45,5 +59,77 @@ public class OrderDetailEnd extends Activity {
 		});
 		
 	}
+	
+	private void findView(){
+		tv_addPay = (TextView) findViewById(R.id.add_pay);
+		tv_meals = (TextView) findViewById(R.id.tv_meals);
+		tv_other = (TextView) findViewById(R.id.tv_other);
+		tv_road = (TextView) findViewById(R.id.tv_road);
+		tv_parking = (TextView) findViewById(R.id.tv_parking);
+		tv_all = (TextView) findViewById(R.id.tv_all);
+		tv_mile = (TextView) findViewById(R.id.tv_mile);
+		btn_confirmEnd = (Button) findViewById(R.id.confirm_end);
+		
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(requestCode == REQUEST_CODE){
+			if (requestCode == AddPay.RESULT_CODE){
+				Bundle bundle = data.getExtras();
+				String road = bundle.getString(AddPay.key_road);
+				String meals = bundle.getString(AddPay.key_meals);
+				String parking = bundle.getString(AddPay.key_parking);
+				String other = bundle.getString(AddPay.key_other);
+				int all = 0;
+				if(!road.equals("")){
+					all = Integer.parseInt(road);
+					tv_road.setText(road+"元");
+				}
+				if(!meals.equals("")){
+					all += Integer.parseInt(meals);
+					tv_meals.setText(meals+"元");
+				}
+				if(!parking.equals("")){
+					all += Integer.parseInt(parking);
+					tv_parking.setText(parking+"元");
+				}
+				if(!other.equals("")){
+					all += Integer.parseInt(other);
+					tv_other.setText(other+"元");
+				}
+				tv_all.setText(all+"元");
+				
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -15,10 +15,11 @@ public class AddPay extends Activity {
 	private EditText et_parking;
 	private EditText et_other;
 	private Button bt_save;
-	private String key_road = "ROAD";
-	private String key_meals = "MEALS";
-	private String key_parking = "PARKING";
-	private String key_other = "OTHER";
+	public final static String key_road = "ROAD";
+	public final static String key_meals = "MEALS";
+	public final static String key_parking = "PARKING";
+	public final static String key_other = "OTHER";
+	public final static int RESULT_CODE=1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,8 @@ public class AddPay extends Activity {
 				bundle.putString(key_other, et_other.getText().toString());
 				Intent intent = new Intent();
 				intent.putExtras(bundle);
-				intent.setClass(getApplicationContext(), OrderDetailEnd.class);
-				startActivity(intent);
+	            setResult(RESULT_CODE, intent);  
+	            finish(); 
 				
 			}
 		});
