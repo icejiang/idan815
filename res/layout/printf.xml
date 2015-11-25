@@ -154,7 +154,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/tv_mile"
+                android:id="@+id/tv_mile_print"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -259,7 +259,7 @@
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_road"
+                    android:id="@+id/tv_road_print"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -286,7 +286,7 @@
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_parking"
+                    android:id="@+id/tv_parking_print"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -313,7 +313,7 @@
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_meals"
+                    android:id="@+id/tv_meals_print"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -334,12 +334,12 @@
                     android:id="@+id/textView17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="其他备注:"
+                    android:text="其他:"
                     android:textScaleX="0.9"
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_other"
+                    android:id="@+id/tv_other_print"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -376,7 +376,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/tv_all"
+                android:id="@+id/tv_all_print"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
