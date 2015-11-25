@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OrderDetailEnd extends Activity {
+public class OrderDetailEnd extends Activity implements OnClickListener {
 	
 	private TextView tv_addPay;
 	private Button btn_confirmEnd;
@@ -21,6 +21,7 @@ public class OrderDetailEnd extends Activity {
 	private TextView tv_other;
 	private TextView tv_all;
 	private TextView tv_mile;
+	private TextView tv_print;
 	
 	
 	public final static int REQUEST_CODE = 1;
@@ -35,28 +36,30 @@ public class OrderDetailEnd extends Activity {
 		Intent intent = getIntent();
 		int mile = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
 		tv_mile.setText(mile+"¹«Àï");
-		
-		tv_addPay.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(getApplicationContext(), AddPay.class);
-				startActivityForResult(intent, REQUEST_CODE);
-				
-			}
-		});
-		
-		btn_confirmEnd.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(getApplicationContext(), MainActivity.class);
-				startActivity(intent);
-				
-			}
-		});
+		tv_addPay.setOnClickListener(this);
+		tv_print.setOnClickListener(this);
+		btn_confirmEnd.setOnClickListener(this);
+//		tv_addPay.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent();
+//				intent.setClass(getApplicationContext(), AddPay.class);
+//				startActivityForResult(intent, REQUEST_CODE);
+//				
+//			}
+//		});
+//		
+//		btn_confirmEnd.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent();
+//				intent.setClass(getApplicationContext(), MainActivity.class);
+//				startActivity(intent);
+//				
+//			}
+//		});
 		
 	}
 	
@@ -68,7 +71,33 @@ public class OrderDetailEnd extends Activity {
 		tv_parking = (TextView) findViewById(R.id.tv_parking);
 		tv_all = (TextView) findViewById(R.id.tv_all);
 		tv_mile = (TextView) findViewById(R.id.tv_mile);
+		tv_print = (TextView) findViewById(R.id.tv_print);
 		btn_confirmEnd = (Button) findViewById(R.id.confirm_end);
+		
+	}
+	
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.add_pay:
+			Intent intent1 = new Intent();
+			intent1.setClass(getApplicationContext(), AddPay.class);
+			startActivityForResult(intent1, REQUEST_CODE);
+			break;
+		case R.id.confirm_end:
+			Intent intent2 = new Intent();
+			intent2.setClass(getApplicationContext(), MainActivity.class);
+			startActivity(intent2);
+			break;
+		case R.id.tv_print:
+			Intent intent3 = new Intent();
+			intent3.setClass(getApplicationContext(), PrintActivity.class);
+			startActivity(intent3);
+			break;
+		default:
+			break;
+		}
 		
 	}
 	
@@ -114,6 +143,7 @@ public class OrderDetailEnd extends Activity {
 		
 		
 	}
+
 	
 	
 	
