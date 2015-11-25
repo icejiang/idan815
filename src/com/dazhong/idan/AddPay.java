@@ -19,6 +19,7 @@ public class AddPay extends Activity {
 	public final static String key_meals = "MEALS";
 	public final static String key_parking = "PARKING";
 	public final static String key_other = "OTHER";
+	public final static String key_all = "ALL";
 	public final static int RESULT_CODE=1;
 	
 	@Override

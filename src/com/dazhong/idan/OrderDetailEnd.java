@@ -22,6 +22,9 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private TextView tv_all;
 	private TextView tv_mile;
 	private TextView tv_print;
+	private Bundle mBundle;
+	private int mile;
+	private int all;
 	
 	
 	public final static int REQUEST_CODE = 1;
@@ -34,11 +37,11 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		setContentView(R.layout.order_detail_end);
 		findView();
 		Intent intent = getIntent();
-		int mile = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
+		mile = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
 		tv_mile.setText(mile+"公里");
 		tv_addPay.setOnClickListener(this);
 		tv_print.setOnClickListener(this);
-		btn_confirmEnd.setOnClickListener(this);
+//		btn_confirmEnd.setOnClickListener(this);
 //		tv_addPay.setOnClickListener(new OnClickListener() {
 //			
 //			@Override
@@ -72,7 +75,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		tv_all = (TextView) findViewById(R.id.tv_all);
 		tv_mile = (TextView) findViewById(R.id.tv_mile);
 		tv_print = (TextView) findViewById(R.id.tv_print);
-		btn_confirmEnd = (Button) findViewById(R.id.confirm_end);
+//		btn_confirmEnd = (Button) findViewById(R.id.confirm_end);
 		
 	}
 	
@@ -85,13 +88,16 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			intent1.setClass(getApplicationContext(), AddPay.class);
 			startActivityForResult(intent1, REQUEST_CODE);
 			break;
-		case R.id.confirm_end:
-			Intent intent2 = new Intent();
-			intent2.setClass(getApplicationContext(), MainActivity.class);
-			startActivity(intent2);
-			break;
+//		case R.id.confirm_end:
+//			Intent intent2 = new Intent();
+//			intent2.setClass(getApplicationContext(), MainActivity.class);
+//			startActivity(intent2);
+//			break;
 		case R.id.tv_print:
 			Intent intent3 = new Intent();
+			intent3.putExtra("MYKEY", mBundle);
+			intent3.putExtra("MILE", mile);
+			intent3.putExtra("ALL", all);
 			intent3.setClass(getApplicationContext(), PrintActivity.class);
 			startActivity(intent3);
 			break;
@@ -109,6 +115,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		if(requestCode == REQUEST_CODE){
 			if (requestCode == AddPay.RESULT_CODE){
 				Bundle bundle = data.getExtras();
+				this.mBundle = bundle;
 				String road = bundle.getString(AddPay.key_road);
 				String meals = bundle.getString(AddPay.key_meals);
 				String parking = bundle.getString(AddPay.key_parking);
@@ -131,7 +138,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					tv_other.setText(other+"元");
 				}
 				tv_all.setText(all+"元");
-				
+				this.all = all;
 			}
 		}
 		
