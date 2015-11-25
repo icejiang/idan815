@@ -47,6 +47,7 @@ public class MainActivity extends Activity{
 		});
 //		mAdapter.notifyDataSetChanged();
 		// configure the SlidingMenu
+		MenuLeftFragment menuLayout = new MenuLeftFragment(getApplicationContext());
 				SlidingMenu menu = new SlidingMenu(this);
 				menu.setMode(SlidingMenu.LEFT);
 				menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);

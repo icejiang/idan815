@@ -30,6 +30,9 @@
         <activity android:name=".OrderDetail"></activity>
         <activity android:name=".OrderDetailEnd"></activity>
         <activity android:name=".AddPay"></activity>
+        <activity android:name=".PrintActivity"></activity>
+        <activity android:name=".PersonalInfo"></activity>
+        <activity android:name=".OrderHistory"></activity>
     </application>
 
 </manifest>
