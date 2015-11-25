@@ -97,7 +97,7 @@ public class getDZService {
 	private static String readSoap(String scode) throws Exception {
 		InputStream inStream = null;
 		String sPath = scode + ".xml";
-		inStream = GetService.class.getClassLoader().getResourceAsStream(sPath);
+		inStream = getDZService.class.getClassLoader().getResourceAsStream(sPath);
 		byte[] data = read(inStream);
 		return new String(data);
 
