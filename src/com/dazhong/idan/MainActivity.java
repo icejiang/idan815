@@ -74,6 +74,7 @@ public class MainActivity extends Activity{
 		mList.add(new Order("2015/11/11 22:22", "SR20151111000002", "市用", "李先生", "13838385438", "人民广场"));
 	}
 	
+	public static String SERVICEADRRESS="http://www.dzzcgs.com:8088/OrderService.asmx";
 	
 	
 	class MyAdapter extends BaseAdapter{
