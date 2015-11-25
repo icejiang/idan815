@@ -54,7 +54,7 @@ public class LoginActivity extends Activity {
 	}
 
 	//show service add
-	public void showTest(View v) {
+	/*public void showTest(View v) {
 		try {
 			String sInfo = getDZService.getAddress("HelloWorld");
 			textView.setText(sInfo);
@@ -63,6 +63,6 @@ public class LoginActivity extends Activity {
 			e.printStackTrace();
 			Toast.makeText(getApplicationContext(), R.string.error, 1).show();
 		}
-	}
+	}*/
 
 }
