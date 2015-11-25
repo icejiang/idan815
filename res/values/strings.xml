@@ -12,5 +12,6 @@
      <string name="personal_car">使用车辆:</string>
      <string name="title_personal">个人信息</string>
      <string name="history_time">请选择时间:</string>
+     <string name="title_history">历史信息</string>
 
 </resources>
