@@ -3,6 +3,7 @@ package com.dazhong.idan;
 import java.util.Stack;
 
 import android.app.Activity;
+import android.util.Log;
 
 public class ScreenManager {
 
@@ -32,13 +33,20 @@ public class ScreenManager {
 	public void popActivity(Activity activity) {
 		if (activity != null) {
 			activity.finish();
+			Log.i("jxb", "remove current activity:" + activity.getClass().getSimpleName());  
 			activityStack.remove(activity);
 			activity = null;
 		}
 	}
 
+	//∑µªÿ’ª∂•activity
 	public Activity currentActivity() {
+		if (activityStack == null || activityStack.size() == 0)  
+        {  
+            return null;  
+        } 
 		Activity activity = activityStack.lastElement();
+		Log.i("jxb", "get current activity:" + activity.getClass().getSimpleName());
 		return activity;
 	}
 
@@ -47,6 +55,7 @@ public class ScreenManager {
 		if (activityStack == null) {
 			activityStack = new Stack<Activity>();
 		}
+		Log.i("jxb", "push stack activity:" + activity.getClass().getSimpleName());
 		activityStack.add(activity);
 	}
 
