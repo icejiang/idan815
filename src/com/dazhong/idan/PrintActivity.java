@@ -39,28 +39,30 @@ public class PrintActivity extends Activity {
 		
 	}
 	
-	private void setData(){
+	private void setData() {
 		Bundle bundle = getIntent().getBundleExtra("MYKEY");
 		int all = getIntent().getIntExtra("ALL", 0);
 		int mile = getIntent().getIntExtra("MILE", 0);
-		String road = bundle.getString(AddPay.key_road);
-		String meals = bundle.getString(AddPay.key_meals);
-		String parking = bundle.getString(AddPay.key_parking);
-		String other = bundle.getString(AddPay.key_other);
-		if(!road.equals("")){
-			tv_road.setText(road+"元");
+		if (bundle != null) {
+			String road = bundle.getString(AddPay.key_road);
+			String meals = bundle.getString(AddPay.key_meals);
+			String parking = bundle.getString(AddPay.key_parking);
+			String other = bundle.getString(AddPay.key_other);
+			if (!road.equals("")) {
+				tv_road.setText(road + "元");
+			}
+			if (!meals.equals("")) {
+				tv_meals.setText(meals + "元");
+			}
+			if (!parking.equals("")) {
+				tv_parking.setText(parking + "元");
+			}
+			if (!other.equals("")) {
+				tv_other.setText(other + "元");
+			}
 		}
-		if(!meals.equals("")){
-			tv_meals.setText(meals+"元");
-		}
-		if(!parking.equals("")){
-			tv_parking.setText(parking+"元");
-		}
-		if(!other.equals("")){
-			tv_other.setText(other+"元");
-		}
-		tv_all.setText(all+"元");
-		tv_mile.setText(mile+"公里");
+		tv_all.setText(all + "元");
+		tv_mile.setText(mile + "公里");
 	}
 	
 	

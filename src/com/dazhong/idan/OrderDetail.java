@@ -16,7 +16,6 @@ import android.widget.Toast;
 public class OrderDetail extends Activity {
 	
 	private Button btn_start;
-	private Button btn_end;
 	private int input_start;
 	private int input_end;
 	public static String INPUT_KEY = "INPUT";
@@ -28,7 +27,6 @@ public class OrderDetail extends Activity {
 		setContentView(R.layout.order_detail);
 		
 		btn_start = (Button) findViewById(R.id.btn_start);
-		btn_end = (Button) findViewById(R.id.btn_end);
 		btn_start.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -48,8 +46,10 @@ public class OrderDetail extends Activity {
 							} else {
 								input_start = Integer.parseInt(input);
 								Log.i("jxb", "起始路码 = "+input_start);
-								btn_start.setVisibility(View.GONE);
-								btn_end.setVisibility(View.VISIBLE);
+								Intent intent = new Intent();
+								intent.putExtra(INPUT_KEY, input_start);
+								intent.setClass(OrderDetail.this, InService.class);
+								startActivity(intent);
 							}
 						}
 					}).show();
@@ -58,7 +58,7 @@ public class OrderDetail extends Activity {
 		});
 		
 		
-		btn_end.setOnClickListener(new OnClickListener() {
+		/*btn_end.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -80,8 +80,6 @@ public class OrderDetail extends Activity {
 							if (input_end < input_start){
 								Toast.makeText(getApplicationContext(), "结束路码小于起始路码，请确认输入", Toast.LENGTH_SHORT).show();
 							} else {
-								btn_end.setVisibility(View.GONE);
-								btn_start.setVisibility(View.VISIBLE);
 								Intent intent = new Intent();
 								intent.putExtra(INPUT_KEY, input_end-input_start);
 								intent.setClass(OrderDetail.this, OrderDetailEnd.class);
@@ -91,7 +89,7 @@ public class OrderDetail extends Activity {
 					}
 				}).show();
 			}
-		});
+		});*/
 		
 		
 	}

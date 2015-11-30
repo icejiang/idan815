@@ -33,6 +33,7 @@
         <activity android:name=".PrintActivity"></activity>
         <activity android:name=".PersonalInfo"></activity>
         <activity android:name=".OrderHistory"></activity>
+        <activity android:name=".InService"></activity>
     </application>
 
 </manifest>

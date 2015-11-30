@@ -34,10 +34,10 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.order_detail_end);
+		setContentView(R.layout.route_note);
 		findView();
 		Intent intent = getIntent();
-		mile = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
+		mile = intent.getIntExtra(InService.INPUT_TOTAL_KEY, 0);
 		tv_mile.setText(mile+"¹«Àï");
 		tv_addPay.setOnClickListener(this);
 		tv_print.setOnClickListener(this);

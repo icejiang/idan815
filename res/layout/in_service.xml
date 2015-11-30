@@ -15,7 +15,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:textSize="24dp"
-            android:text="订单详情" />
+            android:text="服务中" />
 
         <ImageView
             android:id="@+id/imageView1"
@@ -61,7 +61,49 @@
             android:layout_height="wrap_content"
             android:textSize="16dp"
             android:textScaleX="0.9"
-            android:text="业务时间:" />
+            android:text="开始日期:" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="2015/10/25"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp" >
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textScaleX="0.9"
+            android:text="结束日期:" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="2015/10/25"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp" >
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textScaleX="0.9"
+            android:text="上车时间:" />
 
         <TextView
             android:layout_width="match_parent"
@@ -78,7 +120,7 @@
          >
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
@@ -359,7 +401,7 @@
         android:background="#000000" />
 
      <Button
-         android:id="@+id/btn_start"
+         android:id="@+id/btn_end"
          android:layout_width="wrap_content"
          android:layout_height="40dp"
          android:gravity="center_vertical"
@@ -369,6 +411,6 @@
          android:textSize="20dp"
          android:paddingRight="20dp"
          android:paddingLeft="20dp"
-         android:text="开始本次业务" />
+         android:text="结束本次业务" />
 
 </LinearLayout>
