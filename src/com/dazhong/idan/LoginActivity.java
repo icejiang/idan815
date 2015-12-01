@@ -54,15 +54,16 @@ public class LoginActivity extends Activity {
 	}
 
 	//show service add
-	/*public void showTest(View v) {
+	public void showTest(View v) {
 		try {
-			String sInfo = getDZService.getAddress("HelloWorld");
+			String sInfo =getDZService.getAddress("168203", "GetEmployeeInfo");
+			//String sInfo=getDZService.getAddress("HelloWorld");
 			textView.setText(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Toast.makeText(getApplicationContext(), R.string.error, 1).show();
 		}
-	}*/
+	}
 
 }
