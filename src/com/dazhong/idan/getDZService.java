@@ -5,25 +5,98 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import org.xmlpull.v1.XmlPullParser;
-
 import android.os.StrictMode;
 import android.util.Xml;
 
 public class getDZService {
-	//public static String ServiceAddress="http://www.dzzcgs.com:8099/DriverAppwebServiceRelease/DriverService.asmx";
-	
+	// public static String
+	public static String getInfoValue(String sInfo, String sValueBegin,
+			String sValueEnd) {
+		if (sInfo.length() > sValueBegin.length() + sValueEnd.length())
+			return (sInfo.substring(
+					sInfo.indexOf(sValueBegin) + sValueBegin.length(),
+					sInfo.indexOf(sValueEnd)));
+		return null;
+	}
+
+	public static String getInfoValue(String sInfo, String sValue) {
+		String sBegin;
+		String sEnd;
+		if (sInfo == null || sValue == null
+				|| sInfo.length() < 2 * sValue.length() - 1)
+			return null;
+		sBegin = "<" + sValue + ">";
+		sEnd = "</" + sValue + ">";
+		return (sInfo.substring(sInfo.indexOf(sBegin) + sBegin.length(),
+				sInfo.indexOf(sEnd)));
+	}
+	public static String getServiceConnect(String mobile1,String mobile2, String sCode)
+			throws Exception {
+		String soap = readSoap(sCode);
+		soap = soap.replaceAll("\\$mobile1", mobile1);
+		soap=soap.replaceAll("\\$mobile2", mobile2);
+		byte[] entity = soap.getBytes("utf-8");
+		String path = MainActivity.SERVICEADRRESS;
+		HttpURLConnection conn = (HttpURLConnection) new URL(path)
+				.openConnection();
+		conn.setConnectTimeout(5000);
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-Type",
+				"application/soap+xml;charset=utf-8");
+		conn.setRequestProperty("Content-Length", String.valueOf(entity.length));
+		conn.getOutputStream().write(entity);
+		if (conn.getResponseCode() == 200) {
+			return parseSoap(conn.getInputStream(), sCode);
+		}
+		return null;
+	}
+	public static String getServiceConnect(String mobile, String sCode)
+			throws Exception {
+		String soap = readSoap(sCode);
+		soap = soap.replaceAll("\\$mobile", mobile);
+		byte[] entity = soap.getBytes("utf-8");
+		String path = MainActivity.SERVICEADRRESS;
+		HttpURLConnection conn = (HttpURLConnection) new URL(path)
+				.openConnection();
+		conn.setConnectTimeout(5000);
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-Type",
+				"application/soap+xml;charset=utf-8");
+		conn.setRequestProperty("Content-Length", String.valueOf(entity.length));
+		conn.getOutputStream().write(entity);
+		if (conn.getResponseCode() == 200) {
+			return parseSoap(conn.getInputStream(), sCode);
+		}
+		return null;
+	}
+
+	public static String getServiceConnect(String sCode) throws Exception {
+		String soap = readSoap(sCode);
+		byte[] entity = soap.getBytes("utf-8");
+		String path = MainActivity.SERVICEADRRESS;
+		HttpURLConnection conn = (HttpURLConnection) new URL(path)
+				.openConnection();
+		conn.setConnectTimeout(5000);
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-Type",
+				"application/soap+xml;charset=utf-8");
+		conn.setRequestProperty("Content-Length", String.valueOf(entity.length));
+		conn.getOutputStream().write(entity);
+		if (conn.getResponseCode() == 200) {
+			return parseSoap(conn.getInputStream(), sCode);
+		}
+		return null;
+	}
 	public static String getAddress(String mobile, String sCode)
 			throws Exception {
-
 		String soap = readSoap(sCode);
-		System.out.println(soap);
 		soap = soap.replaceAll("\\$mobile", mobile);
-
 		byte[] entity = soap.getBytes("utf-8");
-
-		String path =MainActivity.SERVICEADRRESS;
+		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(5000);
@@ -42,7 +115,7 @@ public class getDZService {
 	public static String getAddress(String sCode) throws Exception {
 		String soap = readSoap(sCode);
 		byte[] entity = soap.getBytes("utf-8");
-		String path =MainActivity.SERVICEADRRESS;
+		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(5000);
@@ -60,7 +133,6 @@ public class getDZService {
 
 	public static String parseXML(InputStream responseStream, String strresult)
 			throws Exception {
-
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(responseStream, "UTF-8");
 		int event = parser.getEventType();
@@ -83,8 +155,6 @@ public class getDZService {
 		XmlPullParser pullParser = Xml.newPullParser();
 		pullParser.setInput(xml, "UTF-8");
 		int event = pullParser.getEventType();
-		System.out.println("cal xml");
-		System.out.println(xml.toString());
 		while (event != XmlPullParser.END_DOCUMENT) {
 			switch (event) {
 			case XmlPullParser.START_TAG:
@@ -101,7 +171,8 @@ public class getDZService {
 	private static String readSoap(String scode) throws Exception {
 		InputStream inStream = null;
 		String sPath = scode + ".xml";
-		inStream = getDZService.class.getClassLoader().getResourceAsStream(sPath);
+		inStream = getDZService.class.getClassLoader().getResourceAsStream(
+				sPath);
 		byte[] data = read(inStream);
 		return new String(data);
 
