@@ -62,17 +62,17 @@
         android:textSize="20sp"
         android:layout_gravity="center_horizontal"/>
 
-<!--     <Button -->
-<!--         android:id="@+id/button1" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:onClick="showTest" -->
-<!--         android:text="Test service" /> -->
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showTest"
+        android:text="Test service" />
 
-<!--     <TextView -->
-<!--         android:id="@+id/textView1" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:text="TextView" /> -->
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
 </LinearLayout>

@@ -21,7 +21,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity{
-	
+	//系统接口地址
+	public static String SERVICEADRRESS="http://www.dzzcgs.com:8099/DriverAppwebServiceRelease/DriverService.asmx";
+	public static String USERNAME="";//用户名称
+	public static String WORKNUMBER="";//工号
+	public static String EMPLOYEEID="";//系统代码
+	//************************************************
 	private ListView mListView;
 	private List<Order> mList;
 	
@@ -75,8 +80,6 @@ public class MainActivity extends Activity{
 		mList.add(new Order("2015/11/11 22:22", "SR20151111000002", "市用", "李先生", "13838385438", "人民广场"));
 	}
 	
-	//public static String SERVICEADRRESS="http://www.dzzcgs.com:8088/OrderService.asmx";
-	public static String SERVICEADRRESS="http://www.dzzcgs.com:8099/DriverAppwebServiceRelease/DriverService.asmx";
 	
 	class MyAdapter extends BaseAdapter{
 		

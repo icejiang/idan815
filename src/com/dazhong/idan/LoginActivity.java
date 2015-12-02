@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,12 +30,11 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.login);
 
 		textView = (TextView) findViewById(R.id.textView1);
-
 		btn_login = (Button) findViewById(R.id.login);
 		btn_login.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
+				
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				intent.setClass(getApplicationContext(), MainActivity.class);
@@ -56,9 +54,14 @@ public class LoginActivity extends Activity {
 	//show service add
 	public void showTest(View v) {
 		try {
-			String sInfo =getDZService.getAddress("168203", "GetEmployeeInfo");
-			//String sInfo=getDZService.getAddress("HelloWorld");
-			textView.setText(sInfo);
+//			if(getInfoValue.getLogin("15821151093", "1234abcd"))
+//				textView.setText(MainActivity.USERNAME);
+//			else
+//				textView.setText("no info");
+			PersonInfo personinfo= new PersonInfo();
+			personinfo=getInfoValue.getPersonInfo("168203");
+			String sKp=personinfo.toString();
+			textView.setText(sKp);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
