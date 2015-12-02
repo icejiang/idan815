@@ -12,6 +12,8 @@ import android.os.StrictMode;
 import android.util.Xml;
 
 public class getDZService {
+	//public static String ServiceAddress="http://www.dzzcgs.com:8099/DriverAppwebServiceRelease/DriverService.asmx";
+	
 	public static String getAddress(String mobile, String sCode)
 			throws Exception {
 
@@ -21,7 +23,7 @@ public class getDZService {
 
 		byte[] entity = soap.getBytes("utf-8");
 
-		String path = "http://www.dzzcgs.com:8088/OrderService.asmx";
+		String path =MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(5000);
@@ -40,7 +42,7 @@ public class getDZService {
 	public static String getAddress(String sCode) throws Exception {
 		String soap = readSoap(sCode);
 		byte[] entity = soap.getBytes("utf-8");
-		String path = MainActivity.SERVICEADRRESS;
+		String path =MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(5000);
@@ -81,6 +83,8 @@ public class getDZService {
 		XmlPullParser pullParser = Xml.newPullParser();
 		pullParser.setInput(xml, "UTF-8");
 		int event = pullParser.getEventType();
+		System.out.println("cal xml");
+		System.out.println(xml.toString());
 		while (event != XmlPullParser.END_DOCUMENT) {
 			switch (event) {
 			case XmlPullParser.START_TAG:
