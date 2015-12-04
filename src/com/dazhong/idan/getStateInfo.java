@@ -9,18 +9,26 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 
 public class getStateInfo extends Activity {
+	private Context context;
+	
+	public getStateInfo(Context context) {
+		super();
+		this.context = context;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
 
-	public void OutputObject(Map<String, Object> map) throws Exception {
+	public void OutputObject(Map<String, PersonInfo> map) throws Exception {
 		// create objects to output
 		File extDir = Environment.getExternalStorageDirectory();
 
@@ -32,9 +40,9 @@ public class getStateInfo extends Activity {
 
 		File saveFile = new File(extDir, "Download/person.txt");
 		System.out.println(saveFile.toURI());
-		FileOutputStream fout = new FileOutputStream(saveFile);
+//		FileOutputStream fout = new FileOutputStream(saveFile);
 
-		// FileOutputStream fout= this.openFileOutput(path,
+		 FileOutputStream fout= context.openFileOutput("person1.txt",Context.MODE_PRIVATE);
 		// Context.MODE_PRIVATE);
 		System.out.println("path is not  right!");
 		// FileOutputStream fo;
@@ -42,9 +50,9 @@ public class getStateInfo extends Activity {
 		// ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(
 		// path));
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
-		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			oos.writeObject(entry);
-			System.out.println(entry.getKey() + "--->" + entry.getValue());
+		for (Map.Entry<String, PersonInfo> entry : map.entrySet()) {
+			oos.writeObject(entry.getValue());
+			System.out.println(entry.getKey() + "--->" + entry.getValue().toString());
 		}
 		// create the output stream
 		// write object
@@ -60,8 +68,9 @@ public class getStateInfo extends Activity {
 			File extDir = Environment.getExternalStorageDirectory();
 			String path = extDir + "/Person.txt";
 			// create inputObjectStream
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
-					path));
+			FileInputStream fin=context.openFileInput("person1.txt");
+//			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("person1.txt"));
+			ObjectInputStream ois = new ObjectInputStream(fin);
 			// temp object to receive the value of this stream read everytime
 			Object obj = null;
 			PersonInfo p = null;

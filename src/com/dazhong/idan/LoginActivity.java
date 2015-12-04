@@ -64,16 +64,16 @@ public class LoginActivity extends Activity {
 //				textView.setText(personinfo.toString());
 //			} else
 //				textView.setText("no info");
-			 PersonInfo personinfo= new PersonInfo();
-			 personinfo=getInfoValue.getPersonInfo("168203");
-			 Map<String,Object> map=new HashMap<String,Object>();
-			 Object obj=personinfo;
-			 map.put("person", obj);
+//			 PersonInfo personinfo= new PersonInfo();
+//			 personinfo=getInfoValue.getPersonInfo("168203");
+//			 Map<String,PersonInfo> map=new HashMap<String,PersonInfo>();
+			 //Object obj=personinfo;
+//			 map.put("person", personinfo);
 			 //getDZService.OutputObject(map);
-			 getStateInfo gs=new getStateInfo();
-			 gs.OutputObject(map);
-//			 gs.inputObject();
-			 String sKp=personinfo.toString();
+			 getStateInfo gs=new getStateInfo(getApplicationContext());
+//			 gs.OutputObject(map);
+			 gs.inputObject();
+//			 String sKp=personinfo.toString();
 //			textView.setText(sKp);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
