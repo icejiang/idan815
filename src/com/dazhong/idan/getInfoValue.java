@@ -1,6 +1,6 @@
 package com.dazhong.idan;
 
-public class getInfoValue {
+public abstract class getInfoValue {
 
 	// 获取用户信息
 	public static PersonInfo getPersonInfo(String employeeid) throws Exception {

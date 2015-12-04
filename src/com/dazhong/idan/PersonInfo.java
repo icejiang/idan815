@@ -1,6 +1,9 @@
 package com.dazhong.idan;
+
+import java.io.Serializable;
+
 //用户信息
-public class PersonInfo {
+public class PersonInfo implements Serializable{
 	/*用户代码*/
 private String PersonID;//用户代码
 private String WorkNum;//工号
@@ -25,6 +28,11 @@ public PersonInfo(String personID, String workNum, String phoneNum,
 	Position = position;
 	Team = team;
 	Company = company;
+}
+public PersonInfo(String personID,String workNum,String name){
+	PersonID=personID;
+	WorkNum=workNum;
+	Name=name;
 }
 @Override
 public String toString() {
