@@ -2,7 +2,10 @@ package com.dazhong.idan;
 
 public abstract class getInfoValue {
 
-	// 获取用户信息
+	/** 
+	 * 获取用户信息
+	 * 参数：用户的系统编号 
+	 **/
 	public static PersonInfo getPersonInfo(String employeeid) throws Exception {
 		String sInfo = getDZService.getServiceConnect(employeeid,
 				"GetEmployeeInfo");
@@ -18,7 +21,11 @@ public abstract class getInfoValue {
 		return personinfo;
 	}
 
-	// 用户登陆
+	/**
+	 * 用户登陆
+	 * 参数：账号，密码
+	 * 返回：True 成功，false 失败
+	 **/ 
 	public static boolean getLogin(String sAccount, String sPassword) {
 		if (sAccount.length() < 3 || sPassword.length() < 3 || sAccount == null
 				|| sPassword == null)

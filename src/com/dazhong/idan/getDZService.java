@@ -15,7 +15,7 @@ import android.util.Xml;
 
 public abstract class getDZService {
 	// public static function
-		public static String getInfoValue(String sInfo, String sValueBegin,
+	public static String getInfoValue(String sInfo, String sValueBegin,
 			String sValueEnd) {
 		if (sInfo.length() > sValueBegin.length() + sValueEnd.length())
 			return (sInfo.substring(
