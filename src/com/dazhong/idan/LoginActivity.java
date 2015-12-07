@@ -40,17 +40,54 @@ public class LoginActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
-		if(getStateRec())
-		{
-			//set static values
-			MainActivity.USERNAME=stateinfo.getCurrentPerson().getName();
-			MainActivity.WORKNUMBER=stateinfo.getCurrentPerson().getWorkNum();
-			MainActivity.EMPLOYEEID=stateinfo.getCurrentPerson().getPersonID();
-			//direct to main form
-			Intent intent = new Intent();
-			intent.setClass(getApplicationContext(), MainActivity.class);
-			startActivity(intent);
+
+		if (getStateRec()) {
+			// set static values
+			MainActivity.USERNAME = stateinfo.getCurrentPerson().getName();
+			MainActivity.WORKNUMBER = stateinfo.getCurrentPerson().getWorkNum();
+			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
+					.getPersonID();
+			Intent intent;
+			// 登陆后，选择显示页面
+			switch (stateinfo.getCurrentState()) {
+			case 101:
+			case 0:
+			case 1:
+			// direct to main form
+				intent = new Intent();
+				intent.setClass(getApplicationContext(), MainActivity.class);
+				startActivity(intent);
+				break;
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 11:
+				intent = new Intent();
+				intent.setClass(getApplicationContext(), OrderDetail.class);
+				startActivity(intent);
+				break;
+			case 12:
+				intent = new Intent();
+				intent.setClass(getApplicationContext(), OrderDetail.class);
+				startActivity(intent);
+				break;
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+			case 18:
+				intent = new Intent();
+				intent.setClass(getApplicationContext(), PrintActivity.class);
+				startActivity(intent);
+				break;
+			default:
+				Toast.makeText(getApplicationContext(), R.string.error, 6000)
+						.show();
+				break;
+			}
+
 		}
 	}
 
@@ -61,14 +98,14 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
-	private boolean getStateRec()
-	{ 
+	private boolean getStateRec() {
 		try {
-			//get state sample
-//			getStateInfo gs = new getStateInfo(getApplicationContext());
-			stateinfo=getStateInfo.getInstance(getApplicationContext()).getStateinfo();
+			// get state sample
+			// getStateInfo gs = new getStateInfo(getApplicationContext());
+			stateinfo = getStateInfo.getInstance(getApplicationContext())
+					.getStateinfo();
 			System.out.println(stateinfo.toString());
-			if(stateinfo==null)
+			if (stateinfo == null)
 				return false;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -77,10 +114,11 @@ public class LoginActivity extends Activity {
 		}
 		return true;
 	}
-	// show test 
+
+	// show test
 	public void showTest(View v) {
 		try {
-			//init state,user first login
+			// init state,user first login
 			if (getInfoValue.getLogin("15821151093", "1234abcd"))
 			// textView.setText(MainActivity.USERNAME);
 			{
@@ -100,9 +138,10 @@ public class LoginActivity extends Activity {
 				stateinfo.setCurrentState(18);
 				stateinfo.setCurrentNote(null);
 				stateinfo.setCurrentLogin(true);
-				//update state sample
-//				getStateInfo gs = new getStateInfo(getApplicationContext());
-				getStateInfo gs=getStateInfo.getInstance(getApplicationContext());
+				// update state sample
+				// getStateInfo gs = new getStateInfo(getApplicationContext());
+				getStateInfo gs = getStateInfo
+						.getInstance(getApplicationContext());
 				gs.setStateinfo(stateinfo);
 			} else
 				textView.setText("no info");
