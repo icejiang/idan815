@@ -65,8 +65,9 @@ public class LoginActivity extends Activity {
 	{ 
 		try {
 			//get state sample
-			getStateInfo gs = new getStateInfo(getApplicationContext());
-			stateinfo=gs.getStateinfo();
+//			getStateInfo gs = new getStateInfo(getApplicationContext());
+			stateinfo=getStateInfo.getInstance(getApplicationContext()).getStateinfo();
+			System.out.println(stateinfo.toString());
 			if(stateinfo==null)
 				return false;
 		} catch (Exception e) {
@@ -100,7 +101,8 @@ public class LoginActivity extends Activity {
 				stateinfo.setCurrentNote(null);
 				stateinfo.setCurrentLogin(true);
 				//update state sample
-				getStateInfo gs = new getStateInfo(getApplicationContext());
+//				getStateInfo gs = new getStateInfo(getApplicationContext());
+				getStateInfo gs=getStateInfo.getInstance(getApplicationContext());
 				gs.setStateinfo(stateinfo);
 			} else
 				textView.setText("no info");
