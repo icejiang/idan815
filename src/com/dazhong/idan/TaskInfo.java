@@ -319,10 +319,15 @@ public class TaskInfo {
 	{
 		return taskid;
 	}
-	
+	/**
+	 * 设置订车人
+	 */
 	public void setBookman(String bookman) {
 		this.bookman = bookman;
 	}
+	/**
+	 * 设置订车人电话
+	 */
 	public void setBooktel(String booktel) {
 		this.booktel = booktel;
 	}
@@ -444,6 +449,88 @@ public class TaskInfo {
 
 	public TaskInfo(){
 
+	}
+	public TaskInfo(String bookman, String booktel, String carid,
+			String carnumber, String cartype, String customer,
+			String customertel, String driverid, String drivername,
+			String driverphone, String frightin, String frightnum,
+			String frightout, int invoicetype, String invoicetypename,
+			String leaveaddress, int maxload, String onboardtime,
+			String pickupaddress, String planner, String plannerremark,
+			String plannertel, double salehotelfee, double salekms,
+			double salelunchfee, double saleotherfee, double saleprice,
+			double salepriceperkm, double salepriceperhour, String salesman,
+			String salestel, String salesremark, double saletime,
+			String servicebegin, String serviceend, int servicetype,
+			String servicetypename, String taskcode, String taskid,
+			String taskcontract) {
+		super();
+		this.bookman = bookman;
+		this.booktel = booktel;
+		this.carid = carid;
+		this.carnumber = carnumber;
+		this.cartype = cartype;
+		this.customer = customer;
+		this.customertel = customertel;
+		this.driverid = driverid;
+		this.drivername = drivername;
+		this.driverphone = driverphone;
+		this.frightin = frightin;
+		this.frightnum = frightnum;
+		this.frightout = frightout;
+		this.invoicetype = invoicetype;
+		this.invoicetypename = invoicetypename;
+		this.leaveaddress = leaveaddress;
+		this.maxload = maxload;
+		this.onboardtime = onboardtime;
+		this.pickupaddress = pickupaddress;
+		this.planner = planner;
+		this.plannerremark = plannerremark;
+		this.plannertel = plannertel;
+		this.salehotelfee = salehotelfee;
+		this.salekms = salekms;
+		this.salelunchfee = salelunchfee;
+		this.saleotherfee = saleotherfee;
+		this.saleprice = saleprice;
+		this.salepriceperkm = salepriceperkm;
+		this.salepriceperhour = salepriceperhour;
+		this.salesman = salesman;
+		this.salestel = salestel;
+		this.salesremark = salesremark;
+		this.saletime = saletime;
+		this.servicebegin = servicebegin;
+		this.serviceend = serviceend;
+		this.servicetype = servicetype;
+		this.servicetypename = servicetypename;
+		this.taskcode = taskcode;
+		this.taskid = taskid;
+		this.taskcontract = taskcontract;
+	}
+	@Override
+	public String toString() {
+		return "TaskInfo [" + bookman + "," + booktel
+				+ "," + carid + "," + carnumber
+				+ "," + cartype + "," + customer
+				+ "," + customertel + "," + driverid
+				+ "," + drivername + "," + driverphone
+				+ "," + frightin + "," + frightnum
+				+ "," + frightout + "," + invoicetype
+				+ "," + invoicetypename + ","
+				+ leaveaddress + "," + maxload + ","
+				+ onboardtime + "," + pickupaddress
+				+ "," + planner + "," + plannerremark
+				+ "," + plannertel + ","
+				+ salehotelfee + "," + salekms + ","
+				+ salelunchfee + "," + saleotherfee
+				+ "," + saleprice + ","
+				+ salepriceperkm + "," + salepriceperhour
+				+ "," + salesman + "," + salestel
+				+ "," + salesremark + "," + saletime
+				+ "," + servicebegin + ","
+				+ serviceend + "," + servicetype
+				+ "," + servicetypename + ","
+				+ taskcode + "," + taskid + ","
+				+ taskcontract + "]";
 	}
 
 }

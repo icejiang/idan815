@@ -114,8 +114,11 @@ public class UpdateManager {
 	}
 
 	protected void installApk() {
+		System.out.println("begin install");
 		File apkfile = new File(saveFileName);
+		System.out.println(apkfile.toString());
 		if (!apkfile.exists()) {
+			System.out.println("no file find");
 			return;
 		}
 		Intent i = new Intent(Intent.ACTION_VIEW);
@@ -134,6 +137,7 @@ public class UpdateManager {
 						.openConnection();
 				conn.connect();
 				int length = conn.getContentLength();
+				System.out.println("length is "+length);
 				InputStream ins = conn.getInputStream();
 				File file = new File(savePath);
 				if (!file.exists()) {
@@ -152,7 +156,9 @@ public class UpdateManager {
 				do {
 					int numread = ins.read(buf);
 					count += numread;
+					System.out.println("count is "+count+",num is "+numread);
 					progress = (int) (((float) count / length) * 100);
+					System.out.println("progress is "+progress);
 					// ÏÂÔØ½ø¶È
 					mHandler.sendEmptyMessage(DOWN_UPDATE);
 					if (numread <= 0) {
