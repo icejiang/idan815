@@ -62,20 +62,12 @@ public class BlueToothManage extends Activity {
 	private Button bt_scan;// 扫描设备	Scan Device
 	public Handler handler = null;
 	public Handler mhandler;
-//	private ProgressDialog progressDialog = null;
 	private EditText edit;
 	private ViewGroup vg;
 	private LinearLayout layout;
 	private LinearLayout layoutscan;
-//	private Button btnUnicode;//Print by Unicode
-	private Button bt_print;// 文字打印 	Print text by GBK
-//	private Button bt_image;// 图片打印 	Print image
-//	private Spinner spinnerTextSize;// 字体	Chose font-style
-//	private Button bt_openpic;// 打开图片目录	Chose Image
-	private ImageView iv;// 显示的图片	
-//	private Button bt_2d;// 生成二维码	Create Qrcode
-//	private Button bt_bar;// 生成条形码	Creaet Barcode
-//	private String picPath = "";// 打开图片保存的路径
+	private Button bt_print;
+	private ImageView iv;
 	private Bitmap btMap = null;// 缓存图片
 	private TextView tv_status;
 	private Button bt_disconnect;
@@ -84,11 +76,7 @@ public class BlueToothManage extends Activity {
 	private Thread bt_update = null;
 	private boolean updateflag = true;
 //	private Button nbt_img;
-	private int verson = 72;// 76和80打印机，58打印机 48；
-//	private ArrayAdapter<String> adapter;
-//	private static String[] arr = { "58", "76" };
-//	private static String[] value = { "384", "576" };
-//	private static final String m[]={"24*24","48*48","16*16","32*32"};
+	private int verson = 72;
 
 	public BlueToothManage() {
 		super();
@@ -113,36 +101,8 @@ public class BlueToothManage extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT));
 
 		bt_print = (Button) findViewById(R.id.bt_print);
-//		btnUnicode=(Button)findViewById(R.id.btnUnicode);
 		layoutscan = (LinearLayout) findViewById(R.id.layoutscan);
 		layoutscan.setVisibility(View.GONE);
-
-//		spinnerTextSize=(Spinner)findViewById(R.id.spinner1);
-//		adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, m);
-//		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		spinnerTextSize.setAdapter(adapter);
-//		spinnerTextSize.setOnItemSelectedListener(new OnItemSelectedListener()
-//		{
-//
-//			@Override
-//			public void onItemSelected(AdapterView<?> arg0, View arg1,
-//					int arg2, long arg3) {
-//				// TODO Auto-generated method stub
-//				byte[] bt = new byte[3];
-//				bt[0] = 27;
-//				bt[1] = 56;
-//				bt[2] = (byte)arg2;// 0,1,2,3//设置字体大小	Setting font-text
-//				mBTService.write(bt);
-//			}
-//
-//			@Override
-//			public void onNothingSelected(AdapterView<?> arg0) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//		});
-
 		mhandler = new Handler() {
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
