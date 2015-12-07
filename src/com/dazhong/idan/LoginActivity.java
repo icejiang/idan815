@@ -15,6 +15,7 @@ public class LoginActivity extends Activity {
 
 	private Button btn_login;
 	private TextView textView;
+	private StateInfo stateinfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,6 @@ public class LoginActivity extends Activity {
 		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
 				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
 				.build());
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
@@ -34,14 +34,24 @@ public class LoginActivity extends Activity {
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				intent.setClass(getApplicationContext(), MainActivity.class);
 				startActivity(intent);
 			}
 		});
-
+		
+		if(getStateRec())
+		{
+			//set static values
+			MainActivity.USERNAME=stateinfo.getCurrentPerson().getName();
+			MainActivity.WORKNUMBER=stateinfo.getCurrentPerson().getWorkNum();
+			MainActivity.EMPLOYEEID=stateinfo.getCurrentPerson().getPersonID();
+			//direct to main form
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), MainActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	@Override
@@ -51,17 +61,50 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
-	//show service add
+	private boolean getStateRec()
+	{ 
+		try {
+			//get state sample
+			getStateInfo gs = new getStateInfo(getApplicationContext());
+			stateinfo=gs.getStateinfo();
+			if(stateinfo==null)
+				return false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	// show test 
 	public void showTest(View v) {
 		try {
-//			if(getInfoValue.getLogin("15821151093", "1234abcd"))
-//				textView.setText(MainActivity.USERNAME);
-//			else
-//				textView.setText("no info");
-			PersonInfo personinfo= new PersonInfo();
-			personinfo=getInfoValue.getPersonInfo("168203");
-			String sKp=personinfo.toString();
-			textView.setText(sKp);
+			//init state,user first login
+			if (getInfoValue.getLogin("15821151093", "1234abcd"))
+			// textView.setText(MainActivity.USERNAME);
+			{
+				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
+						MainActivity.WORKNUMBER, MainActivity.USERNAME);
+				textView.setText(personinfo.toString());
+				stateinfo = new StateInfo();
+				stateinfo.setToday("2015-12-05");
+				stateinfo.setPageOfNoteHistory(1);
+				stateinfo.setPageOfTask(1);
+				stateinfo.setTimeInCar("08:12");
+				stateinfo.setTimeOffCar("19:25");
+				stateinfo.setBeginKMsOfToday("2135");
+				stateinfo.setEndKMsOfToday("2236");
+				stateinfo.setCurrentKMS("2236");
+				stateinfo.setCurrentPerson(personinfo);
+				stateinfo.setCurrentState(18);
+				stateinfo.setCurrentNote(null);
+				stateinfo.setCurrentLogin(true);
+				//update state sample
+				getStateInfo gs = new getStateInfo(getApplicationContext());
+				gs.setStateinfo(stateinfo);
+			} else
+				textView.setText("no info");
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

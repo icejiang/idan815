@@ -1,6 +1,16 @@
 package com.dazhong.idan;
 
-public class NoteInfo {
+import java.io.Serializable;
+
+public class NoteInfo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -113091942551031103L;
+	/**
+	 * 
+	 */
+//	private static final long serialVersionUID = 1L;
 	/**
 	 * ³µÁ¾´úÂë
 	 */

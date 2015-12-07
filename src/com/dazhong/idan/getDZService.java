@@ -1,16 +1,20 @@
 package com.dazhong.idan;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 import org.xmlpull.v1.XmlPullParser;
-import android.os.StrictMode;
+
+import android.os.Environment;
 import android.util.Xml;
 
-public class getDZService {
-	// public static String
+public abstract class getDZService {
+	// public static function
 	public static String getInfoValue(String sInfo, String sValueBegin,
 			String sValueEnd) {
 		if (sInfo.length() > sValueBegin.length() + sValueEnd.length())
@@ -31,11 +35,12 @@ public class getDZService {
 		return (sInfo.substring(sInfo.indexOf(sBegin) + sBegin.length(),
 				sInfo.indexOf(sEnd)));
 	}
-	public static String getServiceConnect(String mobile1,String mobile2, String sCode)
-			throws Exception {
+
+	public static String getServiceConnect(String mobile1, String mobile2,
+			String sCode) throws Exception {
 		String soap = readSoap(sCode);
 		soap = soap.replaceAll("\\$mobile1", mobile1);
-		soap=soap.replaceAll("\\$mobile2", mobile2);
+		soap = soap.replaceAll("\\$mobile2", mobile2);
 		byte[] entity = soap.getBytes("utf-8");
 		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
@@ -52,6 +57,7 @@ public class getDZService {
 		}
 		return null;
 	}
+
 	public static String getServiceConnect(String mobile, String sCode)
 			throws Exception {
 		String soap = readSoap(sCode);
@@ -91,6 +97,7 @@ public class getDZService {
 		}
 		return null;
 	}
+
 	public static String getAddress(String mobile, String sCode)
 			throws Exception {
 		String soap = readSoap(sCode);
