@@ -15,10 +15,20 @@ import android.os.Environment;
 import android.renderscript.Type;
 
 public class getStateInfo {
-	private Context context;
+	private static Context context=null;
 	private StateInfo Stateinfo;
 	private List<TaskInfo> Tasks;
 	private List<NoteInfo> Notes;
+
+	private static volatile getStateInfo instance = null;
+
+	public static getStateInfo getInstance(Context whoseContext) {
+		context=whoseContext;
+		if (instance == null) {
+			instance=new getStateInfo(context);
+		}
+		return instance;
+	}
 
 	/**
 	 * 获取当前状态信息
@@ -30,7 +40,7 @@ public class getStateInfo {
 			return null;
 		System.out.println("state is ok");
 		for (Map.Entry<String, Object> entry : map.entrySet())
-			Stateinfo=(StateInfo)entry.getValue();
+			Stateinfo = (StateInfo) entry.getValue();
 		return Stateinfo;
 	}
 
@@ -38,9 +48,9 @@ public class getStateInfo {
 	 * 更新当前状态
 	 * */
 	public void setStateinfo(StateInfo stateinfo) {
-		 Map<String,Object> map=new HashMap<String,Object>();
-		 Object obj=stateinfo;
-		 try {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Object obj = stateinfo;
+		try {
 			map.put("stateinfo", obj);
 			OutputObjects(map, "stateinfo");
 		} catch (Exception e) {
@@ -79,7 +89,7 @@ public class getStateInfo {
 		Notes = notes;
 	}
 
-	public getStateInfo(Context context) {
+	protected getStateInfo(Context context) {
 		super();
 		this.context = context;
 	}
