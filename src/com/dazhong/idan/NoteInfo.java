@@ -99,6 +99,30 @@ public class NoteInfo implements Serializable {
 	 * 服务时间
 	 */
 	private double ServiceTime;
+	/**
+	 * 超公里
+	 * */
+	private int OverKMs;
+	/**
+	 * 超小时
+	 * */
+	private int OverHours; //超15分钟算一个小时
+
+	public int getOverKMs() {
+		return OverKMs;
+	}
+
+	public void setOverKMs(int overKMs) {
+		OverKMs = overKMs;
+	}
+
+	public int getOverHours() {
+		return OverHours;
+	}
+
+	public void setOverHours(int overHours) {
+		OverHours = overHours;
+	}
 
 	public String getCarID() {
 		return CarID;
@@ -287,7 +311,7 @@ public class NoteInfo implements Serializable {
 			String leaveAddress, String noteID, String onBoardAddress,
 			String planID, String routeBegin, String routeEnd,
 			String serviceBegin, String serviceEnd, double serviceKMs,
-			double serviceTime) {
+			double serviceTime,int overKMs,int overHours) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -311,22 +335,24 @@ public class NoteInfo implements Serializable {
 		ServiceEnd = serviceEnd;
 		ServiceKMs = serviceKMs;
 		ServiceTime = serviceTime;
+		OverKMs=overKMs;
+		OverHours=overHours;
 	}
 
 	@Override
 	public String toString() {
-		return "NoteInfo [" + CarID + "," + CarNumber
+		return "NoteInfo [" + NoteID+ ","  + PlanID + ","+ CarID + "," + CarNumber
 				+ "," + DriverID + "," + DriverName
 				+ "," + FeeBridge + "," + FeeHotel
 				+ "," + FeeLunch + "," + FeeOther
-				+ "," + FeeOverKMs + ",=" + FeeOverTime
+				+ "," + FeeOverKMs + "," + FeeOverTime
 				+ "," + FeePrice + "," + FeeTotal
-				+ "," + LeaveAddress.replace(",","$$") + "," + NoteID
-				+ "," + OnBoardAddress.replace(",","$$") + "," + PlanID
+				+ "," + LeaveAddress.replace(",","$$") 
+				+ "," + OnBoardAddress.replace(",","$$")
 				+ "," + RouteBegin + "," + RouteEnd
 				+ "," + ServiceBegin + ","
 				+ ServiceEnd + "," + ServiceKMs + ","
-				+ ServiceTime + "]";
+				+ ServiceTime +","+ OverKMs+","+OverHours+"]";
 	}
 
 	

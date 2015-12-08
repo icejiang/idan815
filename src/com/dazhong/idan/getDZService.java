@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.xmlpull.v1.XmlPullParser;
 
@@ -25,15 +27,73 @@ public abstract class getDZService {
 	}
 
 	public static String getInfoValue(String sInfo, String sValue) {
-		String sBegin;
-		String sEnd;
+		String sInf=null;
+		String sBegin=null;
+		String sEnd=null;
 		if (sInfo == null || sValue == null
 				|| sInfo.length() < 2 * sValue.length() - 1)
 			return null;
 		sBegin = "<" + sValue + ">";
 		sEnd = "</" + sValue + ">";
-		return (sInfo.substring(sInfo.indexOf(sBegin) + sBegin.length(),
-				sInfo.indexOf(sEnd)));
+		sInf=sInfo.substring(sInfo.indexOf(sBegin) + sBegin.length(),
+				sInfo.indexOf(sEnd));
+		if(sInf==null || sInf.length()==0)
+			sInf="";
+		return sInf;
+	}
+
+	public static List<String> getInfoValue(String sInfo) {
+		List<String> listValues = null;
+		if (sInfo == null)
+			return null;
+		try {
+			String sBegin = "<Root>";
+			String sEnd = "</Root>";
+			String sInfo1 = null;
+			int i = 0;
+			listValues = new ArrayList<String>();
+			while (i < sInfo.length()) {
+				sInfo1 = null;
+				sInfo1 = sInfo.substring(
+						sInfo.indexOf(sBegin) + sBegin.length(),
+						sInfo.indexOf(sEnd));
+				System.out.println(sInfo1);
+				if (sInfo1 == null) {
+					System.out.println("read end");
+					break;
+				}
+				listValues.add(sInfo1);
+				i = i + sInfo1.length();
+				sInfo = sInfo.substring(sInfo.indexOf(sEnd) + sEnd.length());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listValues;
+	}
+
+	public static String getServiceConnect(String mobile1, String mobile2,
+			String mobile3, String sCode) throws Exception {
+		String soap = readSoap(sCode);
+		soap = soap.replaceAll("\\$mobile1", mobile1);
+		soap = soap.replaceAll("\\$mobile2", mobile2);
+		soap = soap.replaceAll("\\$mobile3", mobile3);
+		byte[] entity = soap.getBytes("utf-8");
+		String path = MainActivity.SERVICEADRRESS;
+		HttpURLConnection conn = (HttpURLConnection) new URL(path)
+				.openConnection();
+		conn.setConnectTimeout(5000);
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-Type",
+				"application/soap+xml;charset=utf-8");
+		conn.setRequestProperty("Content-Length", String.valueOf(entity.length));
+		conn.getOutputStream().write(entity);
+		if (conn.getResponseCode() == 200) {
+			return parseSoap(conn.getInputStream(), sCode);
+		}
+		return null;
 	}
 
 	public static String getServiceConnect(String mobile1, String mobile2,

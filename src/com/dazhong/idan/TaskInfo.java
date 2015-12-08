@@ -14,7 +14,7 @@ public class TaskInfo {
 	private String frightin;
 	private String frightnum;
 	private String frightout;
-	private int invoicetype;
+	private String invoicetype;
 	private String invoicetypename;
 	private String leaveaddress;
 	private int maxload;
@@ -41,7 +41,16 @@ public class TaskInfo {
 	private String taskcode;
 	private String taskid;
 	private String taskcontract;
-	
+	private int Readmark;
+	/**
+	 * 阅读标记
+	 * */
+	public int getReadmark() {
+		return Readmark;
+	}
+	public void setReadmark(int readmark) {
+		Readmark = readmark;
+	}
 	/**
 	 * 订车人
 	 */
@@ -132,7 +141,7 @@ public class TaskInfo {
 	/**
 	 * 发票类型
 	 */
-	public int InvoiceType()
+	public String InvoiceType()
 	{
 		return invoicetype;
 	}
@@ -364,7 +373,7 @@ public class TaskInfo {
 	public void setFrightout(String frightout) {
 		this.frightout = frightout;
 	}
-	public void setInvoicetype(int invoicetype) {
+	public void setInvoicetype(String invoicetype) {
 		this.invoicetype = invoicetype;
 	}
 	public void setInvoicetypename(String invoicetypename) {
@@ -454,7 +463,7 @@ public class TaskInfo {
 			String carnumber, String cartype, String customer,
 			String customertel, String driverid, String drivername,
 			String driverphone, String frightin, String frightnum,
-			String frightout, int invoicetype, String invoicetypename,
+			String frightout, String invoicetype, String invoicetypename,
 			String leaveaddress, int maxload, String onboardtime,
 			String pickupaddress, String planner, String plannerremark,
 			String plannertel, double salehotelfee, double salekms,
@@ -463,7 +472,7 @@ public class TaskInfo {
 			String salestel, String salesremark, double saletime,
 			String servicebegin, String serviceend, int servicetype,
 			String servicetypename, String taskcode, String taskid,
-			String taskcontract) {
+			String taskcontract,int readmark) {
 		super();
 		this.bookman = bookman;
 		this.booktel = booktel;
@@ -505,6 +514,7 @@ public class TaskInfo {
 		this.taskcode = taskcode;
 		this.taskid = taskid;
 		this.taskcontract = taskcontract;
+		this.Readmark=readmark;
 	}
 	@Override
 	public String toString() {
@@ -530,7 +540,7 @@ public class TaskInfo {
 				+ serviceend + "," + servicetype
 				+ "," + servicetypename + ","
 				+ taskcode + "," + taskid + ","
-				+ taskcontract + "]";
+				+ taskcontract +","+Readmark+ "]";
 	}
 
 }
