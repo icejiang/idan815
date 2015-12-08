@@ -280,4 +280,54 @@ public class NoteInfo implements Serializable {
 
 	}
 
+	public NoteInfo(String carID, String carNumber, String driverID,
+			String driverName, double feeBridge, double feeHotel,
+			double feeLunch, double feeOther, double feeOverKMs,
+			double feeOverTime, double feePrice, double feeTotal,
+			String leaveAddress, String noteID, String onBoardAddress,
+			String planID, String routeBegin, String routeEnd,
+			String serviceBegin, String serviceEnd, double serviceKMs,
+			double serviceTime) {
+		super();
+		CarID = carID;
+		CarNumber = carNumber;
+		DriverID = driverID;
+		DriverName = driverName;
+		FeeBridge = feeBridge;
+		FeeHotel = feeHotel;
+		FeeLunch = feeLunch;
+		FeeOther = feeOther;
+		FeeOverKMs = feeOverKMs;
+		FeeOverTime = feeOverTime;
+		FeePrice = feePrice;
+		FeeTotal = feeTotal;
+		LeaveAddress = leaveAddress;
+		NoteID = noteID;
+		OnBoardAddress = onBoardAddress;
+		PlanID = planID;
+		RouteBegin = routeBegin;
+		RouteEnd = routeEnd;
+		ServiceBegin = serviceBegin;
+		ServiceEnd = serviceEnd;
+		ServiceKMs = serviceKMs;
+		ServiceTime = serviceTime;
+	}
+
+	@Override
+	public String toString() {
+		return "NoteInfo [" + CarID + "," + CarNumber
+				+ "," + DriverID + "," + DriverName
+				+ "," + FeeBridge + "," + FeeHotel
+				+ "," + FeeLunch + "," + FeeOther
+				+ "," + FeeOverKMs + ",=" + FeeOverTime
+				+ "," + FeePrice + "," + FeeTotal
+				+ "," + LeaveAddress.replace(",","$$") + "," + NoteID
+				+ "," + OnBoardAddress.replace(",","$$") + "," + PlanID
+				+ "," + RouteBegin + "," + RouteEnd
+				+ "," + ServiceBegin + ","
+				+ ServiceEnd + "," + ServiceKMs + ","
+				+ ServiceTime + "]";
+	}
+
+	
 }
