@@ -27,6 +27,7 @@ public class MainActivity extends Activity{
 	public static String WORKNUMBER="";//工号
 	public static String EMPLOYEEID="";//系统代码
 	//************************************************
+	public static List<TaskInfo> tasklist=null;
 	private ListView mListView;
 	private List<Order> mList;
 	
