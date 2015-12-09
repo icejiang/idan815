@@ -7,6 +7,49 @@ import java.util.List;
 
 public abstract class getInfoValue {
 	/**
+	 * 设置用户状态，等待接单
+	 * */
+	public static boolean ServiceStandby(String userid,String taskid){
+		try {
+			String sInfo=getDZService.getServiceConnect(userid, taskid,"0", "SetLockDispatch");
+			System.out.println(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	/**
+	 * 设置用户状态，服务中
+	 * */
+	public static boolean ServiceDoing(String userid,String taskid){
+		try {
+			String sInfo=getDZService.getServiceConnect(userid, taskid,"1", "SetLockDispatch");
+			System.out.println(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	/**
+	 * 设置调度单已读，上传到服务器
+	 * 成功 true，失败 false
+	 * */
+	public static boolean setTaskRead(String userid,String taskid){
+		try {
+			String sInfo=getDZService.getServiceConnect(userid, taskid, "SetReadDispatch");
+			System.out.println(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	/**
 	 * 获取调度信息列表
 	 * */
 	public static List<TaskInfo> getTasks(String employeeid) throws Exception {
