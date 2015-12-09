@@ -18,9 +18,6 @@
     <string name="str_open">打开蓝牙</string>
     <string name="str_close">关闭蓝牙</string>
     <string name="str_matched">查看配对设备</string>
-    <string name="str_openimg">打开图片</string>
-    <string name="str_create2d">生成二维码</string>
-    <string name="str_createbar">生成条码</string>
     <string name="str_order">字体大小</string>
     <string name="str_scan">扫描设备</string>
     <string name="str_printword">打印文字</string>
@@ -33,8 +30,6 @@
     <string name="str_succonnect">连接成功!</string>
     <string name="str_faileconnect">连接失败!</string>
     <string name="str_lose">丢失连接!</string>
-    <string name="str_cannotcreate2d">创建二维码失败! </string>
-    <string name="str_cannotcreatebar">未能创建一维码</string>
     <string name="str_devecehasblue">有蓝牙设备!</string>
     <string name="str_nomatched">没有匹配设备!</string>
     <string name="str_connected">已连接</string>
