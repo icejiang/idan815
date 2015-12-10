@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 public abstract class getInfoValue {
 	/**
 	 * 设置用户状态，等待接单
@@ -159,7 +161,7 @@ public abstract class getInfoValue {
 			e.printStackTrace();
 		}
 
-		return null;
+		return listTasks;
 	}
 
 	/**

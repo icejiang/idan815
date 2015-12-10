@@ -20,7 +20,7 @@ public class MenuLeftFragment extends LinearLayout{
 	private Context mContext;
 	private ListView mListView;
 	private List<String> mDatas = Arrays
-            .asList("个人信息", "历史订单查询","修改密码");
+            .asList("个人信息", "历史订单查询","修改密码","退出");
     private ListAdapter mAdapter;
 	
 	
@@ -55,7 +55,9 @@ public class MenuLeftFragment extends LinearLayout{
 					break;
 				case 2:
 					Intent intent3 = new Intent();
-					
+					intent3.setClass(mContext, PasswordAlter.class);
+					mContext.startActivity(intent3);
+					break;
 				default:
 					break;
 				}
