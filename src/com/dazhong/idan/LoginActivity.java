@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,16 +54,17 @@ public class LoginActivity extends Activity {
 					.getPersonID();
 			System.out.println(stateinfo.getCurrentPerson().toString());
 			try {
-				List<TaskInfo> tl=	getInfoValue.getTasks(stateinfo.getCurrentPerson().getPersonID());
-				MainActivity.tasklist=tl;
-				
+				MainActivity.tasklist=	getInfoValue.getTasks(stateinfo.getCurrentPerson().getPersonID());
+//				MainActivity.tasklist=tl;
+//				System.out.println("davis say "+tl.size());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Intent intent;
 			// 登陆后，选择显示页面
-			switch (stateinfo.getCurrentState()) {
+			switch (88) {
+//			switch (stateinfo.getCurrentState()) {
 			case 101:
 			case 0:
 			case 1:
@@ -131,38 +133,38 @@ public class LoginActivity extends Activity {
 	// show test
 	public void showTest(View v) {
 		try {
-//			// init state,user first login
-//			if (getInfoValue.getLogin("15821151093", "1234abcd"))
-//			// textView.setText(MainActivity.USERNAME);
-//			{
-//				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
-//						MainActivity.WORKNUMBER, MainActivity.USERNAME);
-//				textView.setText(personinfo.toString());
-//				stateinfo = new StateInfo();
-//				stateinfo.setToday("2015-12-05");
-//				stateinfo.setPageOfNoteHistory(1);
-//				stateinfo.setPageOfTask(1);
-//				stateinfo.setTimeInCar("08:12");
-//				stateinfo.setTimeOffCar("19:25");
-//				stateinfo.setBeginKMsOfToday("2135");
-//				stateinfo.setEndKMsOfToday("2236");
-//				stateinfo.setCurrentKMS("2236");
-//				stateinfo.setCurrentPerson(personinfo);
-//				stateinfo.setCurrentState(18);
-//				stateinfo.setCurrentNote(null);
-//				stateinfo.setCurrentLogin(true);
-//				// update state sample
-//				// getStateInfo gs = new getStateInfo(getApplicationContext());
-//				getStateInfo gs = getStateInfo
-//						.getInstance(getApplicationContext());
-//				gs.setStateinfo(stateinfo);
-//			} else
-//				textView.setText("no info");
-//if(getInfoValue.ServiceDoing("147889", "2"))
-//	textView.setText("service doing remark");
-//			if(getInfoValue.setTaskRead("147889", "2")){
-//				textView.setText("lock now");
-//			}
+			// init state,user first login
+			if (getInfoValue.getLogin("15821151093", "1234abcd"))
+			// textView.setText(MainActivity.USERNAME);
+			{
+				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
+						MainActivity.WORKNUMBER, MainActivity.USERNAME);
+				textView.setText(personinfo.toString());
+				stateinfo = new StateInfo();
+				stateinfo.setToday("2015-12-05");
+				stateinfo.setPageOfNoteHistory(1);
+				stateinfo.setPageOfTask(1);
+				stateinfo.setTimeInCar("08:12");
+				stateinfo.setTimeOffCar("19:25");
+				stateinfo.setBeginKMsOfToday("2135");
+				stateinfo.setEndKMsOfToday("2236");
+				stateinfo.setCurrentKMS("2236");
+				stateinfo.setCurrentPerson(personinfo);
+				stateinfo.setCurrentState(18);
+				stateinfo.setCurrentNote(null);
+				stateinfo.setCurrentLogin(true);
+				// update state sample
+				// getStateInfo gs = new getStateInfo(getApplicationContext());
+				getStateInfo gs = getStateInfo
+						.getInstance(getApplicationContext());
+				gs.setStateinfo(stateinfo);
+			} else
+				textView.setText("no info");
+if(getInfoValue.ServiceDoing("147889", "2"))
+	textView.setText("service doing remark");
+			if(getInfoValue.setTaskRead("147889", "2")){
+				textView.setText("lock now");
+			}
 			if(getInfoValue.ServiceStandby("147889", "2"))
 			textView.setText("service standby remark");
 

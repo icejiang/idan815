@@ -257,6 +257,38 @@
                 android:text="0小时"
                 android:textSize="16dp" />
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="营运记录:"
+                android:textScaleX="0.9"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tv_add_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:text="添加"
+                android:textSize="14dp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="16dp" />
 
         <ImageView
             android:id="@+id/imageView4"
