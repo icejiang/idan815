@@ -10,7 +10,7 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 
 	 */
-//	private static final long serialVersionUID = 1L;
+	// private static final long serialVersionUID = 1L;
 	/**
 	 * 车辆代码
 	 */
@@ -106,7 +106,43 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 超小时
 	 * */
-	private int OverHours; //超15分钟算一个小时
+	private int OverHours; // 超15分钟算一个小时
+	/** 
+	 * 收费选择 
+	 * */
+	private int FeeChoice;
+	/** 
+	 * 服务轨迹
+	 *  */
+	private String ServiceRoute;
+	/** 
+	 * 结算的超公里或超小时的费用
+	 *  */
+	private double FeeOverCal;
+
+	public String getServiceRoute() {
+		return ServiceRoute;
+	}
+
+	public void setServiceRoute(String serviceRoute) {
+		ServiceRoute = serviceRoute;
+	}
+
+	public double getFeeOverCal() {
+		return FeeOverCal;
+	}
+
+	public void setFeeOverCal(double feeOverCal) {
+		FeeOverCal = feeOverCal;
+	}
+
+	public int getFeeChoice() {
+		return FeeChoice;
+	}
+
+	public void setFeeChoice(int feeChoice) {
+		FeeChoice = feeChoice;
+	}
 
 	public int getOverKMs() {
 		return OverKMs;
@@ -311,7 +347,7 @@ public class NoteInfo implements Serializable {
 			String leaveAddress, String noteID, String onBoardAddress,
 			String planID, String routeBegin, String routeEnd,
 			String serviceBegin, String serviceEnd, double serviceKMs,
-			double serviceTime,int overKMs,int overHours) {
+			double serviceTime, int overKMs, int overHours,int feeChoice,double feeOverCal,String serviceRoute) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -335,25 +371,25 @@ public class NoteInfo implements Serializable {
 		ServiceEnd = serviceEnd;
 		ServiceKMs = serviceKMs;
 		ServiceTime = serviceTime;
-		OverKMs=overKMs;
-		OverHours=overHours;
+		OverKMs = overKMs;
+		OverHours = overHours;
+		FeeChoice=feeChoice;
+		FeeOverCal=feeOverCal;
+		ServiceRoute=serviceRoute;
 	}
 
 	@Override
 	public String toString() {
-		return "NoteInfo [" + NoteID+ ","  + PlanID + ","+ CarID + "," + CarNumber
-				+ "," + DriverID + "," + DriverName
-				+ "," + FeeBridge + "," + FeeHotel
-				+ "," + FeeLunch + "," + FeeOther
-				+ "," + FeeOverKMs + "," + FeeOverTime
-				+ "," + FeePrice + "," + FeeTotal
-				+ "," + LeaveAddress.replace(",","$$") 
-				+ "," + OnBoardAddress.replace(",","$$")
-				+ "," + RouteBegin + "," + RouteEnd
-				+ "," + ServiceBegin + ","
-				+ ServiceEnd + "," + ServiceKMs + ","
-				+ ServiceTime +","+ OverKMs+","+OverHours+"]";
+		return "NoteInfo [" + NoteID + "," + PlanID + "," + CarID + ","
+				+ CarNumber + "," + DriverID + "," + DriverName + ","
+				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
+				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
+				+ FeeTotal + "," + LeaveAddress.replace(",", "$$") + ","
+				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
+				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
+				+ ServiceKMs + "," + ServiceTime + "," + OverKMs + ","
+				+ OverHours+","+FeeChoice+","+FeeOverCal+","+ServiceRoute
+				+ "]";
 	}
 
-	
 }

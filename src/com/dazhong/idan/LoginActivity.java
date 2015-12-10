@@ -56,7 +56,10 @@ public class LoginActivity extends Activity {
 			try {
 				MainActivity.tasklist=	getInfoValue.getTasks(stateinfo.getCurrentPerson().getPersonID());
 //				MainActivity.tasklist=tl;
-//				System.out.println("davis say "+tl.size());
+				System.out.println("davis say "+MainActivity.tasklist.size());
+				getBlueTooth.getInstance(getApplicationContext()).PrintNow("");
+				System.out.println("print ok");
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
