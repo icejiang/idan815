@@ -25,11 +25,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="业务时间："
+                android:text="业务日期："
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/item_time"
+                android:id="@+id/item_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2015/10/25 9:00"
@@ -44,11 +44,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="调度单号："
+                android:text="上车时间："
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/item_id"
+                android:id="@+id/item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SR20151025000001"

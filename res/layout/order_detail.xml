@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+<LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -61,13 +65,58 @@
             android:layout_height="wrap_content"
             android:textSize="16dp"
             android:textScaleX="0.9"
-            android:text="业务时间:" />
+            android:text="开始日期:" />
 
         <TextView
+            android:id="@+id/detail_service_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="2015/10/25 9:00"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textScaleX="0.9"
+            android:text="结束日期:" />
+
+        <TextView
+            android:id="@+id/detail_service_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="机场接机"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textScaleX="0.9"
+            android:text="上车时间:" />
+
+        <TextView
+            android:id="@+id/detail_onboard_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="机场接机"
             android:textSize="16dp" />
 
     </LinearLayout>
@@ -78,7 +127,6 @@
          >
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
@@ -86,6 +134,7 @@
             android:text="业务类型:" />
 
         <TextView
+            android:id="@+id/detail_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -108,6 +157,7 @@
             android:text="订车人:" />
 
         <TextView
+            android:id="@+id/detail_placename"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -131,6 +181,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_placenum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -154,6 +205,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -177,6 +229,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -200,6 +253,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -223,6 +277,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_destination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -231,6 +286,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_flight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -246,6 +302,168 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_flightNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="MU789"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务时间:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_serviceTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="MU789"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务里程:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_serviceMile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="MU789"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调度员:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_dispatcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="MU789"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调度员号码:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_dispatcherNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="MU789"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="业务员:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_salesman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="MU789"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="业务员号码:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_salesmanNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="MU789"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发票类型:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_invoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -261,14 +479,37 @@
         >
 
         <TextView
-            android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="其他备注:"
+            android:text="调度员备注:"
             android:textScaleX="0.9"
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="需要接机牌等"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="业务员备注:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_remark_sales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -298,6 +539,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_plateNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -321,6 +563,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/detail_carType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -344,6 +587,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/payments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -354,6 +598,7 @@
     </LinearLayout>
      <ImageView
         android:id="@+id/imageView17"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000" />
@@ -372,3 +617,4 @@
          android:text="开始本次业务" />
 
 </LinearLayout>
+</ScrollView>
