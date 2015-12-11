@@ -11,6 +11,7 @@ public class NoteInfo implements Serializable {
 	 * 
 	 */
 	// private static final long serialVersionUID = 1L;
+	private String NoteDate;
 	/**
 	 * 车辆代码
 	 */
@@ -119,6 +120,14 @@ public class NoteInfo implements Serializable {
 	 * 结算的超公里或超小时的费用
 	 *  */
 	private double FeeOverCal;
+
+	public String getNoteDate() {
+		return NoteDate;
+	}
+
+	public void setNoteDate(String noteDate) {
+		NoteDate = noteDate;
+	}
 
 	public String getServiceRoute() {
 		return ServiceRoute;
