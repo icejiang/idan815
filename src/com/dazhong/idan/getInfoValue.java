@@ -160,8 +160,8 @@ public abstract class getInfoValue {
 						.getInfoValue(sinf, "ExceedSettleType")));
 				taskinfo.setSalepricecalname(getDZService.getInfoValue(sinf,
 						"ExceedSettleTypeName"));
-				taskinfo.setBalancetype(Integer.parseInt(getDZService
-						.getInfoValue(sinf, "BalanceTypeName")));
+				taskinfo.setBalancetype(getDZService
+						.getInfoValue(sinf, "BalanceTypeName"));
 				taskinfo.setBalancetypename(getDZService.getInfoValue(sinf,
 						"BalanceTypeName"));
 				System.out.println(taskinfo.toString());

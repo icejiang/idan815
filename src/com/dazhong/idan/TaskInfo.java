@@ -44,15 +44,15 @@ public class TaskInfo {
 	private int Readmark;
 	private int salepricecal;
 	private String salepricecalname;
-	private int balancetype;
+	private String balancetype;
 	private String balancetypename;
 	/**
 	 * Ω·À„∑Ω Ω
 	 * */
-	public int getBalancetype() {
+	public String getBalancetype() {
 		return balancetype;
 	}
-	public void setBalancetype(int balancetype) {
+	public void setBalancetype(String balancetype) {
 		this.balancetype = balancetype;
 	}
 	/**
@@ -518,7 +518,7 @@ public class TaskInfo {
 			String servicebegin, String serviceend, int servicetype,
 			String servicetypename, String taskcode, String taskid,
 			String taskcontract,int readmark,int salepricecal,String salepricecalname,
-			int balancetype,String balancetypename) {
+			String balancetype,String balancetypename) {
 		super();
 		this.bookman = bookman;
 		this.booktel = booktel;
