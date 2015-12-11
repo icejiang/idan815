@@ -1,5 +1,10 @@
 package com.dazhong.idan;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,14 +28,27 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private TextView tv_meals;
 	private TextView tv_parking;
 	private TextView tv_other;
+	private TextView tv_base;
+	private TextView tv_hotel;
 	private TextView tv_all;
-	private TextView tv_mile;
 	private TextView tv_print;
 	private TextView tv_addRecord;
 	private TextView tv_record;
+	private TextView date;
+	private TextView startTime;
+	private TextView endTime;
+	private TextView type;
+	private TextView mile;
+	private TextView time;
+	private TextView extraMile;
+	private TextView extraTime;
+	
 	private Bundle mBundle;
-	private int mile;
+	private int mileInt;
 	private int all;
+	private NoteInfo noteInfo;
+	private TaskInfo taskInfo;
+	private int position;
 	
 	
 	public final static int REQUEST_CODE = 1;
@@ -43,8 +61,10 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		setContentView(R.layout.route_note);
 		findView();
 		Intent intent = getIntent();
-		mile = intent.getIntExtra(InService.INPUT_TOTAL_KEY, 0);
-		tv_mile.setText(mile+"公里");
+		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
+		position = intent.getIntExtra("TYPE",0);
+		taskInfo = MainActivity.tasklist.get(position);
+		setView();
 		tv_addPay.setOnClickListener(this);
 		tv_print.setOnClickListener(this);
 		tv_addRecord.setOnClickListener(this);
@@ -79,14 +99,63 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		tv_other = (TextView) findViewById(R.id.tv_other);
 		tv_road = (TextView) findViewById(R.id.tv_road);
 		tv_parking = (TextView) findViewById(R.id.tv_parking);
+		tv_base = (TextView) findViewById(R.id.tv_base);
+		tv_hotel = (TextView) findViewById(R.id.tv_hotel);
 		tv_all = (TextView) findViewById(R.id.tv_all);
-		tv_mile = (TextView) findViewById(R.id.tv_mile);
 		tv_print = (TextView) findViewById(R.id.tv_print);
 		tv_addRecord = (TextView) findViewById(R.id.tv_add_record);
 		tv_record = (TextView) findViewById(R.id.tv_record);
 //		btn_confirmEnd = (Button) findViewById(R.id.confirm_end);
+		date = (TextView) findViewById(R.id.route_date);
+		startTime = (TextView) findViewById(R.id.route_startTime);
+		endTime = (TextView) findViewById(R.id.route_endTime);
+		type = (TextView) findViewById(R.id.route_type);
+		mile = (TextView) findViewById(R.id.route_mile);
+		time = (TextView) findViewById(R.id.route_time);
+		extraMile = (TextView) findViewById(R.id.route_extraMile);
+		extraTime = (TextView) findViewById(R.id.route_extraTime);
 		
 	}
+	
+	private void setView(){
+//		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+//		Date curDate = new Date(System.currentTimeMillis());
+//		String str = formatter.format(curDate);
+		SimpleDateFormat sDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd");
+		String curDate = sDateFormat.format(new Date(System.currentTimeMillis()));
+		date.setText(curDate);
+		startTime.setText(noteInfo.getServiceBegin());
+		endTime.setText(noteInfo.getServiceEnd());
+		type.setText(taskInfo.ServiceTypeName());
+		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
+		mile.setText(totalMile+"公里");
+//		int timeStart = Integer.parseInt(noteInfo.getServiceBegin());
+		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		int hours = 0;
+		try {
+			Date d1 = df.parse(noteInfo.getServiceBegin());
+			Date d2 = df.parse(noteInfo.getServiceEnd());
+			long diff = d1.getTime() - d2.getTime();
+			long hour = diff/(1000* 60 * 60);
+			hours = Integer.parseInt(Long.toString(hour));
+			time.setText(Long.toString(hour)+"小时");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int serviceMile = (int) noteInfo.getServiceKMs();
+		int serviceHour = (int) noteInfo.getServiceTime();
+		if(serviceMile<totalMile){
+			extraMile.setText((totalMile - serviceMile)+"公里" );
+		}
+		if(hours > serviceHour){
+			extraTime.setText((hours - serviceHour)+"小时");
+		}
+		tv_base.setText(noteInfo.getFeePrice()+"");
+		tv_all.setText(noteInfo.getFeePrice()+"");
+	}
+	
 	
 	@Override
 	public void onClick(View v) {
@@ -105,7 +174,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		case R.id.tv_print:
 			Intent intent3 = new Intent();
 			intent3.putExtra("MYKEY", mBundle);
-			intent3.putExtra("MILE", mile);
+			intent3.putExtra("MILE", mileInt);
 			intent3.putExtra("ALL", all);
 			intent3.setClass(getApplicationContext(), PrintActivity.class);
 			startActivity(intent3);
@@ -151,6 +220,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					String meals = bundle.getString(AddPay.key_meals);
 					String parking = bundle.getString(AddPay.key_parking);
 					String other = bundle.getString(AddPay.key_other);
+					String hotel = bundle.getString(AddPay.key_hotel);
 					int all = 0;
 					if (!road.equals("")) {
 						all = Integer.parseInt(road);
@@ -168,6 +238,11 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						all += Integer.parseInt(other);
 						tv_other.setText(other + "元");
 					}
+					if (!hotel.equals("")) {
+						all += Integer.parseInt(hotel);
+						tv_hotel.setText(hotel + "元");
+					}
+					all = (int) (all+noteInfo.getFeePrice());
 					tv_all.setText(all + "元");
 					this.all = all;
 				}

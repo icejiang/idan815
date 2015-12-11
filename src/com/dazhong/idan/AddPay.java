@@ -14,12 +14,13 @@ public class AddPay extends Activity {
 	private EditText et_eat;
 	private EditText et_parking;
 	private EditText et_other;
+	private EditText et_hotel;
 	private Button bt_save;
 	public final static String key_road = "ROAD";
 	public final static String key_meals = "MEALS";
 	public final static String key_parking = "PARKING";
 	public final static String key_other = "OTHER";
-	public final static String key_all = "ALL";
+	public final static String key_hotel = "HOTEL";
 	public final static int RESULT_CODE=1;
 	
 	@Override
@@ -40,6 +41,7 @@ public class AddPay extends Activity {
 				bundle.putString(key_meals, et_eat.getText().toString());
 				bundle.putString(key_parking, et_parking.getText().toString());
 				bundle.putString(key_other, et_other.getText().toString());
+				bundle.putString(key_hotel, et_hotel.getText().toString());
 				Intent intent = new Intent();
 				intent.putExtras(bundle);
 	            setResult(RESULT_CODE, intent);  
@@ -57,6 +59,7 @@ public class AddPay extends Activity {
 		et_parking = (EditText) findViewById(R.id.pay_parking);
 		et_other = (EditText) findViewById(R.id.pay_other);
 		bt_save = (Button) findViewById(R.id.bt_save);
+		et_hotel = (EditText) findViewById(R.id.pay_hotel);
 		
 	}
 }
