@@ -76,7 +76,7 @@ class MyAdapter extends BaseAdapter{
 			if(convertView == null){
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.order_item, null);
-				holder.id = (TextView) convertView.findViewById(R.id.item_id);
+				holder.date = (TextView) convertView.findViewById(R.id.item_date);
 				holder.location = (TextView) convertView.findViewById(R.id.item_location);
 				holder.name = (TextView) convertView.findViewById(R.id.item_name);
 				holder.nubmer = (TextView) convertView.findViewById(R.id.item_number);
@@ -88,7 +88,7 @@ class MyAdapter extends BaseAdapter{
 			}
 			Order mOrder = mList.get(position);
 			holder.time.setText(mOrder.getTime());
-			holder.id.setText(mOrder.getId());
+			holder.date.setText(mOrder.getId());
 			holder.location.setText(mOrder.getLocation());
 			holder.name.setText(mOrder.getName());
 			holder.nubmer.setText(mOrder.getNubmer());
@@ -104,7 +104,7 @@ class MyAdapter extends BaseAdapter{
 	static class ViewHolder  
 	{  
 		public TextView time;  
-		public TextView id;  
+		public TextView date;  
 		public TextView type;  
 		public TextView name;  
 		public TextView nubmer;  

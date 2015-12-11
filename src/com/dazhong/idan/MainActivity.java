@@ -22,12 +22,14 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity{
 	//系统接口地址
-	public static String SERVICEADRRESS="http://www.dzzcgs.com:8099/DriverAppwebServiceRelease/DriverService.asmx";
+	public static String SERVICEADRRESS="http://192.168.75.200:8084/DriverService.asmx";
 	public static String USERNAME="";//用户名称
 	public static String WORKNUMBER="";//工号
 	public static String EMPLOYEEID="";//系统代码
 	//************************************************
 	public static List<TaskInfo> tasklist=null;
+	public static String POSITION = "POSITON";
+	TaskInfo curTask = null;
 	private ListView mListView;
 	private TextView tv_name;
 	
@@ -45,10 +47,13 @@ public class MainActivity extends Activity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+//				tasklist.get(position).setReadmark(0);
+				curTask = tasklist.get(position);
+				curTask.setReadmark(0);
 				Intent intent = new Intent();
+				intent.putExtra(POSITION, position);
 				intent.setClass(getApplicationContext(), OrderDetail.class);
 				startActivity(intent);
-
 			}
 		});
 		// configure the SlidingMenu
@@ -114,7 +119,7 @@ public class MainActivity extends Activity{
 			if(convertView == null){
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.order_item, null);
-				holder.id = (TextView) convertView.findViewById(R.id.item_id);
+				holder.date = (TextView) convertView.findViewById(R.id.item_date);
 				holder.location = (TextView) convertView.findViewById(R.id.item_location);
 				holder.name = (TextView) convertView.findViewById(R.id.item_name);
 				holder.nubmer = (TextView) convertView.findViewById(R.id.item_number);
@@ -125,14 +130,21 @@ public class MainActivity extends Activity{
 				holder = (ViewHolder) convertView.getTag();
 			}
 			TaskInfo taskInfo = tasklist.get(position);
+			Log.i("jxb", "readMark = "+taskInfo.getReadmark());
+			String ServiceDate = null;
+			String serviceBegin = taskInfo.ServiceBegin();
+			String serviceEnd = taskInfo.ServiceEnd();
+			if(serviceBegin.equals(serviceEnd)){
+				ServiceDate = serviceBegin;
+			} else {
+				ServiceDate = serviceBegin+"-"+serviceEnd;
+			}
 			holder.time.setText(taskInfo.OnboardTime());
-			holder.id.setText(taskInfo.TaskCode());
+			holder.date.setText(ServiceDate);
 			holder.location.setText(taskInfo.PickupAddress());
 			holder.name.setText(taskInfo.Customer());
 			holder.nubmer.setText(taskInfo.CustomerTel());
 			holder.type.setText(taskInfo.ServiceTypeName()); 
-			
-			
 			
 			return convertView;
 		}
@@ -142,7 +154,7 @@ public class MainActivity extends Activity{
 	static class ViewHolder  
 	{  
 		public TextView time;  
-		public TextView id;  
+		public TextView date;  
 		public TextView type;  
 		public TextView name;  
 		public TextView nubmer;  

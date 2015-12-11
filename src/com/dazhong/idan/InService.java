@@ -17,6 +17,7 @@ public class InService extends Activity {
 	
 	private Button btn_end;
 	private int input_end;
+	private NoteInfo noteInfo;
 	private int input_start;
 	public static String INPUT_TOTAL_KEY = "INPUT_TOTAL";
 	
@@ -27,8 +28,8 @@ public class InService extends Activity {
 		setContentView(R.layout.in_service);
 		
 		Intent intent = getIntent();
-		input_start = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
-		
+		noteInfo = (NoteInfo) intent.getSerializableExtra(OrderDetail.INPUT_KEY);
+		input_start = Integer.parseInt(noteInfo.getRouteBegin());
 		btn_end = (Button) findViewById(R.id.btn_end);
 		
 		
