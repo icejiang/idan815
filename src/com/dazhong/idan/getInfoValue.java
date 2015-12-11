@@ -158,8 +158,12 @@ public abstract class getInfoValue {
 						.getInfoValue(sinf, "ReadMark")));
 				taskinfo.setSalePriceCal(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "ExceedSettleType")));
-				taskinfo.setSalepricecalname(getDZService
-						.getInfoValue(sinf, "ExceedSettleTypeName"));
+				taskinfo.setSalepricecalname(getDZService.getInfoValue(sinf,
+						"ExceedSettleTypeName"));
+				taskinfo.setBalancetype(Integer.parseInt(getDZService
+						.getInfoValue(sinf, "BalanceTypeName")));
+				taskinfo.setBalancetypename(getDZService.getInfoValue(sinf,
+						"BalanceTypeName"));
 				System.out.println(taskinfo.toString());
 				listTasks.add(taskinfo);
 			}
