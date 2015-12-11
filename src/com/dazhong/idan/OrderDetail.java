@@ -1,5 +1,9 @@
 package com.dazhong.idan;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -78,11 +82,11 @@ public class OrderDetail extends Activity {
 							} else {
 								input_start = Integer.parseInt(input);
 								Log.i("jxb", "ÆðÊ¼Â·Âë = "+input_start);
-								NoteInfo noteInfo = new NoteInfo();
-								noteInfo.setRouteBegin(input);
+//								noteInfo.setRouteBegin(input);
 								Intent intent = new Intent();
-								putData(noteInfo);
-								intent.putExtra(INPUT_KEY, noteInfo);
+//								putData(noteInfo);
+								intent.putExtra("input_start", input);
+								intent.putExtra(INPUT_KEY, position);
 								intent.setClass(OrderDetail.this, InService.class);
 								startActivity(intent);
 							}
@@ -189,31 +193,6 @@ public class OrderDetail extends Activity {
 		carType.setText(taskInfo.CarType());
 		payments.setText(taskInfo.getBalancetypename());
 	}
-	
-	
-	private void putData(NoteInfo noteInfo){
-		noteInfo.setCarID(taskInfo.CarID());
-		noteInfo.setCarNumber(taskInfo.CarNumber());
-		noteInfo.setDriverID(taskInfo.DriverID());
-		noteInfo.setDriverName(taskInfo.DriverName());
-//		noteInfo.setFeeBridge(taskInfo.);
-		noteInfo.setFeePrice(taskInfo.SalePrice());
-		// id/code
-		noteInfo.setPlanID(taskInfo.TaskCode());
-//		noteInfo.setRouteBegin(routeBegin);
-//		noteInfo.setRouteEnd(routeEnd);
-//		noteInfo.setServiceBegin(serviceBegin);
-		noteInfo.setFeeChoice(taskInfo.SalePriceCal());
-		noteInfo.setOnBoardAddress(taskInfo.PickupAddress());
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
