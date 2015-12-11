@@ -11,9 +11,10 @@ public abstract class getInfoValue {
 	/**
 	 * 设置用户状态，等待接单
 	 * */
-	public static boolean ServiceStandby(String userid,String taskid){
+	public static boolean ServiceStandby(String userid, String taskid) {
 		try {
-			String sInfo=getDZService.getServiceConnect(userid, taskid,"0", "SetLockDispatch");
+			String sInfo = getDZService.getServiceConnect(userid, taskid, "0",
+					"SetLockDispatch");
 			System.out.println(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -22,12 +23,14 @@ public abstract class getInfoValue {
 		}
 		return true;
 	}
+
 	/**
 	 * 设置用户状态，服务中
 	 * */
-	public static boolean ServiceDoing(String userid,String taskid){
+	public static boolean ServiceDoing(String userid, String taskid) {
 		try {
-			String sInfo=getDZService.getServiceConnect(userid, taskid,"1", "SetLockDispatch");
+			String sInfo = getDZService.getServiceConnect(userid, taskid, "1",
+					"SetLockDispatch");
 			System.out.println(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -36,13 +39,14 @@ public abstract class getInfoValue {
 		}
 		return true;
 	}
+
 	/**
-	 * 设置调度单已读，上传到服务器
-	 * 成功 true，失败 false
+	 * 设置调度单已读，上传到服务器 成功 true，失败 false
 	 * */
-	public static boolean setTaskRead(String userid,String taskid){
+	public static boolean setTaskRead(String userid, String taskid) {
 		try {
-			String sInfo=getDZService.getServiceConnect(userid, taskid, "SetReadDispatch");
+			String sInfo = getDZService.getServiceConnect(userid, taskid,
+					"SetReadDispatch");
 			System.out.println(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -51,6 +55,7 @@ public abstract class getInfoValue {
 		}
 		return true;
 	}
+
 	/**
 	 * 获取调度信息列表
 	 * */
@@ -99,8 +104,8 @@ public abstract class getInfoValue {
 						"FlightTime"));
 				taskinfo.setFrightnum(getDZService.getInfoValue(sinf,
 						"FlightNo"));
-				taskinfo.setInvoicetype(getDZService
-						.getInfoValue(sinf, "InvoiceTypeCode"));
+				taskinfo.setInvoicetype(getDZService.getInfoValue(sinf,
+						"InvoiceTypeCode"));
 				taskinfo.setInvoicetypename(getDZService.getInfoValue(sinf,
 						"InvoiceTypeName"));
 				taskinfo.setLeaveaddress(getDZService.getInfoValue(sinf,
@@ -151,7 +156,14 @@ public abstract class getInfoValue {
 						.getInfoValue(sinf, "DispatchID"));
 				taskinfo.setReadmark(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "ReadMark")));
-
+				taskinfo.setSalePriceCal(Integer.parseInt(getDZService
+						.getInfoValue(sinf, "ExceedSettleType")));
+				taskinfo.setSalepricecalname(getDZService.getInfoValue(sinf,
+						"ExceedSettleTypeName"));
+				taskinfo.setBalancetype(Integer.parseInt(getDZService
+						.getInfoValue(sinf, "BalanceTypeName")));
+				taskinfo.setBalancetypename(getDZService.getInfoValue(sinf,
+						"BalanceTypeName"));
 				System.out.println(taskinfo.toString());
 				listTasks.add(taskinfo);
 			}

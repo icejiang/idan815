@@ -42,6 +42,51 @@ public class TaskInfo {
 	private String taskid;
 	private String taskcontract;
 	private int Readmark;
+	private int salepricecal;
+	private String salepricecalname;
+	private int balancetype;
+	private String balancetypename;
+	/**
+	 * 结算方式
+	 * */
+	public int getBalancetype() {
+		return balancetype;
+	}
+	public void setBalancetype(int balancetype) {
+		this.balancetype = balancetype;
+	}
+	/**
+	 * 结算方式名称
+	 * */
+	public String getBalancetypename() {
+		return balancetypename;
+	}
+	public void setBalancetypename(String balancetypename) {
+		this.balancetypename = balancetypename;
+	}
+	/**
+	 * 超额计费选择的名称，双边或单侧收费
+	 */
+	public String SalePriceCalName() {
+		return salepricecalname;
+	}
+	public void setSalepricecalname(String salepricecalname) {
+		this.salepricecalname = salepricecalname;
+	}
+	/**
+	 * 超额计费选择，双边或单侧收费
+	 */
+	public int SalePriceCal()
+	{
+		return salepricecal;
+	}
+	/**
+	 * 超额计费选择，双边或单侧收费
+	 */
+	public void setSalePriceCal(int salePricecal)
+	{
+		this.salepricecal=salePricecal;
+	}
 	/**
 	 * 阅读标记
 	 * */
@@ -121,7 +166,7 @@ public class TaskInfo {
 	{
 		return driverphone;
 	}
-	// 航班进港时间
+	/*** 航班进港时间*/
 	public String FrightIn()
 	{
 		return frightin;
@@ -133,7 +178,7 @@ public class TaskInfo {
 	{
 		return frightnum;
 	}
-	//航班出港时间
+	/**航班出港时间*/
 	public String FrightOut()
 	{
 		return frightout;
@@ -472,7 +517,8 @@ public class TaskInfo {
 			String salestel, String salesremark, double saletime,
 			String servicebegin, String serviceend, int servicetype,
 			String servicetypename, String taskcode, String taskid,
-			String taskcontract,int readmark) {
+			String taskcontract,int readmark,int salepricecal,String salepricecalname,
+			int balancetype,String balancetypename) {
 		super();
 		this.bookman = bookman;
 		this.booktel = booktel;
@@ -515,6 +561,10 @@ public class TaskInfo {
 		this.taskid = taskid;
 		this.taskcontract = taskcontract;
 		this.Readmark=readmark;
+		this.salepricecal=salepricecal;
+		this.salepricecalname=salepricecalname;
+		this.balancetype=balancetype;
+		this.balancetypename=balancetypename;
 	}
 	@Override
 	public String toString() {
@@ -540,7 +590,9 @@ public class TaskInfo {
 				+ serviceend + "," + servicetype
 				+ "," + servicetypename + ","
 				+ taskcode + "," + taskid + ","
-				+ taskcontract +","+Readmark+ "]";
+				+ taskcontract +","+Readmark+","+salepricecal+","+salepricecalname
+				+balancetype+","+balancetypename
+				+ "]";
 	}
 
 }
