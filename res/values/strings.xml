@@ -46,4 +46,7 @@
 <string name="str_noinitdevice">没有可用的打印机，请重新选择！</string>
 <string name="str_initdevicefail">连接打印机失败</string>
 <string name="str_initdeviceok">连接打印机成功</string>
+<string name="str_closed">蓝牙没有打开</string>
+<string name="str_printfail">打印失败，请重新连接打印机！</string>
+<string name="str_printok">路单打印完成！</string>
 </resources>

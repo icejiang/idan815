@@ -66,8 +66,8 @@ public class LoginActivity extends Activity {
 			}
 			Intent intent;
 			// 登陆后，选择显示页面
-			switch (88) {
-//			switch (stateinfo.getCurrentState()) {
+//			switch (88) {
+			switch (stateinfo.getCurrentState()) {
 			case 101:
 			case 0:
 			case 1:
@@ -137,40 +137,43 @@ public class LoginActivity extends Activity {
 	public void showTest(View v) {
 		try {
 			// init state,user first login
-			if (getInfoValue.getLogin("15821151093", "1234abcd"))
-			// textView.setText(MainActivity.USERNAME);
-			{
-				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
-						MainActivity.WORKNUMBER, MainActivity.USERNAME);
-				textView.setText(personinfo.toString());
-				stateinfo = new StateInfo();
-				stateinfo.setToday("2015-12-05");
-				stateinfo.setPageOfNoteHistory(1);
-				stateinfo.setPageOfTask(1);
-				stateinfo.setTimeInCar("08:12");
-				stateinfo.setTimeOffCar("19:25");
-				stateinfo.setBeginKMsOfToday("2135");
-				stateinfo.setEndKMsOfToday("2236");
-				stateinfo.setCurrentKMS("2236");
-				stateinfo.setCurrentPerson(personinfo);
-				stateinfo.setCurrentState(18);
-				stateinfo.setCurrentNote(null);
-				stateinfo.setCurrentLogin(true);
-				// update state sample
-				// getStateInfo gs = new getStateInfo(getApplicationContext());
-				getStateInfo gs = getStateInfo
-						.getInstance(getApplicationContext());
-				gs.setStateinfo(stateinfo);
-			} else
-				textView.setText("no info");
-if(getInfoValue.ServiceDoing("147889", "2"))
-	textView.setText("service doing remark");
-			if(getInfoValue.setTaskRead("147889", "2")){
-				textView.setText("lock now");
-			}
-			if(getInfoValue.ServiceStandby("147889", "2"))
-			textView.setText("service standby remark");
-
+//			if (getInfoValue.getLogin("15821151093", "1234abcd"))
+//			// textView.setText(MainActivity.USERNAME);
+//			{
+//				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
+//						MainActivity.WORKNUMBER, MainActivity.USERNAME);
+//				textView.setText(personinfo.toString());
+//				stateinfo = new StateInfo();
+//				stateinfo.setToday("2015-12-05");
+//				stateinfo.setPageOfNoteHistory(1);
+//				stateinfo.setPageOfTask(1);
+//				stateinfo.setTimeInCar("08:12");
+//				stateinfo.setTimeOffCar("19:25");
+//				stateinfo.setBeginKMsOfToday("2135");
+//				stateinfo.setEndKMsOfToday("2236");
+//				stateinfo.setCurrentKMS("2236");
+//				stateinfo.setCurrentPerson(personinfo);
+//				stateinfo.setCurrentState(18);
+//				stateinfo.setCurrentNote(null);
+//				stateinfo.setCurrentLogin(true);
+//				// update state sample
+//				// getStateInfo gs = new getStateInfo(getApplicationContext());
+//				getStateInfo gs = getStateInfo
+//						.getInstance(getApplicationContext());
+//				gs.setStateinfo(stateinfo);
+//			} else
+//				textView.setText("no info");
+//if(getInfoValue.ServiceDoing("147889", "2"))
+//	textView.setText("service doing remark");
+//			if(getInfoValue.setTaskRead("147889", "2")){
+//				textView.setText("lock now");
+//			}
+//			if(getInfoValue.ServiceStandby("147889", "2"))
+//			textView.setText("service standby remark");
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), PrintActivity.class);
+//			intent.setClass(getApplicationContext(), BlueToothManage.class);
+			startActivity(intent);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
