@@ -332,7 +332,7 @@ public class BlueToothManage extends Activity {
 						2000).show();
 				mBTService.DisConnected();
 				mBTService.ConnectToDevice(address);
-				MainActivity.stateInfo.setPrinterName(info.substring(1,16));
+//				MainActivity.stateInfo.setPrinterName(info.substring(1,16));
 			}
 		});
 
@@ -506,6 +506,6 @@ public class BlueToothManage extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.exit(0);
+		BlueToothManage.this.finish();
 	}
 }

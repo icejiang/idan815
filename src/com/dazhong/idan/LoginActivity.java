@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -29,6 +30,20 @@ public class LoginActivity extends Activity {
 		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
 				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
 				.build());
+//		ApplicationInfo appInfo = LoginActivity.this.getApplicationInfo(); 
+//		int appFlags = appInfo.flags; 
+//		if ((appFlags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) { 
+//		    // Do StrictMode setup here 
+////		    StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder() 
+////		        .detectLeakedSqlLiteObjects() 
+////		        .penaltyLog() 
+////		        .penaltyDeath() 
+////		        .build()); 
+//			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//			.detectDiskReads().detectDiskWrites().detectNetwork()
+//			.penaltyLog().build());
+//
+//		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 //		UpdateManager mUpdateManager = new UpdateManager(LoginActivity.this);
@@ -53,13 +68,9 @@ public class LoginActivity extends Activity {
 			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
 					.getPersonID();
 			MainActivity.stateInfo=stateinfo;
-			System.out.println(stateinfo.getCurrentPerson().toString());
 			try {
 				MainActivity.tasklist=	getInfoValue.getTasks(stateinfo.getCurrentPerson().getPersonID());
-//				MainActivity.tasklist=tl;
-				System.out.println("davis say "+MainActivity.tasklist.size());
-//				getBlueTooth.getInstance(getApplicationContext()).PrintNow("");
-				System.out.println("print ok");
+//				System.out.println("davis say "+MainActivity.tasklist.size());
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -67,8 +78,8 @@ public class LoginActivity extends Activity {
 			}
 			Intent intent;
 			// 登陆后，选择显示页面
-			switch (88) {
-//			switch (stateinfo.getCurrentState()) {
+//			switch (88) {
+			switch (stateinfo.getCurrentState()) {
 			case 101:
 			case 0:
 			case 1:
@@ -137,33 +148,33 @@ public class LoginActivity extends Activity {
 	// show test
 	public void showTest(View v) {
 		try {
-			// init state,user first login
-//			if (getInfoValue.getLogin("15821151093", "1234abcd"))
-//			// textView.setText(MainActivity.USERNAME);
-//			{
-//				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
-//						MainActivity.WORKNUMBER, MainActivity.USERNAME);
-//				textView.setText(personinfo.toString());
-//				stateinfo = new StateInfo();
-//				stateinfo.setToday("2015-12-05");
-//				stateinfo.setPageOfNoteHistory(1);
-//				stateinfo.setPageOfTask(1);
-//				stateinfo.setTimeInCar("08:12");
-//				stateinfo.setTimeOffCar("19:25");
-//				stateinfo.setBeginKMsOfToday("2135");
-//				stateinfo.setEndKMsOfToday("2236");
-//				stateinfo.setCurrentKMS("2236");
-//				stateinfo.setCurrentPerson(personinfo);
-//				stateinfo.setCurrentState(18);
-//				stateinfo.setCurrentNote(null);
-//				stateinfo.setCurrentLogin(true);
-//				// update state sample
-//				// getStateInfo gs = new getStateInfo(getApplicationContext());
-//				getStateInfo gs = getStateInfo
-//						.getInstance(getApplicationContext());
-//				gs.setStateinfo(stateinfo);
-//			} else
-//				textView.setText("no info");
+//			 init state,user first login
+			if (getInfoValue.getLogin("15821151093", "1234abcd"))
+			// textView.setText(MainActivity.USERNAME);
+			{
+				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
+						MainActivity.WORKNUMBER, MainActivity.USERNAME);
+				textView.setText(personinfo.toString());
+				stateinfo = new StateInfo();
+				stateinfo.setToday("2015-12-05");
+				stateinfo.setPageOfNoteHistory(1);
+				stateinfo.setPageOfTask(1);
+				stateinfo.setTimeInCar("08:12");
+				stateinfo.setTimeOffCar("19:25");
+				stateinfo.setBeginKMsOfToday("2135");
+				stateinfo.setEndKMsOfToday("2236");
+				stateinfo.setCurrentKMS("2236");
+				stateinfo.setCurrentPerson(personinfo);
+				stateinfo.setCurrentState(1);
+				stateinfo.setCurrentNote(null);
+				stateinfo.setCurrentLogin(true);
+				// update state sample
+				// getStateInfo gs = new getStateInfo(getApplicationContext());
+				getStateInfo gs = getStateInfo
+						.getInstance(getApplicationContext());
+				gs.setStateinfo(stateinfo);
+			} else
+				textView.setText("no info");
 //if(getInfoValue.ServiceDoing("147889", "2"))
 //	textView.setText("service doing remark");
 //			if(getInfoValue.setTaskRead("147889", "2")){
@@ -171,9 +182,10 @@ public class LoginActivity extends Activity {
 //			}
 //			if(getInfoValue.ServiceStandby("147889", "2"))
 //			textView.setText("service standby remark");
+			
 			Intent intent = new Intent();
-			intent.setClass(getApplicationContext(), PrintActivity.class);
-//			intent.setClass(getApplicationContext(), BlueToothManage.class);
+//			intent.setClass(getApplicationContext(), PrintActivity.class);
+			intent.setClass(getApplicationContext(), BlueToothManage.class);
 			startActivity(intent);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

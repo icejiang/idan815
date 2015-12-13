@@ -34,39 +34,39 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 路桥费
 	 */
-	private double FeeBridge;
+	private double FeeBridge=0;
 	/**
 	 * 住宿费
 	 */
-	private double FeeHotel;
+	private double FeeHotel=0;
 	/**
 	 * 餐费
 	 */
-	private double FeeLunch;
+	private double FeeLunch=0;
 	/**
 	 * 其它费用
 	 */
-	private double FeeOther;
+	private double FeeOther=0;
 	/**
 	 * 超里程费
 	 */
-	private double FeeOverKMs;
+	private double FeeOverKMs=0;
 	/**
 	 * 超时间费
 	 */
-	private double FeeOverTime;
+	private double FeeOverTime=0;
 	/**
 	 * 销售报价
 	 */
-	private double FeePrice;
+	private double FeePrice=0;
 	/**
 	 * 总金额
 	 */
-	private double FeeTotal;
+	private double FeeTotal=0;
 	/**
 	 * 下车地址
 	 */
-	private String LeaveAddress;
+	private String LeaveAddress="";
 	/**
 	 * 路单编号
 	 */
@@ -74,7 +74,7 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 上车地址
 	 */
-	private String OnBoardAddress;
+	private String OnBoardAddress="";
 	/**
 	 * 调度单号
 	 */
@@ -90,27 +90,27 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 服务开始时间
 	 */
-	private String ServiceBegin;
+	private String ServiceBegin="";
 	/**
 	 * 服务结束时间
 	 */
-	private String ServiceEnd;
+	private String ServiceEnd="";
 	/**
 	 * 服务里程
 	 */
-	private double ServiceKMs;
+	private double ServiceKMs=0;
 	/**
 	 * 服务时间
 	 */
-	private double ServiceTime;
+	private double ServiceTime=0;
 	/**
 	 * 超公里
 	 * */
-	private int OverKMs;
+	private int OverKMs=0;
 	/**
 	 * 超小时
 	 * */
-	private int OverHours; // 超15分钟算一个小时
+	private int OverHours=0; // 超15分钟算一个小时
 	/** 
 	 * 收费选择 
 	 * */
@@ -118,19 +118,19 @@ public class NoteInfo implements Serializable {
 	/** 
 	 * 服务轨迹
 	 *  */
-	private String ServiceRoute;
+	private String ServiceRoute="";
 	/** 
 	 * 结算的超公里或超小时的费用
 	 *  */
-	private double FeeOverCal;
+	private double FeeOverCal=0;
 	/**
 	 * 客人的公司名称
 	 * */
-	private String CustomerCompany;
+	private String CustomerCompany="";
 	/**
 	 * 客人名称
 	 * */
-	private String CustomerName;
+	private String CustomerName="";
 
 	public String getNoteDate() {
 		return NoteDate;

@@ -5,6 +5,7 @@ import java.util.Set;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,8 +47,13 @@ public class PrintActivity extends Activity {
 			public void onClick(View v) {
 				if (mBTService.getState() == mBTService.STATE_CONNECTED) {
 					String message = printFile();
-					if (message == null)
+					if (message == null) {
+						Toast.makeText(
+								PrintActivity.this,
+								PrintActivity.this.getResources().getString(
+										R.string.str_printfail), 2000).show();
 						return;
+					}
 					mBTService.PrintCharacters(message);
 					Toast.makeText(
 							PrintActivity.this,
@@ -134,8 +140,7 @@ public class PrintActivity extends Activity {
 				devices = mBTService.GetBondedDevice();
 				if (devices.size() > 0) {
 					for (BluetoothDevice device : devices) {
-						if (device.getName().equals(
-								MainActivity.stateInfo.getPrinterName()))
+						if (device.getName().equals(MainActivity.stateInfo.getPrinterName()))
 							connAddress = device.getAddress();
 					}
 					mBTService.DisConnected();
@@ -190,37 +195,58 @@ public class PrintActivity extends Activity {
 	 * 路单打印格式
 	 * */
 	private String printFile() {
+
 		String messages = null;
-		String mes = "\r\n\r\n";
-		NoteInfo note = MainActivity.stateInfo.getCurrentNote();
-		if (note == null) {
-			Toast.makeText(
-					PrintActivity.this,
-					PrintActivity.this.getResources().getString(R.string.error),
-					2000).show();
+		try {
+			String mes = "\r\n\r\n";
+			 NoteInfo note = MainActivity.stateInfo.getCurrentNote();
+			//在此调整数据格式，将实际的路单信息传入
+//			NoteInfo note = new NoteInfo();
+//			note.setCarNumber("沪BZ8911");
+//			note.setNoteDate("20151213");
+//			note.setNoteID("dz16820320151213001");
+//			note.setCustomerCompany("大众物流");
+//			note.setCustomerName("Ms lee");
+//			note.setOnBoardAddress("renmin square");
+//			note.setLeaveAddress("如果团队很小，把每个人的公钥收集起来放到服务器的/home/git/.ssh/authorized_keys这里我们不介绍怎么玩Gitosis了，几百号人的团队基本都在500强了，相信找个高水平的Linux管理员问题不大。");
+//			note.setServiceBegin("09:35");
+			if (note == null) {
+				Toast.makeText(
+						PrintActivity.this,
+						PrintActivity.this.getResources().getString(
+								R.string.error), 2000).show();
+				return messages;
+			}
+			messages ="";// "--------------------------" + mes;
+			messages = messages + "路单号码：" + note.getNoteID() + mes;
+			messages = messages + "服务日期：" + note.getNoteDate() + mes;
+			messages = messages + "营运车辆：" + note.getCarNumber() + mes;
+			messages = messages + "用车客人：" + note.getCustomerName() + mes;
+			messages = messages + "上车时间：" + note.getServiceBegin() + mes;
+			messages = messages + "下车时间：" + note.getServiceEnd() + mes;
+			messages = messages + "上车地址：" + note.getOnBoardAddress() + mes;
+			messages = messages + "下车地址：" + note.getLeaveAddress() + mes;
+			messages = messages + "途径地点：" + note.getServiceRoute() + mes;
+			messages = messages + "服务里程："
+					+ Double.toString(note.getServiceKMs()) + mes;
+			messages = messages + "服务时长："
+					+ Double.toString(note.getServiceTime()) + mes;
+			if (note.getOverHours() > 0)
+				messages = messages + "超时服务"
+						+ Integer.toString(note.getOverHours()) + mes;
+			if (note.getOverKMs() > 0)
+				messages = messages + "超出里程："
+						+ Integer.toString(note.getOverKMs()) + mes;
+			messages = messages + "服务费用：" + Double.toString(note.getFeeTotal())
+					+ mes;
+			messages = messages + "客户签名" + mes + mes + mes;
+			messages = messages + "___________________________" + mes + mes
+					+ mes;
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return messages;
 		}
-		messages = "----------------------------------------------------" + mes;
-		messages = messages + "路单号码：" + note.getNoteID() + mes;
-		messages = messages + "服务日期：" + note.getNoteDate() + mes;
-		messages = messages + "营运车辆：" + note.getCarNumber() + mes;
-		messages = messages + "用车客人：" + note.getDriverName() + mes;
-		messages = messages + "上车时间：" + note.getServiceBegin() + mes;
-		messages = messages + "下车时间：" + note.getServiceEnd() + mes;
-		messages = messages + "上车地址：" + note.getOnBoardAddress() + mes;
-		messages = messages + "下车地址：" + note.getLeaveAddress() + mes;
-		messages = messages + "途径地点：" + note.getServiceRoute() + mes;
-		messages = messages + "服务里程：" + Double.toString(note.getServiceKMs())
-				+ mes;
-		messages = messages + "服务时长：" + note.getServiceTime() + mes;
-		if (note.getOverHours() > 0)
-			messages = messages + "超时服务" + note.getOverHours() + mes;
-		if (note.getOverKMs() > 0)
-			messages = messages + "超出里程：" + note.getOverKMs() + mes;
-		messages = messages + "服务费用：" + note.getFeeTotal() + mes;
-		messages = messages + "客户签名" + mes + mes + mes;
-		messages = messages + "______________________________________________"
-				+ mes + mes + mes;
 		return messages;
 	}
 

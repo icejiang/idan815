@@ -17,35 +17,35 @@ public class StateInfo implements Serializable {
 	 * 16:结算中 17:输入费用 18:打印预览 51:历史路单 52:调度明细 53:路单明细 54:调度明细 55:个人信息 56:修改密码
 	 * 101:退出系统
 	 */
-	private int CurrentState;
+	private int CurrentState=0;
 	// 当前用户
-	private PersonInfo CurrentPerson;
+	private PersonInfo CurrentPerson=null;
 	// 当前调度单
-	private TaskInfo CurrentTask;
+	private TaskInfo CurrentTask=null;
 	/* 当前路单 * */
-	private NoteInfo CurrentNote;
+	private NoteInfo CurrentNote=null;
 	/* 调度页码 */
-	private int PageOfTask;
+	private int PageOfTask=0;
 	/* 历史路单页码 */
-	private int PageOfNoteHistory;
+	private int PageOfNoteHistory=0;
 	/* 最后输入的路码 */
-	private String CurrentKMS;
+	private String CurrentKMS="";
 	/* 当日路单次数 */
-	private int TimeOfTaskOneDay;
+	private int TimeOfTaskOneDay=0;
 	/* 今日上车时间 */
-	private String TimeInCar;
+	private String TimeInCar="";
 	/* 今日下车时间 */
-	private String TimeOffCar;
+	private String TimeOffCar="";
 	/* 记录日期 */
-	private String Today;
+	private String Today="";
 	// 当日上车路码
-	private String BeginKMsOfToday;
+	private String BeginKMsOfToday="";
 	// 当日下车路码
-	private String EndKMsOfToday;
+	private String EndKMsOfToday="";
 	// 当前登录的状态，true 登录状态，false 登出状态
-	private boolean CurrentLogin;
+	private boolean CurrentLogin=false;
 	//打印机名称
-	private String PrinterName;
+	private String PrinterName="DL58";
 	
 	/**获取当前登录状态
 	 * */
