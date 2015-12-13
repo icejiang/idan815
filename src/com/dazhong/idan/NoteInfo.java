@@ -123,6 +123,14 @@ public class NoteInfo implements Serializable {
 	 * 结算的超公里或超小时的费用
 	 *  */
 	private double FeeOverCal;
+	/**
+	 * 客人的公司名称
+	 * */
+	private String CustomerCompany;
+	/**
+	 * 客人名称
+	 * */
+	private String CustomerName;
 
 	public String getNoteDate() {
 		return NoteDate;
@@ -347,6 +355,23 @@ public class NoteInfo implements Serializable {
 	public void setServiceTime(double serviceTime) {
 		ServiceTime = serviceTime;
 	}
+	
+
+	public String getCustomerCompany() {
+		return CustomerCompany;
+	}
+
+	public void setCustomerCompany(String customerCompany) {
+		CustomerCompany = customerCompany;
+	}
+
+	public String getCustomerName() {
+		return CustomerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		CustomerName = customerName;
+	}
 
 	public NoteInfo() {
 
@@ -359,7 +384,8 @@ public class NoteInfo implements Serializable {
 			String leaveAddress, String noteID, String onBoardAddress,
 			String planID, String routeBegin, String routeEnd,
 			String serviceBegin, String serviceEnd, double serviceKMs,
-			double serviceTime, int overKMs, int overHours,int feeChoice,double feeOverCal,String serviceRoute) {
+			double serviceTime, int overKMs, int overHours,int feeChoice,
+			double feeOverCal,String serviceRoute,String customerCompany,String customerName) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -388,6 +414,23 @@ public class NoteInfo implements Serializable {
 		FeeChoice=feeChoice;
 		FeeOverCal=feeOverCal;
 		ServiceRoute=serviceRoute;
+		CustomerCompany=customerCompany;
+		CustomerName=customerName;
+	}
+	/**
+	 * 上传到服务器的格式
+	 * */
+	public String toUploadNote(){
+		return "NoteInfo [" + NoteID + "," + PlanID + "," + CarID + ","
+				+ CarNumber + "," + DriverID + "," + DriverName + ","
+				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
+				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
+				+ FeeTotal + "," + LeaveAddress.replace(",", "$$") + ","
+				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
+				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
+				+ ServiceKMs + "," + ServiceTime + "," + OverKMs + ","
+				+ OverHours+","+FeeChoice+","+FeeOverCal+","+ServiceRoute
+				+ "]";
 	}
 
 	@Override
@@ -400,7 +443,8 @@ public class NoteInfo implements Serializable {
 				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
 				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
 				+ ServiceKMs + "," + ServiceTime + "," + OverKMs + ","
-				+ OverHours+","+FeeChoice+","+FeeOverCal+","+ServiceRoute
+				+ OverHours+","+FeeChoice+","+FeeOverCal+","+ServiceRoute+","
+				+CustomerCompany+","+CustomerName
 				+ "]";
 	}
 

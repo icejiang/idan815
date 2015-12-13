@@ -46,6 +46,8 @@ public class PrintActivity extends Activity {
 			public void onClick(View v) {
 				if (mBTService.getState() == mBTService.STATE_CONNECTED) {
 					String message = printFile();
+					if (message == null)
+						return;
 					mBTService.PrintCharacters(message);
 					Toast.makeText(
 							PrintActivity.this,
@@ -132,7 +134,8 @@ public class PrintActivity extends Activity {
 				devices = mBTService.GetBondedDevice();
 				if (devices.size() > 0) {
 					for (BluetoothDevice device : devices) {
-						if (device.getName().equals(MainActivity.stateInfo.getPrinterName()))
+						if (device.getName().equals(
+								MainActivity.stateInfo.getPrinterName()))
 							connAddress = device.getAddress();
 					}
 					mBTService.DisConnected();
@@ -178,14 +181,46 @@ public class PrintActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		PrintActivity.this.finish();
 	}
 
 	// ******************************************
-	//define print string
+	// define print string
+	/**
+	 * 路单打印格式
+	 * */
 	private String printFile() {
 		String messages = null;
-		messages = "davis print now\r\n davis print line1\r\n davis print line2 \r\n davis print line3 ";
-		messages=messages+ "\r\n\r\n";
+		String mes = "\r\n\r\n";
+		NoteInfo note = MainActivity.stateInfo.getCurrentNote();
+		if (note == null) {
+			Toast.makeText(
+					PrintActivity.this,
+					PrintActivity.this.getResources().getString(R.string.error),
+					2000).show();
+			return messages;
+		}
+		messages = "----------------------------------------------------" + mes;
+		messages = messages + "路单号码：" + note.getNoteID() + mes;
+		messages = messages + "服务日期：" + note.getNoteDate() + mes;
+		messages = messages + "营运车辆：" + note.getCarNumber() + mes;
+		messages = messages + "用车客人：" + note.getDriverName() + mes;
+		messages = messages + "上车时间：" + note.getServiceBegin() + mes;
+		messages = messages + "下车时间：" + note.getServiceEnd() + mes;
+		messages = messages + "上车地址：" + note.getOnBoardAddress() + mes;
+		messages = messages + "下车地址：" + note.getLeaveAddress() + mes;
+		messages = messages + "途径地点：" + note.getServiceRoute() + mes;
+		messages = messages + "服务里程：" + Double.toString(note.getServiceKMs())
+				+ mes;
+		messages = messages + "服务时长：" + note.getServiceTime() + mes;
+		if (note.getOverHours() > 0)
+			messages = messages + "超时服务" + note.getOverHours() + mes;
+		if (note.getOverKMs() > 0)
+			messages = messages + "超出里程：" + note.getOverKMs() + mes;
+		messages = messages + "服务费用：" + note.getFeeTotal() + mes;
+		messages = messages + "客户签名" + mes + mes + mes;
+		messages = messages + "______________________________________________"
+				+ mes + mes + mes;
 		return messages;
 	}
 

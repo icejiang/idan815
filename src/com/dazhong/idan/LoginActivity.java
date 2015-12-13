@@ -67,8 +67,8 @@ public class LoginActivity extends Activity {
 			}
 			Intent intent;
 			// 登陆后，选择显示页面
-//			switch (88) {
-			switch (stateinfo.getCurrentState()) {
+			switch (88) {
+//			switch (stateinfo.getCurrentState()) {
 			case 101:
 			case 0:
 			case 1:
