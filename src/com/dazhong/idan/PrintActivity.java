@@ -1,6 +1,12 @@
 package com.dazhong.idan;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
+
+import com.dazhong.idan.R.id;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
@@ -26,12 +32,30 @@ public class PrintActivity extends Activity {
 	private Set<BluetoothDevice> devices;
 
 	private TextView print_confirm;
+	private TextView tv_base;
 	private TextView tv_road;
 	private TextView tv_parking;
 	private TextView tv_meals;
+	private TextView tv_hotel;
 	private TextView tv_other;
-	private TextView tv_mile;
 	private TextView tv_all;
+	private TextView tv_beyondMile;
+	private TextView tv_beyondTime;
+	private TextView tv_dateLast;
+	private TextView date;
+	private TextView time;
+	private TextView type;
+	private TextView name;
+	private TextView destination;
+	private TextView location;
+	private TextView serviceTime;
+	private TextView serviceMile;
+	private TextView extraTime;
+	private TextView extraMile;
+	
+	private NoteInfo noteInfo;
+	private TaskInfo taskInfo;
+	private int position;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +65,12 @@ public class PrintActivity extends Activity {
 
 		findView();
 		setData();
+		
+		Intent intent = getIntent();
+		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
+		position = intent.getIntExtra("TYPE",0);
+		taskInfo = MainActivity.tasklist.get(position);
+		
 		print_confirm.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -251,38 +281,88 @@ public class PrintActivity extends Activity {
 	}
 
 	private void setData() {
-		Bundle bundle = getIntent().getBundleExtra("MYKEY");
-		int all = getIntent().getIntExtra("ALL", 0);
-		int mile = getIntent().getIntExtra("MILE", 0);
-		if (bundle != null) {
-			String road = bundle.getString(AddPay.key_road);
-			String meals = bundle.getString(AddPay.key_meals);
-			String parking = bundle.getString(AddPay.key_parking);
-			String other = bundle.getString(AddPay.key_other);
-			if (!road.equals("")) {
-				tv_road.setText(road + "元");
-			}
-			if (!meals.equals("")) {
-				tv_meals.setText(meals + "元");
-			}
-			if (!parking.equals("")) {
-				tv_parking.setText(parking + "元");
-			}
-			if (!other.equals("")) {
-				tv_other.setText(other + "元");
-			}
+//		Bundle bundle = getIntent().getBundleExtra("MYKEY");
+//		int all = getIntent().getIntExtra("ALL", 0);
+//		int mile = getIntent().getIntExtra("MILE", 0);
+//		if (bundle != null) {
+//			String road = bundle.getString(AddPay.key_road);
+//			String meals = bundle.getString(AddPay.key_meals);
+//			String parking = bundle.getString(AddPay.key_parking);
+//			String other = bundle.getString(AddPay.key_other);
+//			if (!road.equals("")) {
+//				tv_road.setText(road + "元");
+//			}
+//			if (!meals.equals("")) {
+//				tv_meals.setText(meals + "元");
+//			}
+//			if (!parking.equals("")) {
+//				tv_parking.setText(parking + "元");
+//			}
+//			if (!other.equals("")) {
+//				tv_other.setText(other + "元");
+//			}
+//		}
+//		tv_all.setText(all + "元");
+//		serviceMile.setText(mile + "公里");
+		SimpleDateFormat sDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd");
+		String curDate = sDateFormat.format(new Date(System.currentTimeMillis()));
+		date.setText(curDate);
+		time.setText(noteInfo.getServiceBegin()+"-"+noteInfo.getServiceEnd());
+		type.setText(taskInfo.ServiceTypeName());
+		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
+		serviceMile.setText(totalMile+"公里");
+		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		int hours = 0;
+		try {
+			Date d1 = df.parse(noteInfo.getServiceBegin());
+			Date d2 = df.parse(noteInfo.getServiceEnd());
+			long diff = d1.getTime() - d2.getTime();
+			long hour = diff/(1000* 60 * 60);
+			hours = Integer.parseInt(Long.toString(hour));
+			serviceTime.setText(Long.toString(hour)+"小时");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		tv_all.setText(all + "元");
-		tv_mile.setText(mile + "公里");
+		int serviceMile = (int) noteInfo.getServiceKMs();
+		int serviceHour = (int) noteInfo.getServiceTime();
+		if(serviceMile<totalMile){
+			extraMile.setText((totalMile - serviceMile)+"公里" );
+		}
+		if(hours > serviceHour){
+			extraTime.setText((hours - serviceHour)+"小时");
+		}
+		tv_base.setText(noteInfo.getFeeChoice()+"元");
+		tv_road.setText(noteInfo.getFeeBridge()+"元");
+//		tv_parking.setText(text);
+		tv_meals.setText(noteInfo.getFeeLunch()+"元");
+		tv_hotel.setText(noteInfo.getFeeHotel()+"元");
+		tv_other.setText(noteInfo.getFeeOther()+"元");
+//		extraMile
+		tv_all.setText(noteInfo.getFeeTotal()+"元");
+		tv_dateLast.setText(curDate);
 	}
 
 	private void findView() {
 		print_confirm = (TextView) findViewById(R.id.print_confirm);
+		tv_base = (TextView) findViewById(R.id.tv_base);
 		tv_road = (TextView) findViewById(R.id.tv_road_print);
 		tv_parking = (TextView) findViewById(R.id.tv_parking_print);
 		tv_meals = (TextView) findViewById(R.id.tv_meals_print);
+		tv_hotel = (TextView) findViewById(R.id.tv_hotel_print);
 		tv_other = (TextView) findViewById(R.id.tv_other_print);
-		tv_mile = (TextView) findViewById(R.id.tv_mile_print);
 		tv_all = (TextView) findViewById(R.id.tv_all_print);
+		serviceMile = (TextView) findViewById(R.id.print_serviceMile);
+		serviceTime = (TextView) findViewById(R.id.print_serviceTime);
+		date = (TextView) findViewById(R.id.print_date);
+		time = (TextView) findViewById(R.id.print_time);
+		type = (TextView) findViewById(R.id.print_type);
+		name = (TextView) findViewById(R.id.print_name);
+		location = (TextView) findViewById(R.id.print_location);
+		destination = (TextView) findViewById(R.id.print_destination);
+		extraMile = (TextView) findViewById(R.id.print_extraMile);
+		extraTime = (TextView) findViewById(R.id.print_extraTime);
+		tv_dateLast = (TextView) findViewById(R.id.print_date_last);
 	}
 }

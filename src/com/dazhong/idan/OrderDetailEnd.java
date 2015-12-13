@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.R.integer;
+import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -50,6 +51,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private TaskInfo taskInfo;
 	private int position;
 	
+	public static String NOTEKEY = "NOTEKEY";
+	public static String TASKKEY = "TASKKEY";
 	
 	public final static int REQUEST_CODE = 1;
 	
@@ -173,9 +176,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 //			break;
 		case R.id.tv_print:
 			Intent intent3 = new Intent();
-			intent3.putExtra("MYKEY", mBundle);
-			intent3.putExtra("MILE", mileInt);
-			intent3.putExtra("ALL", all);
+			intent3.putExtra(NOTEKEY, noteInfo);
+			intent3.putExtra(TASKKEY, position);
 			intent3.setClass(getApplicationContext(), PrintActivity.class);
 			startActivity(intent3);
 			break;
@@ -225,25 +227,31 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					if (!road.equals("")) {
 						all = Integer.parseInt(road);
 						tv_road.setText(road + "Ԫ");
+						noteInfo.setFeeBridge(Double.valueOf(road));
 					}
 					if (!meals.equals("")) {
 						all += Integer.parseInt(meals);
 						tv_meals.setText(meals + "Ԫ");
+						noteInfo.setFeeLunch(Double.valueOf(meals));
 					}
 					if (!parking.equals("")) {
 						all += Integer.parseInt(parking);
 						tv_parking.setText(parking + "Ԫ");
+//						noteInfo.setf
 					}
 					if (!other.equals("")) {
 						all += Integer.parseInt(other);
 						tv_other.setText(other + "Ԫ");
+						noteInfo.setFeeOther(Double.valueOf(other));
 					}
 					if (!hotel.equals("")) {
 						all += Integer.parseInt(hotel);
 						tv_hotel.setText(hotel + "Ԫ");
+						noteInfo.setFeeHotel(Double.valueOf(hotel));
 					}
 					all = (int) (all+noteInfo.getFeePrice());
 					tv_all.setText(all + "Ԫ");
+					noteInfo.setFeeTotal(all);
 					this.all = all;
 				}
 			}
