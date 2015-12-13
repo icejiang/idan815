@@ -15,7 +15,7 @@ public abstract class getInfoValue {
 		try {
 			String sInfo = getDZService.getServiceConnect(userid, taskid, "0",
 					"SetLockDispatch");
-			System.out.println(sInfo);
+//			System.out.println(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,7 +31,7 @@ public abstract class getInfoValue {
 		try {
 			String sInfo = getDZService.getServiceConnect(userid, taskid, "1",
 					"SetLockDispatch");
-			System.out.println(sInfo);
+//			System.out.println(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public abstract class getInfoValue {
 		try {
 			String sInfo = getDZService.getServiceConnect(userid, taskid,
 					"SetReadDispatch");
-			System.out.println(sInfo);
+//			System.out.println(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,18 +67,18 @@ public abstract class getInfoValue {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		String sf = sdf.format(now);
-		System.out.println(sf);
+//		System.out.println(sf);
 		try {
 			sInfo = getDZService.getServiceConnect(employeeid, sf, "1",
 					"GetDispatchInfo");
-			System.out.println(sInfo);
+//			System.out.println(sInfo);
 			if (sInfo == null)
 				return null;
 			listInfo = getDZService.getInfoValue(sInfo);
 			if (listInfo == null)
 				return null;
 			listTasks = new ArrayList<TaskInfo>();
-			System.out.println("info count:" + listInfo.size());
+//			System.out.println("info count:" + listInfo.size());
 			for (String sinf : listInfo) {
 				taskinfo = new TaskInfo();
 				taskinfo.setBookman(getDZService.getInfoValue(sinf, "Order"));
@@ -164,10 +164,10 @@ public abstract class getInfoValue {
 						.getInfoValue(sinf, "BalanceTypeName"));
 				taskinfo.setBalancetypename(getDZService.getInfoValue(sinf,
 						"BalanceTypeName"));
-				System.out.println(taskinfo.toString());
+//				System.out.println(taskinfo.toString());
 				listTasks.add(taskinfo);
 			}
-			System.out.println("task count:" + listTasks.size());
+//			System.out.println("task count:" + listTasks.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

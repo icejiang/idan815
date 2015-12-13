@@ -44,7 +44,6 @@ import android.widget.Toast;
  */
 public class BlueToothManage extends Activity {
 	private BlueToothService mBTService = null;
-	private String tag = "MainActivity";
 	private static final int REQUEST_EX = 1;
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
@@ -333,7 +332,7 @@ public class BlueToothManage extends Activity {
 						2000).show();
 				mBTService.DisConnected();
 				mBTService.ConnectToDevice(address);
-
+//				MainActivity.stateInfo.setPrinterName(info.substring(1,16));
 			}
 		});
 
@@ -507,6 +506,6 @@ public class BlueToothManage extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.exit(0);
+		BlueToothManage.this.finish();
 	}
 }

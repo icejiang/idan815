@@ -26,6 +26,7 @@ public class MainActivity extends Activity{
 	public static String USERNAME="";//用户名称
 	public static String WORKNUMBER="";//工号
 	public static String EMPLOYEEID="";//系统代码
+	public static StateInfo stateInfo=null;//状态管理
 	//************************************************
 	public static List<TaskInfo> tasklist=null;
 	public static String POSITION = "POSITON";

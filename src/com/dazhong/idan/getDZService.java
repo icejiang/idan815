@@ -27,18 +27,18 @@ public abstract class getDZService {
 	}
 
 	public static String getInfoValue(String sInfo, String sValue) {
-		String sInf=null;
-		String sBegin=null;
-		String sEnd=null;
+		String sInf = null;
+		String sBegin = null;
+		String sEnd = null;
 		if (sInfo == null || sValue == null
 				|| sInfo.length() < 2 * sValue.length() - 1)
 			return null;
 		sBegin = "<" + sValue + ">";
 		sEnd = "</" + sValue + ">";
-		sInf=sInfo.substring(sInfo.indexOf(sBegin) + sBegin.length(),
+		sInf = sInfo.substring(sInfo.indexOf(sBegin) + sBegin.length(),
 				sInfo.indexOf(sEnd));
-		if(sInf==null || sInf.length()==0)
-			sInf="";
+		if (sInf == null || sInf.length() == 0)
+			sInf = "";
 		return sInf;
 	}
 
@@ -50,21 +50,17 @@ public abstract class getDZService {
 			String sBegin = "<Root>";
 			String sEnd = "</Root>";
 			String sInfo1 = null;
-			int i = 0;
+			String[] sSplit = sInfo.split(sEnd);
 			listValues = new ArrayList<String>();
-			while (i < sInfo.length()) {
-				sInfo1 = null;
-				sInfo1 = sInfo.substring(
-						sInfo.indexOf(sBegin) + sBegin.length(),
-						sInfo.indexOf(sEnd));
-				System.out.println(sInfo1);
-				if (sInfo1 == null) {
-					System.out.println("read end");
-					break;
+			for (int i = 0; i < sSplit.length; i++) {
+				sInfo1 = sSplit[i];
+//				System.out.println(sInfo1);
+				if (sInfo1.indexOf(sBegin) !=-1) {
+					sInfo1 = sInfo1.substring(sInfo1.indexOf(sBegin)
+							+ sBegin.length());
+					listValues.add(sInfo1);
 				}
-				listValues.add(sInfo1);
-				i = i + sInfo1.length();
-				sInfo = sInfo.substring(sInfo.indexOf(sEnd) + sEnd.length());
+				sInfo1 = null;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -83,7 +79,7 @@ public abstract class getDZService {
 		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(5000);
+		conn.setConnectTimeout(9000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -105,7 +101,7 @@ public abstract class getDZService {
 		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(5000);
+		conn.setConnectTimeout(9000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -126,7 +122,7 @@ public abstract class getDZService {
 		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(5000);
+		conn.setConnectTimeout(9000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -145,7 +141,7 @@ public abstract class getDZService {
 		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(5000);
+		conn.setConnectTimeout(9000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -166,7 +162,7 @@ public abstract class getDZService {
 		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(5000);
+		conn.setConnectTimeout(9000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -185,7 +181,7 @@ public abstract class getDZService {
 		String path = MainActivity.SERVICEADRRESS;
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(5000);
+		conn.setConnectTimeout(9000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
