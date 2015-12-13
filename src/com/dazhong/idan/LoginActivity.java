@@ -52,6 +52,7 @@ public class LoginActivity extends Activity {
 			MainActivity.WORKNUMBER = stateinfo.getCurrentPerson().getWorkNum();
 			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
 					.getPersonID();
+			MainActivity.stateInfo=stateinfo;
 			System.out.println(stateinfo.getCurrentPerson().toString());
 			try {
 				MainActivity.tasklist=	getInfoValue.getTasks(stateinfo.getCurrentPerson().getPersonID());

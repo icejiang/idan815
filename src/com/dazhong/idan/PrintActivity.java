@@ -132,7 +132,7 @@ public class PrintActivity extends Activity {
 				devices = mBTService.GetBondedDevice();
 				if (devices.size() > 0) {
 					for (BluetoothDevice device : devices) {
-						if (device.getName().equals("DL58"))
+						if (device.getName().equals(MainActivity.stateInfo.getPrinterName()))
 							connAddress = device.getAddress();
 					}
 					mBTService.DisConnected();

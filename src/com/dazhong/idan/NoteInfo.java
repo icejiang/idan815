@@ -11,6 +11,9 @@ public class NoteInfo implements Serializable {
 	 * 
 	 */
 	// private static final long serialVersionUID = 1L;
+	/**
+	 * 路单日期
+	 * */
 	private String NoteDate;
 	/**
 	 * 车辆代码

@@ -44,7 +44,9 @@ public class StateInfo implements Serializable {
 	private String EndKMsOfToday;
 	// 当前登录的状态，true 登录状态，false 登出状态
 	private boolean CurrentLogin;
-
+	//打印机名称
+	private String PrinterName;
+	
 	/**获取当前登录状态
 	 * */
 	public boolean isCurrentLogin() {
@@ -276,4 +278,19 @@ public class StateInfo implements Serializable {
 		EndKMsOfToday = endKMsOfToday;
 	}
 
+	/**
+	 * 取得蓝牙打印机名称
+	 * */
+	public String getPrinterName() {
+		return PrinterName;
+	}
+
+	/**
+	 * 设置打印机名称
+	 * */
+	public void setPrinterName(String printerName) {
+		PrinterName = printerName;
+	}
+
+	
 }
