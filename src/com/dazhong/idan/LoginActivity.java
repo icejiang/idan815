@@ -56,70 +56,100 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(getApplicationContext(), MainActivity.class);
-				startActivity(intent);
+//				Intent intent = new Intent();
+//				intent.setClass(getApplicationContext(), MainActivity.class);
+//				startActivity(intent);
+				if (getInfoValue.getLogin("15821151093", "1234abcd"))
+					// textView.setText(MainActivity.USERNAME);
+					{
+//						PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
+//								MainActivity.WORKNUMBER, MainActivity.USERNAME);
+					
+					PersonInfo personinfo = new PersonInfo(iDanApp.getInstance().getEMPLOYEEID(),
+							iDanApp.getInstance().getWORKNUMBER(), iDanApp.getInstance().getUSERNAME());
+						textView.setText(personinfo.toString());
+						stateinfo = new StateInfo();
+						stateinfo.setToday("2015-12-05");
+						stateinfo.setPageOfNoteHistory(1);
+						stateinfo.setPageOfTask(1);
+						stateinfo.setTimeInCar("08:12");
+						stateinfo.setTimeOffCar("19:25");
+						stateinfo.setBeginKMsOfToday("2135");
+						stateinfo.setEndKMsOfToday("2236");
+						stateinfo.setCurrentKMS("2236");
+						stateinfo.setCurrentPerson(personinfo);
+						stateinfo.setCurrentState(1);
+						stateinfo.setCurrentNote(null);
+						stateinfo.setCurrentLogin(true);
+						// update state sample
+						// getStateInfo gs = new getStateInfo(getApplicationContext());
+						getStateInfo gs = getStateInfo
+								.getInstance(getApplicationContext());
+						gs.setStateinfo(stateinfo);
+					} else
+						textView.setText("no info");
+				LoginActivity.this.finish();
 			}
 		});
 
-		if (getStateRec()) {
-			// set static values
-			MainActivity.USERNAME = stateinfo.getCurrentPerson().getName();
-			MainActivity.WORKNUMBER = stateinfo.getCurrentPerson().getWorkNum();
-			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
-					.getPersonID();
-			MainActivity.stateInfo=stateinfo;
-			try {
-				MainActivity.tasklist=	getInfoValue.getTasks(stateinfo.getCurrentPerson().getPersonID());
-//				System.out.println("davis say "+MainActivity.tasklist.size());
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Intent intent;
-			// 登陆后，选择显示页面
-//			switch (88) {
-			switch (stateinfo.getCurrentState()) {
-			case 101:
-			case 0:
-			case 1:
-			// direct to main for
-				intent = new Intent();
-				intent.setClass(getApplicationContext(), MainActivity.class);
-				startActivity(intent);
-				break;
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 11:
-				intent = new Intent();
-				intent.setClass(getApplicationContext(), OrderDetail.class);
-				startActivity(intent);
-				break;
-			case 12:
-				intent = new Intent();
-				intent.setClass(getApplicationContext(), OrderDetail.class);
-				startActivity(intent);
-				break;
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-			case 18:
-				intent = new Intent();
-				intent.setClass(getApplicationContext(), PrintActivity.class);
-				startActivity(intent);
-				break;
-			default:
-				Toast.makeText(getApplicationContext(), R.string.error, 6000)
-						.show();
-				break;
-			}
+//		if (getStateRec()) {
+//			// set static values
+//			MainActivity.USERNAME = stateinfo.getCurrentPerson().getName();
+//			MainActivity.WORKNUMBER = stateinfo.getCurrentPerson().getWorkNum();
+//			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
+//					.getPersonID();
+//			MainActivity.stateInfo=stateinfo;
+//			try {
+//				MainActivity.tasklist=	getInfoValue.getTasks(stateinfo.getCurrentPerson().getPersonID());
+////				System.out.println("davis say "+MainActivity.tasklist.size());
+//				
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			Intent intent;
+//			// 登陆后，选择显示页面
+////			switch (88) {
+//			switch (stateinfo.getCurrentState()) {
+//			case 101:
+//			case 0:
+//			case 1:
+//			// direct to main for
+//				intent = new Intent();
+//				intent.setClass(getApplicationContext(), MainActivity.class);
+//				startActivity(intent);
+//				break;
+//			case 2:
+//			case 3:
+//			case 4:
+//			case 5:
+//			case 11:
+//				intent = new Intent();
+//				intent.setClass(getApplicationContext(), OrderDetail.class);
+//				startActivity(intent);
+//				break;
+//			case 12:
+//				intent = new Intent();
+//				intent.setClass(getApplicationContext(), OrderDetail.class);
+//				startActivity(intent);
+//				break;
+//			case 13:
+//			case 14:
+//			case 15:
+//			case 16:
+//			case 17:
+//			case 18:
+//				intent = new Intent();
+//				intent.setClass(getApplicationContext(), PrintActivity.class);
+//				startActivity(intent);
+//				break;
+//			default:
+//				Toast.makeText(getApplicationContext(), R.string.error, 6000)
+//						.show();
+//				break;
+//			}
 
-		}
+//		}
 	}
 
 	@Override
@@ -129,53 +159,53 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
-	private boolean getStateRec() {
-		try {
-			// get state sample
-			// getStateInfo gs = new getStateInfo(getApplicationContext());
-			stateinfo = getStateInfo.getInstance(getApplicationContext())
-					.getStateinfo();
-			System.out.println(stateinfo.toString());
-			if (stateinfo == null)
-				return false;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
+//	private boolean getStateRec() {
+//		try {
+//			// get state sample
+//			// getStateInfo gs = new getStateInfo(getApplicationContext());
+//			stateinfo = getStateInfo.getInstance(getApplicationContext())
+//					.getStateinfo();
+//			System.out.println(stateinfo.toString());
+//			if (stateinfo == null)
+//				return false;
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
+//		return true;
+//	}
 
 	// show test
 	public void showTest(View v) {
 		try {
 //			 init state,user first login
-			if (getInfoValue.getLogin("15821151093", "1234abcd"))
-			// textView.setText(MainActivity.USERNAME);
-			{
-				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
-						MainActivity.WORKNUMBER, MainActivity.USERNAME);
-				textView.setText(personinfo.toString());
-				stateinfo = new StateInfo();
-				stateinfo.setToday("2015-12-05");
-				stateinfo.setPageOfNoteHistory(1);
-				stateinfo.setPageOfTask(1);
-				stateinfo.setTimeInCar("08:12");
-				stateinfo.setTimeOffCar("19:25");
-				stateinfo.setBeginKMsOfToday("2135");
-				stateinfo.setEndKMsOfToday("2236");
-				stateinfo.setCurrentKMS("2236");
-				stateinfo.setCurrentPerson(personinfo);
-				stateinfo.setCurrentState(1);
-				stateinfo.setCurrentNote(null);
-				stateinfo.setCurrentLogin(true);
-				// update state sample
-				// getStateInfo gs = new getStateInfo(getApplicationContext());
-				getStateInfo gs = getStateInfo
-						.getInstance(getApplicationContext());
-				gs.setStateinfo(stateinfo);
-			} else
-				textView.setText("no info");
+//			if (getInfoValue.getLogin("15821151093", "1234abcd"))
+//			// textView.setText(MainActivity.USERNAME);
+//			{
+//				PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
+//						MainActivity.WORKNUMBER, MainActivity.USERNAME);
+//				textView.setText(personinfo.toString());
+//				stateinfo = new StateInfo();
+//				stateinfo.setToday("2015-12-05");
+//				stateinfo.setPageOfNoteHistory(1);
+//				stateinfo.setPageOfTask(1);
+//				stateinfo.setTimeInCar("08:12");
+//				stateinfo.setTimeOffCar("19:25");
+//				stateinfo.setBeginKMsOfToday("2135");
+//				stateinfo.setEndKMsOfToday("2236");
+//				stateinfo.setCurrentKMS("2236");
+//				stateinfo.setCurrentPerson(personinfo);
+//				stateinfo.setCurrentState(1);
+//				stateinfo.setCurrentNote(null);
+//				stateinfo.setCurrentLogin(true);
+//				// update state sample
+//				// getStateInfo gs = new getStateInfo(getApplicationContext());
+//				getStateInfo gs = getStateInfo
+//						.getInstance(getApplicationContext());
+//				gs.setStateinfo(stateinfo);
+//			} else
+//				textView.setText("no info");
 //if(getInfoValue.ServiceDoing("147889", "2"))
 //	textView.setText("service doing remark");
 //			if(getInfoValue.setTaskRead("147889", "2")){

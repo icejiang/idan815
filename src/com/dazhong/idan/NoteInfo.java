@@ -32,41 +32,45 @@ public class NoteInfo implements Serializable {
 	 */
 	private String DriverName;
 	/**
+	 * 停车费
+	 * */
+	private double FeePark = 0;
+	/**
 	 * 路桥费
 	 */
-	private double FeeBridge=0;
+	private double FeeBridge = 0;
 	/**
 	 * 住宿费
 	 */
-	private double FeeHotel=0;
+	private double FeeHotel = 0;
 	/**
 	 * 餐费
 	 */
-	private double FeeLunch=0;
+	private double FeeLunch = 0;
 	/**
 	 * 其它费用
 	 */
-	private double FeeOther=0;
+	private double FeeOther = 0;
 	/**
 	 * 超里程费
 	 */
-	private double FeeOverKMs=0;
+	private double FeeOverKMs = 0;
 	/**
 	 * 超时间费
 	 */
-	private double FeeOverTime=0;
+	private double FeeOverTime = 0;
 	/**
 	 * 销售报价
 	 */
-	private double FeePrice=0;
+	private double FeePrice = 0;
 	/**
 	 * 总金额
 	 */
-	private double FeeTotal=0;
+	private double FeeTotal = 0;
 	/**
 	 * 下车地址
 	 */
-	private String LeaveAddress="";
+	private String LeaveAddress = "";
 	/**
 	 * 路单编号
 	 */
@@ -74,7 +78,7 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 上车地址
 	 */
-	private String OnBoardAddress="";
+	private String OnBoardAddress = "";
 	/**
 	 * 调度单号
 	 */
@@ -90,47 +94,47 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 服务开始时间
 	 */
-	private String ServiceBegin="";
+	private String ServiceBegin = "";
 	/**
 	 * 服务结束时间
 	 */
-	private String ServiceEnd="";
+	private String ServiceEnd = "";
 	/**
 	 * 服务里程
 	 */
-	private double ServiceKMs=0;
+	private double ServiceKMs = 0;
 	/**
 	 * 服务时间
 	 */
-	private double ServiceTime=0;
+	private double ServiceTime = 0;
 	/**
 	 * 超公里
 	 * */
-	private int OverKMs=0;
+	private int OverKMs = 0;
 	/**
 	 * 超小时
 	 * */
-	private int OverHours=0; // 超15分钟算一个小时
-	/** 
-	 * 收费选择 
+	private int OverHours = 0; // 超15分钟算一个小时
+	/**
+	 * 收费选择
 	 * */
 	private int FeeChoice;
-	/** 
+	/**
 	 * 服务轨迹
-	 *  */
-	private String ServiceRoute="";
-	/** 
+	 * */
+	private String ServiceRoute = "";
+	/**
 	 * 结算的超公里或超小时的费用
-	 *  */
-	private double FeeOverCal=0;
+	 * */
+	private double FeeOverCal = 0;
 	/**
 	 * 客人的公司名称
 	 * */
-	private String CustomerCompany="";
+	private String CustomerCompany = "";
 	/**
 	 * 客人名称
 	 * */
-	private String CustomerName="";
+	private String CustomerName = "";
 
 	public String getNoteDate() {
 		return NoteDate;
@@ -355,7 +359,6 @@ public class NoteInfo implements Serializable {
 	public void setServiceTime(double serviceTime) {
 		ServiceTime = serviceTime;
 	}
-	
 
 	public String getCustomerCompany() {
 		return CustomerCompany;
@@ -373,6 +376,14 @@ public class NoteInfo implements Serializable {
 		CustomerName = customerName;
 	}
 
+	public double getFeePark() {
+		return FeePark;
+	}
+
+	public void setFeePark(double feePark) {
+		FeePark = feePark;
+	}
+
 	public NoteInfo() {
 
 	}
@@ -384,8 +395,9 @@ public class NoteInfo implements Serializable {
 			String leaveAddress, String noteID, String onBoardAddress,
 			String planID, String routeBegin, String routeEnd,
 			String serviceBegin, String serviceEnd, double serviceKMs,
-			double serviceTime, int overKMs, int overHours,int feeChoice,
-			double feeOverCal,String serviceRoute,String customerCompany,String customerName) {
+			double serviceTime, int overKMs, int overHours, int feeChoice,
+			double feeOverCal, String serviceRoute, String customerCompany,
+			String customerName, double feePark) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -411,16 +423,18 @@ public class NoteInfo implements Serializable {
 		ServiceTime = serviceTime;
 		OverKMs = overKMs;
 		OverHours = overHours;
-		FeeChoice=feeChoice;
-		FeeOverCal=feeOverCal;
-		ServiceRoute=serviceRoute;
-		CustomerCompany=customerCompany;
-		CustomerName=customerName;
+		FeeChoice = feeChoice;
+		FeeOverCal = feeOverCal;
+		ServiceRoute = serviceRoute;
+		CustomerCompany = customerCompany;
+		CustomerName = customerName;
+		FeePark = feePark;
 	}
+
 	/**
 	 * 上传到服务器的格式
 	 * */
-	public String toUploadNote(){
+	public String toUploadNote() {
 		return "NoteInfo [" + NoteID + "," + PlanID + "," + CarID + ","
 				+ CarNumber + "," + DriverID + "," + DriverName + ","
 				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
@@ -429,8 +443,9 @@ public class NoteInfo implements Serializable {
 				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
 				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
 				+ ServiceKMs + "," + ServiceTime + "," + OverKMs + ","
-				+ OverHours+","+FeeChoice+","+FeeOverCal+","+ServiceRoute
-				+ "]";
+				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
+				+ ServiceRoute.replace(",", "$$") + "," 
+				+ FeePark + "]";
 	}
 
 	@Override
@@ -443,8 +458,9 @@ public class NoteInfo implements Serializable {
 				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
 				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
 				+ ServiceKMs + "," + ServiceTime + "," + OverKMs + ","
-				+ OverHours+","+FeeChoice+","+FeeOverCal+","+ServiceRoute+","
-				+CustomerCompany+","+CustomerName
+				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
+				+ ServiceRoute + "," + CustomerCompany + ","
+				+ CustomerName+","+FeePark
 				+ "]";
 	}
 

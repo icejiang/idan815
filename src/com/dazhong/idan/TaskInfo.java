@@ -46,6 +46,19 @@ public class TaskInfo {
 	private String salepricecalname;
 	private String balancetype;
 	private String balancetypename;
+	private boolean done=false;
+	/**
+	 * 是否已完成
+	 * */
+	public boolean isDone() {
+		return done;
+	}
+	/**
+	 * 设置完成，false 未做，true 已做
+	 * */
+	public void setDone(boolean done) {
+		this.done = done;
+	}
 	/**
 	 * 结算方式
 	 * */
@@ -591,7 +604,7 @@ public class TaskInfo {
 				+ "," + servicetypename + ","
 				+ taskcode + "," + taskid + ","
 				+ taskcontract +","+Readmark+","+salepricecal+","+salepricecalname
-				+balancetype+","+balancetypename
+				+balancetype+","+balancetypename+","+done
 				+ "]";
 	}
 

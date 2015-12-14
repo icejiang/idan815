@@ -211,12 +211,18 @@ public abstract class getInfoValue {
 			if (i < 0) {
 				return false;
 			}
-			MainActivity.USERNAME = getDZService.getInfoValue(sInfo,
-					"DriverName");
-			MainActivity.EMPLOYEEID = getDZService.getInfoValue(sInfo,
-					"EmployeeID");
-			MainActivity.WORKNUMBER = getDZService.getInfoValue(sInfo,
-					"WorkCardNo");
+//			MainActivity.USERNAME = getDZService.getInfoValue(sInfo,
+//					"DriverName");
+			iDanApp.getInstance().setUSERNAME(getDZService.getInfoValue(sInfo,
+					"DriverName"));
+//			MainActivity.EMPLOYEEID = getDZService.getInfoValue(sInfo,
+//					"EmployeeID");
+			iDanApp.getInstance().setEMPLOYEEID(getDZService.getInfoValue(sInfo,
+					"EmployeeID"));
+//			MainActivity.WORKNUMBER = getDZService.getInfoValue(sInfo,
+//					"WorkCardNo");
+			iDanApp.getInstance().setWORKNUMBER(getDZService.getInfoValue(sInfo,
+					"WorkCardNo"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

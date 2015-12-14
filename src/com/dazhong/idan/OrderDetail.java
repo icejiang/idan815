@@ -59,7 +59,7 @@ public class OrderDetail extends Activity {
 		setContentView(R.layout.order_detail);
 		ActivityControler.addActivity(this);
 		position = getIntent().getIntExtra(MainActivity.POSITION, 0);
-		taskInfo = MainActivity.tasklist.get(position);
+		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		findview();
 		setData();
 		btn_start = (Button) findViewById(R.id.btn_start);

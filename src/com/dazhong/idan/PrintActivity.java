@@ -66,7 +66,7 @@ public class PrintActivity extends Activity {
 		Intent intent = getIntent();
 		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
 		position = intent.getIntExtra("TYPE",0);
-		taskInfo = MainActivity.tasklist.get(position);
+		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		
 		findView();
 		setData();
@@ -170,7 +170,7 @@ public class PrintActivity extends Activity {
 				devices = mBTService.GetBondedDevice();
 				if (devices.size() > 0) {
 					for (BluetoothDevice device : devices) {
-						if (device.getName().equals(MainActivity.stateInfo.getPrinterName()))
+						if (device.getName().equals(iDanApp.getInstance().getStateInfo().getPrinterName()))
 							connAddress = device.getAddress();
 					}
 					mBTService.DisConnected();
@@ -229,7 +229,7 @@ public class PrintActivity extends Activity {
 		String messages = null;
 		try {
 			String mes = "\r\n\r\n";
-			 NoteInfo note = MainActivity.stateInfo.getCurrentNote();
+			 NoteInfo note = iDanApp.getInstance().getStateInfo().getCurrentNote();
 			//在此调整数据格式，将实际的路单信息传入
 //			NoteInfo note = new NoteInfo();
 //			note.setCarNumber("沪BZ8911");

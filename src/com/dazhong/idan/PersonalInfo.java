@@ -20,7 +20,8 @@ public class PersonalInfo extends Activity{
 		
 		findView();
 		try {
-			PersonInfo personInfo = getInfoValue.getPersonInfo(MainActivity.EMPLOYEEID);
+//			PersonInfo personInfo = getInfoValue.getPersonInfo(MainActivity.EMPLOYEEID);
+			PersonInfo personInfo = getInfoValue.getPersonInfo(iDanApp.getInstance().getEMPLOYEEID());
 //			PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
 //					MainActivity.WORKNUMBER, MainActivity.USERNAME);
 			name.setText(personInfo.getName());

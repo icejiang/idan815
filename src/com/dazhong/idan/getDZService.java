@@ -76,7 +76,8 @@ public abstract class getDZService {
 		soap = soap.replaceAll("\\$mobile2", mobile2);
 		soap = soap.replaceAll("\\$mobile3", mobile3);
 		byte[] entity = soap.getBytes("utf-8");
-		String path = MainActivity.SERVICEADRRESS;
+//		String path = MainActivity.SERVICEADRRESS;
+		String path =iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(9000);
@@ -98,7 +99,7 @@ public abstract class getDZService {
 		soap = soap.replaceAll("\\$mobile1", mobile1);
 		soap = soap.replaceAll("\\$mobile2", mobile2);
 		byte[] entity = soap.getBytes("utf-8");
-		String path = MainActivity.SERVICEADRRESS;
+		String path =iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(9000);
@@ -119,7 +120,7 @@ public abstract class getDZService {
 		String soap = readSoap(sCode);
 		soap = soap.replaceAll("\\$mobile", mobile);
 		byte[] entity = soap.getBytes("utf-8");
-		String path = MainActivity.SERVICEADRRESS;
+		String path = iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(9000);
@@ -138,7 +139,7 @@ public abstract class getDZService {
 	public static String getServiceConnect(String sCode) throws Exception {
 		String soap = readSoap(sCode);
 		byte[] entity = soap.getBytes("utf-8");
-		String path = MainActivity.SERVICEADRRESS;
+		String path = iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(9000);
@@ -159,7 +160,7 @@ public abstract class getDZService {
 		String soap = readSoap(sCode);
 		soap = soap.replaceAll("\\$mobile", mobile);
 		byte[] entity = soap.getBytes("utf-8");
-		String path = MainActivity.SERVICEADRRESS;
+		String path =iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(9000);
@@ -178,7 +179,7 @@ public abstract class getDZService {
 	public static String getAddress(String sCode) throws Exception {
 		String soap = readSoap(sCode);
 		byte[] entity = soap.getBytes("utf-8");
-		String path = MainActivity.SERVICEADRRESS;
+		String path = iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
 		conn.setConnectTimeout(9000);

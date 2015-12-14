@@ -48,7 +48,7 @@ public class InService extends Activity {
 		Intent intent = getIntent();
 		position = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
 		input_start = intent.getStringExtra("input_start");
-		taskInfo = MainActivity.tasklist.get(position);
+		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		noteInfo = new NoteInfo();
 //		noteInfo = (NoteInfo) intent.getSerializableExtra(OrderDetail.INPUT_KEY);
 		findView();
