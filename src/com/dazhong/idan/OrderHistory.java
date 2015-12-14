@@ -26,7 +26,7 @@ public class OrderHistory extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.order_history);
-		
+		ActivityControler.addActivity(this);
 		mListView = (ListView) findViewById(R.id.listview_history);
 		addData();
 		MyAdapter mAdapter = new MyAdapter(this);

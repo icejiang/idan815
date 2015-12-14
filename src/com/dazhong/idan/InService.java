@@ -44,7 +44,7 @@ public class InService extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.in_service);
-		
+		ActivityControler.addActivity(this);
 		Intent intent = getIntent();
 		position = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
 		input_start = intent.getStringExtra("input_start");

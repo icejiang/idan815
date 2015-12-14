@@ -46,6 +46,7 @@ public class LoginActivity extends Activity {
 //		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		ActivityControler.addActivity(this);
 //		UpdateManager mUpdateManager = new UpdateManager(LoginActivity.this);
 //		// 注意此处不能传入getApplicationContext();会报错，因为只有是一个Activity才可以添加窗体
 //		mUpdateManager.checkUpdateInfo();
