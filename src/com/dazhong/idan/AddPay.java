@@ -28,7 +28,7 @@ public class AddPay extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_pay);
-		
+		ActivityControler.addActivity(this);
 		findView();
 		
 		bt_save.setOnClickListener(new OnClickListener() {

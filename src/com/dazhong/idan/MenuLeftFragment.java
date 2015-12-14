@@ -58,6 +58,9 @@ public class MenuLeftFragment extends LinearLayout{
 					intent3.setClass(mContext, PasswordAlter.class);
 					mContext.startActivity(intent3);
 					break;
+				case 3:
+					ActivityControler.finishAll();
+					break;
 				default:
 					break;
 				}

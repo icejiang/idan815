@@ -39,6 +39,7 @@ public class MainActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.business_list);
+		ActivityControler.addActivity(this);
 		findView();
 		tv_name.setText(USERNAME);
 		MyAdapter mAdapter = new MyAdapter(this);

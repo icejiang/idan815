@@ -57,7 +57,7 @@ public class OrderDetail extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.order_detail);
-		
+		ActivityControler.addActivity(this);
 		position = getIntent().getIntExtra(MainActivity.POSITION, 0);
 		taskInfo = MainActivity.tasklist.get(position);
 		findview();

@@ -62,6 +62,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.route_note);
+		ActivityControler.addActivity(this);
 		findView();
 		Intent intent = getIntent();
 		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);

@@ -11,7 +11,7 @@ public class PasswordAlter extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.password_alter);
-		
+		ActivityControler.addActivity(this);
 	}
 	
 }

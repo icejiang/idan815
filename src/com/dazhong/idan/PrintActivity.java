@@ -63,13 +63,13 @@ public class PrintActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.printf);
 
-		findView();
-		setData();
-		
 		Intent intent = getIntent();
 		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
 		position = intent.getIntExtra("TYPE",0);
 		taskInfo = MainActivity.tasklist.get(position);
+		
+		findView();
+		setData();
 		
 		print_confirm.setOnClickListener(new OnClickListener() {
 
@@ -308,7 +308,7 @@ public class PrintActivity extends Activity {
 				"yyyy-MM-dd");
 		String curDate = sDateFormat.format(new Date(System.currentTimeMillis()));
 		date.setText(curDate);
-		time.setText(noteInfo.getServiceBegin()+"-"+noteInfo.getServiceEnd());
+//		time.setText(noteInfo.getServiceBegin()+"-"+noteInfo.getServiceEnd());
 		type.setText(taskInfo.ServiceTypeName());
 		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
 		serviceMile.setText(totalMile+"¹«Àï");
