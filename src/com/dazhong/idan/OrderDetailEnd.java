@@ -67,7 +67,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
 		position = intent.getIntExtra("TYPE",0);
-		taskInfo = MainActivity.tasklist.get(position);
+		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		setView();
 		tv_addPay.setOnClickListener(this);
 		tv_print.setOnClickListener(this);

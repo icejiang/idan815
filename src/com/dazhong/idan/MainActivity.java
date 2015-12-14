@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,38 +20,77 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity{
-	//系统接口地址
-	public static String SERVICEADRRESS="http://192.168.75.200:8084/DriverService.asmx";
-	public static String USERNAME="";//用户名称
-	public static String WORKNUMBER="";//工号
-	public static String EMPLOYEEID="";//系统代码
-	public static StateInfo stateInfo=null;//状态管理
-	//************************************************
-	public static List<TaskInfo> tasklist=null;
+public class MainActivity extends Activity {
+	// 系统接口地址
+//	public static String SERVICEADRRESS = "http://192.168.75.200:8084/DriverService.asmx";
+//	public static String USERNAME = "";// 用户名称
+//	public static String WORKNUMBER = "";// 工号
+//	public static String EMPLOYEEID = "";// 系统代码
+//	public static StateInfo stateInfo = null;// 状态管理
+	// ************************************************
 	public static String POSITION = "POSITON";
-	TaskInfo curTask = null;
+	private iDanApp idanapp;
+	private TaskInfo curTask = null;
 	private ListView mListView;
 	private TextView tv_name;
-	
+	private StateInfo stateinfo;
+	private List<TaskInfo> tasklist = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+				.detectDiskReads().detectDiskWrites().detectNetwork()
+				.penaltyLog().build());
+
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
+				.build());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.business_list);
+		idanapp =iDanApp.getInstance();
 		ActivityControler.addActivity(this);
+//System.out.println(idanapp.getSERVICEADRRESS());
+		if (getStateRec()) {
+			// set static values
+//			MainActivity.USERNAME = stateinfo.getCurrentPerson().getName();
+//			MainActivity.WORKNUMBER = stateinfo.getCurrentPerson().getWorkNum();
+//			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
+//					.getPersonID();
+//			MainActivity.stateInfo = stateinfo;
+			idanapp.setStateInfo(stateinfo);
+			idanapp.setUSERNAME(stateinfo.getCurrentPerson().getName());
+			idanapp.setWORKNUMBER(stateinfo.getCurrentPerson().getWorkNum());
+			idanapp.setEMPLOYEEID(stateinfo.getCurrentPerson().getPersonID());
+			
+			try {
+//				MainActivity.tasklist = getInfoValue.getTasks(stateinfo
+//						.getCurrentPerson().getPersonID());
+				idanapp.setTasklist(getInfoValue.getTasks(stateinfo
+						.getCurrentPerson().getPersonID()));
+				tasklist=idanapp.getTasklist();
+				// System.out.println("davis say "+MainActivity.tasklist.size());
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			PageJump();
+		}
+
 		findView();
-		tv_name.setText(USERNAME);
+		tv_name.setText(idanapp.getUSERNAME());
 		MyAdapter mAdapter = new MyAdapter(this);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-//				tasklist.get(position).setReadmark(0);
+				// tasklist.get(position).setReadmark(0);
 				curTask = tasklist.get(position);
+//				curTask=iDanApp.getInstance().getTasklist().get(position);
 				curTask.setReadmark(0);
 				Intent intent = new Intent();
 				intent.putExtra(POSITION, position);
@@ -73,93 +113,162 @@ public class MainActivity extends Activity{
 		 */
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.left_menu);
+
 	}
-	
-	
-	
-	private void findView(){
+
+	private void PageJump() {
+		Intent intent;
+		// 登陆后，选择显示页面
+		// switch (88) {
+		switch (stateinfo.getCurrentState()) {
+		case 101:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+			break;
+		case 0:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+			break;
+		case 1:
+			break;
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 11:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), OrderDetail.class);
+			startActivity(intent);
+			break;
+		case 12:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), OrderDetail.class);
+			startActivity(intent);
+			break;
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+		case 18:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), PrintActivity.class);
+			startActivity(intent);
+			break;
+		default:
+			Toast.makeText(getApplicationContext(), R.string.error, 6000)
+					.show();
+			break;
+		}
+	}
+
+	private boolean getStateRec() {
+		try {
+			// get state sample
+			// getStateInfo gs = new getStateInfo(getApplicationContext());
+			stateinfo = getStateInfo.getInstance(getApplicationContext())
+					.getStateinfo();
+			// System.out.println(stateinfo.toString());
+			if (stateinfo == null)
+				return false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private void findView() {
 		mListView = (ListView) findViewById(R.id.listView_main);
 		tv_name = (TextView) findViewById(R.id.tv_titleName);
 	}
-	
-	class MyAdapter extends BaseAdapter{
-		
+
+	class MyAdapter extends BaseAdapter {
+
 		private LayoutInflater mInflater = null;
 		private Context mContext;
-		
+
 		public MyAdapter(Context context) {
-			
+
 			this.mContext = context;
 			this.mInflater = LayoutInflater.from(context);
 		}
-		
+
 		@Override
 		public int getCount() {
-			
-			if(tasklist!=null){
+
+			if (tasklist != null) {
 				return tasklist.size();
 			} else {
 				return 0;
 			}
 		}
-		
+
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
 			return position;
 		}
-		
+
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
 			return position;
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
-			if(convertView == null){
+			if (convertView == null) {
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.order_item, null);
-				holder.date = (TextView) convertView.findViewById(R.id.item_date);
-				holder.location = (TextView) convertView.findViewById(R.id.item_location);
-				holder.name = (TextView) convertView.findViewById(R.id.item_name);
-				holder.nubmer = (TextView) convertView.findViewById(R.id.item_number);
-				holder.time = (TextView) convertView.findViewById(R.id.item_time);
-				holder.type = (TextView) convertView.findViewById(R.id.item_type);
+				holder.date = (TextView) convertView
+						.findViewById(R.id.item_date);
+				holder.location = (TextView) convertView
+						.findViewById(R.id.item_location);
+				holder.name = (TextView) convertView
+						.findViewById(R.id.item_name);
+				holder.nubmer = (TextView) convertView
+						.findViewById(R.id.item_number);
+				holder.time = (TextView) convertView
+						.findViewById(R.id.item_time);
+				holder.type = (TextView) convertView
+						.findViewById(R.id.item_type);
 				convertView.setTag(holder);
-			}else {
+			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			TaskInfo taskInfo = tasklist.get(position);
-			Log.i("jxb", "readMark = "+taskInfo.getReadmark());
+			Log.i("jxb", "readMark = " + taskInfo.getReadmark());
 			String ServiceDate = null;
 			String serviceBegin = taskInfo.ServiceBegin();
 			String serviceEnd = taskInfo.ServiceEnd();
-			if(serviceBegin.equals(serviceEnd)){
+			if (serviceBegin.equals(serviceEnd)) {
 				ServiceDate = serviceBegin;
 			} else {
-				ServiceDate = serviceBegin+"-"+serviceEnd;
+				ServiceDate = serviceBegin + "-" + serviceEnd;
 			}
 			holder.time.setText(taskInfo.OnboardTime());
 			holder.date.setText(ServiceDate);
 			holder.location.setText(taskInfo.PickupAddress());
 			holder.name.setText(taskInfo.Customer());
 			holder.nubmer.setText(taskInfo.CustomerTel());
-			holder.type.setText(taskInfo.ServiceTypeName()); 
-			
+			holder.type.setText(taskInfo.ServiceTypeName());
+
 			return convertView;
 		}
-		
-		
+
 	}
-	static class ViewHolder  
-	{  
-		public TextView time;  
-		public TextView date;  
-		public TextView type;  
-		public TextView name;  
-		public TextView nubmer;  
-		public TextView location;  
+
+	static class ViewHolder {
+		public TextView time;
+		public TextView date;
+		public TextView type;
+		public TextView name;
+		public TextView nubmer;
+		public TextView location;
 	}
 }
