@@ -124,13 +124,13 @@ public abstract class getInfoValue {
 						"DispatchManPhone"));
 				taskinfo.setSalehotelfee(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "OutFee")));
-				taskinfo.setSalekms(Double.parseDouble(getDZService
+				taskinfo.setSalekms(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "AvailableMile")));
 				taskinfo.setSaleprice(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "ActualRent")));
-				taskinfo.setSalepriceperkm(Double.parseDouble(getDZService
+				taskinfo.setSalepriceperkm(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "ExceedMileFee")));
-				taskinfo.setSalepriceperhour(Double.parseDouble(getDZService
+				taskinfo.setSalepriceperhour(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "ExceedTimeFee")));
 				taskinfo.setSalesman(getDZService.getInfoValue(sinf,
 						"EmployeeName"));
@@ -138,7 +138,7 @@ public abstract class getInfoValue {
 						"EmployeePhone"));
 				taskinfo.setSalesremark(getDZService.getInfoValue(sinf,
 						"BargainRemarks"));
-				taskinfo.setSaletime(Double.parseDouble(getDZService
+				taskinfo.setSaletime(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "AvailableTime")));
 				taskinfo.setServicebegin(getDZService.getInfoValue(sinf,
 						"StartDate"));

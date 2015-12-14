@@ -24,7 +24,7 @@ public class TaskInfo {
 	private String plannerremark;
 	private String plannertel;
 	private double salehotelfee;
-	private double salekms;
+	private int salekms;
 	private double salelunchfee;
 	private double saleotherfee;
 	private double saleprice;
@@ -33,7 +33,7 @@ public class TaskInfo {
 	private String salesman;
 	private String salestel;
 	private String salesremark;
-	private double saletime;
+	private int saletime;
 	private String servicebegin;
 	private String serviceend;
 	private int servicetype;
@@ -269,7 +269,7 @@ public class TaskInfo {
 	/**
 	 * 售卖的服务里程
 	 */
-	public double SaleKMs()
+	public int SaleKMs()
 	{
 		return salekms;
 	}
@@ -332,7 +332,7 @@ public class TaskInfo {
 	/**
 	 * 售卖的服务时间
 	 */
-	public double SaleTime()
+	public int SaleTime()
 	{
 		return saletime;
 	}
@@ -461,7 +461,7 @@ public class TaskInfo {
 	public void setSalehotelfee(double salehotelfee) {
 		this.salehotelfee = salehotelfee;
 	}
-	public void setSalekms(double salekms) {
+	public void setSalekms(int salekms) {
 		this.salekms = salekms;
 	}
 	public void setSalelunchfee(double salelunchfee) {
@@ -473,10 +473,10 @@ public class TaskInfo {
 	public void setSaleprice(double saleprice) {
 		this.saleprice = saleprice;
 	}
-	public void setSalepriceperkm(double salepriceperkm) {
+	public void setSalepriceperkm(int salepriceperkm) {
 		this.salepriceperkm = salepriceperkm;
 	}
-	public void setSalepriceperhour(double salepriceperhour) {
+	public void setSalepriceperhour(int salepriceperhour) {
 		this.salepriceperhour = salepriceperhour;
 	}
 	public void setSalesman(String salesman) {
@@ -488,7 +488,7 @@ public class TaskInfo {
 	public void setSalesremark(String salesremark) {
 		this.salesremark = salesremark;
 	}
-	public void setSaletime(double saletime) {
+	public void setSaletime(int saletime) {
 		this.saletime = saletime;
 	}
 	public void setServicebegin(String servicebegin) {
@@ -524,10 +524,10 @@ public class TaskInfo {
 			String frightout, String invoicetype, String invoicetypename,
 			String leaveaddress, int maxload, String onboardtime,
 			String pickupaddress, String planner, String plannerremark,
-			String plannertel, double salehotelfee, double salekms,
+			String plannertel, double salehotelfee, int salekms,
 			double salelunchfee, double saleotherfee, double saleprice,
 			double salepriceperkm, double salepriceperhour, String salesman,
-			String salestel, String salesremark, double saletime,
+			String salestel, String salesremark, int saletime,
 			String servicebegin, String serviceend, int servicetype,
 			String servicetypename, String taskcode, String taskid,
 			String taskcontract,int readmark,int salepricecal,String salepricecalname,
