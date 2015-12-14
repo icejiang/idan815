@@ -7,7 +7,8 @@ import android.app.Activity;
 import android.app.Application;
 
 public class iDanApp {
-	private String SERVICEADRRESS = "http://192.168.75.200:8084/DriverService.asmx";
+//	private String SERVICEADRRESS = "http://192.168.75.200:8084/DriverService.asmx";
+	private String SERVICEADRRESS = "http://www.dzzcgs.com:8099/DriverAppwebServiceRelease/DriverService.asmx";
 	private String USERNAME = "";// 用户名称
 	private String WORKNUMBER = "";// 工号
 	private String EMPLOYEEID = "";// 系统代码
