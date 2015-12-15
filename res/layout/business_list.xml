@@ -3,60 +3,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal" >
+    <RelativeLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="50dp" 
+        android:background="@drawable/bg_red" 
+        android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@android:drawable/ic_menu_sort_by_size" />
-
-        <TextView
-            android:id="@+id/tv_titleName"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:text="李"
-            android:textSize="20dp" />
+            android:id="@+id/return_main"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/menu" />
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/tv_titleName"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="师傅您好"
+            android:text="师傅,您好"
+            android:textColor="#ffffff"
             android:textSize="20dp" />
 
-        <ImageView
-            android:id="@+id/imageView1"
+        <TextView
+            android:id="@+id/tv_titleName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@android:drawable/ic_menu_info_details" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="70dp"
+            android:layout_toRightOf="@+id/return_main"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:text="李"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
 
-    <ImageView
+    </RelativeLayout>
+
+    <!-- <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000" />
+        android:background="#000000" /> -->
 
-    <TextView
+    <!-- <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="当前业务列表:"
-        android:textSize="20dp" />
+        android:textSize="20dp" /> -->
 
     <ListView
         android:id="@+id/listView_main"
@@ -66,24 +68,27 @@
         android:layout_marginTop="15dp"
         android:layout_weight="1" >
     </ListView>
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000" />
+        android:background="#000000" /> -->
 
-    <TextView
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:background="#808080"
-        android:layout_gravity="center"
-        android:text="上班填写路码" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_red" >
+
+        <TextView
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="上班填写路码"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

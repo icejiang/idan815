@@ -312,7 +312,7 @@ public class PrintActivity extends Activity {
 		type.setText(taskInfo.ServiceTypeName());
 		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
 		serviceMile.setText(totalMile+"¹«Àï");
-		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("HH:mm");
 		int hours = 0;
 		try {
 			Date d1 = df.parse(noteInfo.getServiceBegin());
