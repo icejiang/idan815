@@ -9,6 +9,26 @@ import android.util.Log;
 
 public abstract class getInfoValue {
 	/**
+	 * 获取当前时间
+	 * */
+	public static String getNowTime() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		String time = format.format(now);
+		time = time.substring(11);
+		return time;
+	}
+
+	/**
+	 * 获取当前日期
+	 * */
+	public static String getNowDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		return sdf.format(now);
+	}
+
+	/**
 	 * 设置用户状态，等待接单
 	 * */
 	public static boolean ServiceStandby(String userid, String taskid) {
