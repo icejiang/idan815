@@ -52,20 +52,20 @@ public class InService extends Activity {
 		input_start = intent.getStringExtra("input_start");
 		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		noteInfo = new NoteInfo();
+		findView();
+		setData();
+		putDataIntoNote();
 		try {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
 			myStateInfo.setCurrentState(13);
+			myStateInfo.setCurrentNote(noteInfo);
 			myGetStateInfo.setStateinfo(myStateInfo);
 			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-//		noteInfo = (NoteInfo) intent.getSerializableExtra(OrderDetail.INPUT_KEY);
-		findView();
-		setData();
-		putDataIntoNote();
 		
 		btn_end.setOnClickListener(new OnClickListener() {
 			

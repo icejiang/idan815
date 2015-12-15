@@ -51,7 +51,7 @@ public class LoginActivity extends Activity {
 		// }
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		idanapp = idanapp;
+		idanapp = iDanApp.getInstance();
 		ActivityControler.addActivity(this);
 		today = getInfoValue.getNowDate();
 		// UpdateManager mUpdateManager = new UpdateManager(LoginActivity.this);
@@ -65,9 +65,15 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (getInfoValue.getLogin(logname.getText().toString(),
-						password.getText().toString()))
-				// if (getInfoValue.getLogin("15821151093", "1234abcd"))
+				String account = logname.getText().toString();
+				String psw = password.getText().toString();
+				if(account.equals("")|| account == null || psw.equals("")||psw == null){
+					Toast.makeText(getApplicationContext(), " ‰»Î¥ÌŒÛ", Toast.LENGTH_SHORT).show();;
+				} else {
+			
+		
+				if (getInfoValue.getLogin(account,psw))
+//				 if (getInfoValue.getLogin("15821151093", "1234abcd"))
 				// 13061613032 1234abcd1
 				// 13918878436 1234abcd2
 				{
@@ -86,7 +92,7 @@ public class LoginActivity extends Activity {
 						PageJump();
 				} else
 					textView.setText("no info");
-
+				}
 				// LoginActivity.this.finish();
 			}
 		});
