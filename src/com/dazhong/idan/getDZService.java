@@ -80,7 +80,7 @@ public abstract class getDZService {
 		String path =iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(9000);
+		conn.setConnectTimeout(5000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -102,7 +102,7 @@ public abstract class getDZService {
 		String path =iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(9000);
+		conn.setConnectTimeout(5000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -112,6 +112,7 @@ public abstract class getDZService {
 		if (conn.getResponseCode() == 200) {
 			return parseSoap(conn.getInputStream(), sCode);
 		}
+		System.out.println("Davis say get internet info fail");
 		return null;
 	}
 
@@ -123,7 +124,7 @@ public abstract class getDZService {
 		String path = iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(9000);
+		conn.setConnectTimeout(5000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -142,7 +143,7 @@ public abstract class getDZService {
 		String path = iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(9000);
+		conn.setConnectTimeout(5000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -163,7 +164,7 @@ public abstract class getDZService {
 		String path =iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(9000);
+		conn.setConnectTimeout(5000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
@@ -182,7 +183,7 @@ public abstract class getDZService {
 		String path = iDanApp.getInstance().getSERVICEADRRESS();
 		HttpURLConnection conn = (HttpURLConnection) new URL(path)
 				.openConnection();
-		conn.setConnectTimeout(9000);
+		conn.setConnectTimeout(5000);
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type",
