@@ -96,6 +96,7 @@ public class LoginActivity extends Activity {
 				// LoginActivity.this.finish();
 			}
 		});
+		
 		if (getStateRec())
 			PageJump();
 	}
@@ -152,14 +153,14 @@ public class LoginActivity extends Activity {
 		// switch (88) {
 		switch (stateinfo.getCurrentState()) {
 		case 101:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
+//			intent = new Intent();
+//			intent.setClass(getApplicationContext(), LoginActivity.class);
+//			startActivity(intent);
 			break;
 		case 0:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
+//			intent = new Intent();
+//			intent.setClass(getApplicationContext(), LoginActivity.class);
+//			startActivity(intent);
 			break;
 		case 1:
 			intent = new Intent();
