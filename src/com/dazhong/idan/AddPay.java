@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class AddPay extends Activity {
 
@@ -15,7 +16,7 @@ public class AddPay extends Activity {
 	private EditText et_parking;
 	private EditText et_other;
 	private EditText et_hotel;
-	private Button bt_save;
+	private TextView bt_save;
 	public final static String key_road = "ROAD";
 	public final static String key_meals = "MEALS";
 	public final static String key_parking = "PARKING";
@@ -58,7 +59,7 @@ public class AddPay extends Activity {
 		et_eat = (EditText) findViewById(R.id.pay_eat);
 		et_parking = (EditText) findViewById(R.id.pay_parking);
 		et_other = (EditText) findViewById(R.id.pay_other);
-		bt_save = (Button) findViewById(R.id.bt_save);
+		bt_save = (TextView) findViewById(R.id.bt_save);
 		et_hotel = (EditText) findViewById(R.id.pay_hotel);
 		
 	}

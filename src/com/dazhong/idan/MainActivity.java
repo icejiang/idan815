@@ -36,7 +36,6 @@ public class MainActivity extends Activity {
 	private iDanApp idanapp;
 	private TaskInfo curTask = null;
 	private ListView mListView;
-	private TextView tv_name;
 	private ImageView iv_return;
 	private StateInfo stateinfo;
 	private List<TaskInfo> tasklist = null;
@@ -60,7 +59,6 @@ public class MainActivity extends Activity {
 //System.out.println(idanapp.getSERVICEADRRESS());
 
 		findView();
-		tv_name.setText(idanapp.getUSERNAME());
 		MyAdapter mAdapter = new MyAdapter(this);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -170,7 +168,6 @@ public class MainActivity extends Activity {
 
 	private void findView() {
 		mListView = (ListView) findViewById(R.id.listView_main);
-		tv_name = (TextView) findViewById(R.id.tv_titleName);
 		iv_return = (ImageView) findViewById(R.id.return_main);
 	}
 
