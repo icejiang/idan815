@@ -14,10 +14,12 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ public class MainActivity extends Activity {
 	private TaskInfo curTask = null;
 	private ListView mListView;
 	private TextView tv_name;
+	private ImageView iv_return;
 	private StateInfo stateinfo;
 	private List<TaskInfo> tasklist = null;
 
@@ -51,34 +54,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.business_list);
 		idanapp =iDanApp.getInstance();
+		stateinfo=idanapp.getStateInfo();
+		tasklist=idanapp.getTasklist();
 		ActivityControler.addActivity(this);
 //System.out.println(idanapp.getSERVICEADRRESS());
-		if (getStateRec()) {
-			// set static values
-//			MainActivity.USERNAME = stateinfo.getCurrentPerson().getName();
-//			MainActivity.WORKNUMBER = stateinfo.getCurrentPerson().getWorkNum();
-//			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
-//					.getPersonID();
-//			MainActivity.stateInfo = stateinfo;
-			idanapp.setStateInfo(stateinfo);
-			idanapp.setUSERNAME(stateinfo.getCurrentPerson().getName());
-			idanapp.setWORKNUMBER(stateinfo.getCurrentPerson().getWorkNum());
-			idanapp.setEMPLOYEEID(stateinfo.getCurrentPerson().getPersonID());
-			
-			try {
-//				MainActivity.tasklist = getInfoValue.getTasks(stateinfo
-//						.getCurrentPerson().getPersonID());
-				idanapp.setTasklist(getInfoValue.getTasks(stateinfo
-						.getCurrentPerson().getPersonID()));
-				tasklist=idanapp.getTasklist();
-				// System.out.println("davis say "+MainActivity.tasklist.size());
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			PageJump();
-		}
 
 		findView();
 		tv_name.setText(idanapp.getUSERNAME());
@@ -101,7 +80,7 @@ public class MainActivity extends Activity {
 		// configure the SlidingMenu
 		MenuLeftFragment menuLayout = new MenuLeftFragment(
 				getApplicationContext());
-		SlidingMenu menu = new SlidingMenu(this);
+		final SlidingMenu menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
@@ -113,14 +92,22 @@ public class MainActivity extends Activity {
 		 */
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.left_menu);
+		iv_return.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				menu.showMenu();
+			}
+		});
 
 	}
 
 	private void PageJump() {
 		Intent intent;
 		// 登陆后，选择显示页面
-		// switch (88) {
-		switch (stateinfo.getCurrentState()) {
+		 switch (88) {
+//		switch (stateinfo.getCurrentState()) {
 		case 101:
 			intent = new Intent();
 			intent.setClass(getApplicationContext(), LoginActivity.class);
@@ -184,6 +171,7 @@ public class MainActivity extends Activity {
 	private void findView() {
 		mListView = (ListView) findViewById(R.id.listView_main);
 		tv_name = (TextView) findViewById(R.id.tv_titleName);
+		iv_return = (ImageView) findViewById(R.id.return_main);
 	}
 
 	class MyAdapter extends BaseAdapter {

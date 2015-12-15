@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class InService extends Activity {
 	
-	private Button btn_end;
+	private TextView btn_end;
 	private int input_end;
 	private int position;
 //	private NoteInfo noteInfo;
@@ -38,6 +38,8 @@ public class InService extends Activity {
 	private TextView number;
 	private TextView location;
 	private TextView destination;
+	private StateInfo myStateInfo;
+	private getStateInfo myGetStateInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,16 @@ public class InService extends Activity {
 		input_start = intent.getStringExtra("input_start");
 		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		noteInfo = new NoteInfo();
+		try {
+			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+			myStateInfo = myGetStateInfo.getStateinfo();
+			myStateInfo.setCurrentState(13);
+			myGetStateInfo.setStateinfo(myStateInfo);
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 //		noteInfo = (NoteInfo) intent.getSerializableExtra(OrderDetail.INPUT_KEY);
 		findView();
 		setData();
@@ -60,6 +72,8 @@ public class InService extends Activity {
 			@Override
 			public void onClick(View v) {
 				
+				myStateInfo.setCurrentState(15);
+				myGetStateInfo.setStateinfo(myStateInfo);
 				final EditText editText = new EditText(InService.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(InService.this).setTitle("ÇëÌîÐ´½áÊøÂ·Âë").
@@ -98,7 +112,7 @@ public class InService extends Activity {
 	
 	private void findView(){
 		
-		btn_end = (Button) findViewById(R.id.btn_end);
+		btn_end = (TextView) findViewById(R.id.btn_end);
 		
 		date = (TextView) findViewById(R.id.service_date);
 		onboard = (TextView) findViewById(R.id.service_onboard);
@@ -113,7 +127,7 @@ public class InService extends Activity {
 	}
 	
 	private void setData(){
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		Date curDate = new Date(System.currentTimeMillis());
 		String str = formatter.format(curDate);
 		onboard.setText(str);

@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 public class OrderDetail extends Activity {
 	
-	private Button btn_start;
+	private TextView tv_start;
 	private int input_start;
 	private int input_end;
 	private int position;
@@ -51,6 +51,8 @@ public class OrderDetail extends Activity {
 	private TextView remark_sales;
 	private TextView payments;
 	private LinearLayout flightLayout;
+	private StateInfo myStateInfo;
+	private getStateInfo myGetStateInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +64,25 @@ public class OrderDetail extends Activity {
 		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		findview();
 		setData();
-		btn_start = (Button) findViewById(R.id.btn_start);
-		btn_start.setOnClickListener(new OnClickListener() {
+		try {
+			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+			myStateInfo = myGetStateInfo.getStateinfo();
+			myStateInfo.setCurrentState(11);
+			myGetStateInfo.setStateinfo(myStateInfo);
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		tv_start = (TextView) findViewById(R.id.tv_start);
+		tv_start.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				final EditText editText = new EditText(OrderDetail.this);
+				myStateInfo.setCurrentState(12);
+				myGetStateInfo.setStateinfo(myStateInfo);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(OrderDetail.this).setTitle("请填写起始路码").
 					setView(editText).setPositiveButton("确定并开始业务", new android.content.DialogInterface.OnClickListener() {
@@ -82,9 +96,7 @@ public class OrderDetail extends Activity {
 							} else {
 								input_start = Integer.parseInt(input);
 								Log.i("jxb", "起始路码 = "+input_start);
-//								noteInfo.setRouteBegin(input);
 								Intent intent = new Intent();
-//								putData(noteInfo);
 								intent.putExtra("input_start", input);
 								intent.putExtra(INPUT_KEY, position);
 								intent.setClass(OrderDetail.this, InService.class);
