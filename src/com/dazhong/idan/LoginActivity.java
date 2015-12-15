@@ -96,7 +96,8 @@ public class LoginActivity extends Activity {
 				// LoginActivity.this.finish();
 			}
 		});
-
+		if (getStateRec())
+			PageJump();
 	}
 
 	@Override
