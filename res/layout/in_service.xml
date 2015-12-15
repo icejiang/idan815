@@ -5,8 +5,9 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_width="match_parent" 
+        android:layout_height="50dp" 
+        android:background="@drawable/bg_red" >
 
         <TextView
             android:id="@+id/textView1"
@@ -15,22 +16,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:textSize="24dp"
+            android:textColor="#ffffff"
             android:text="服务中" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="#000000" />
     </RelativeLayout>
     <LinearLayout 
         android:layout_width="match_parent"
@@ -270,23 +257,22 @@
         android:visibility="gone"
          android:background="#000000"/>
     </LinearLayout>
-     <ImageView
-        android:id="@+id/imageView17"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000" />
 
-     <Button
-         android:id="@+id/btn_end"
-         android:layout_width="wrap_content"
-         android:layout_height="40dp"
-         android:gravity="center_vertical"
-         android:layout_gravity="center"
-         android:background="#808080"
-         android:textColor="#ffffff"
-         android:textSize="20dp"
-         android:paddingRight="20dp"
-         android:paddingLeft="20dp"
-         android:text="结束本次业务" />
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_red" >
+
+        <TextView
+            android:id="@+id/btn_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="结束本次业务"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

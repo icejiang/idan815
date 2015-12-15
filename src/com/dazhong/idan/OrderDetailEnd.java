@@ -50,6 +50,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
 	private int position;
+	private StateInfo myStateInfo;
+	private getStateInfo myGetStateInfo;
 	
 	public static String NOTEKEY = "NOTEKEY";
 	public static String TASKKEY = "TASKKEY";
@@ -63,6 +65,16 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		
 		setContentView(R.layout.route_note);
 		ActivityControler.addActivity(this);
+		try {
+			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+			myStateInfo = myGetStateInfo.getStateinfo();
+			myStateInfo.setCurrentState(16);
+			myGetStateInfo.setStateinfo(myStateInfo);
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		findView();
 		Intent intent = getIntent();
 		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
@@ -166,6 +178,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.add_pay:
+			myStateInfo.setCurrentState(17);
+			myGetStateInfo.setStateinfo(myStateInfo);
 			Intent intent1 = new Intent();
 			intent1.setClass(getApplicationContext(), AddPay.class);
 			startActivityForResult(intent1, REQUEST_CODE);
@@ -176,6 +190,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 //			startActivity(intent2);
 //			break;
 		case R.id.tv_print:
+			myStateInfo.setCurrentState(18);
+			myGetStateInfo.setStateinfo(myStateInfo);
 			Intent intent3 = new Intent();
 			intent3.putExtra(NOTEKEY, noteInfo);
 			intent3.putExtra(TASKKEY, position);
@@ -260,7 +276,13 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	}
 
 	
-	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		myStateInfo.setCurrentState(16);
+		myGetStateInfo.setStateinfo(myStateInfo);
+	}
 	
 	
 	

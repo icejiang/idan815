@@ -59,6 +59,16 @@ public class MenuLeftFragment extends LinearLayout{
 					mContext.startActivity(intent3);
 					break;
 				case 3:
+					try {
+						getStateInfo myGetStateInfo = getStateInfo.getInstance(mContext);
+						StateInfo myStateInfo = myGetStateInfo.getStateinfo();
+						myStateInfo.setCurrentState(101);
+						myGetStateInfo.setStateinfo(myStateInfo);
+						
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					ActivityControler.finishAll();
 					break;
 				default:
