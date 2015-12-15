@@ -20,7 +20,7 @@ public class MenuLeftFragment extends LinearLayout{
 	private Context mContext;
 	private ListView mListView;
 	private List<String> mDatas = Arrays
-            .asList("个人信息", "历史订单查询","修改密码","退出");
+            .asList("个人信息", "打印设置","历史订单","修改密码","退出");
     private ListAdapter mAdapter;
 	
 	
