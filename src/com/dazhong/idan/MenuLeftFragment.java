@@ -49,16 +49,21 @@ public class MenuLeftFragment extends LinearLayout{
 					mContext.startActivity(intent);
 					break;
 				case 1:
+					Intent intent4 = new Intent();
+					intent4.setClass(mContext, BlueToothManage.class);
+					mContext.startActivity(intent4);
+					break;
+				case 2:
 					Intent intent2 = new Intent();
 					intent2.setClass(mContext, OrderHistory.class);
 					mContext.startActivity(intent2);
 					break;
-				case 2:
+				case 3:
 					Intent intent3 = new Intent();
 					intent3.setClass(mContext, PasswordAlter.class);
 					mContext.startActivity(intent3);
 					break;
-				case 3:
+				case 4:
 					try {
 						getStateInfo myGetStateInfo = getStateInfo.getInstance(mContext);
 						StateInfo myStateInfo = myGetStateInfo.getStateinfo();
