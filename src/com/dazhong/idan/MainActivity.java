@@ -54,34 +54,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.business_list);
 		idanapp =iDanApp.getInstance();
+		stateinfo=idanapp.getStateInfo();
+		tasklist=idanapp.getTasklist();
 		ActivityControler.addActivity(this);
 //System.out.println(idanapp.getSERVICEADRRESS());
-		if (getStateRec()) {
-			// set static values
-//			MainActivity.USERNAME = stateinfo.getCurrentPerson().getName();
-//			MainActivity.WORKNUMBER = stateinfo.getCurrentPerson().getWorkNum();
-//			MainActivity.EMPLOYEEID = stateinfo.getCurrentPerson()
-//					.getPersonID();
-//			MainActivity.stateInfo = stateinfo;
-			idanapp.setStateInfo(stateinfo);
-			idanapp.setUSERNAME(stateinfo.getCurrentPerson().getName());
-			idanapp.setWORKNUMBER(stateinfo.getCurrentPerson().getWorkNum());
-			idanapp.setEMPLOYEEID(stateinfo.getCurrentPerson().getPersonID());
-			
-			try {
-//				MainActivity.tasklist = getInfoValue.getTasks(stateinfo
-//						.getCurrentPerson().getPersonID());
-				idanapp.setTasklist(getInfoValue.getTasks(stateinfo
-						.getCurrentPerson().getPersonID()));
-				tasklist=idanapp.getTasklist();
-				// System.out.println("davis say "+MainActivity.tasklist.size());
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			PageJump();
-		}
 
 		findView();
 		tv_name.setText(idanapp.getUSERNAME());
