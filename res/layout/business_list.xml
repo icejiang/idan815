@@ -23,23 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/tv_titleName"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="师傅,您好"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/tv_titleName"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="70dp"
-            android:layout_toRightOf="@+id/return_main"
-            android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:text="李"
+            android:text="派单信息"
             android:textColor="#ffffff"
             android:textSize="20dp" />
 
@@ -63,9 +50,13 @@
     <ListView
         android:id="@+id/listView_main"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:divider="#747474"
+        android:dividerHeight="1dp"
         android:layout_weight="1" >
     </ListView>
     <!-- <ImageView
