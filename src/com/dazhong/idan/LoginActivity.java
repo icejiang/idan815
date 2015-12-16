@@ -220,7 +220,7 @@ public class LoginActivity extends Activity {
 		getStateInfo gs;
 		try {
 			gs = getStateInfo.getInstance(getApplicationContext());
-//			stateinfo = new StateInfo();
+			stateinfo = new StateInfo();
 			stateinfo.setToday(getInfoValue.getNowDate());
 			stateinfo.setPageOfNoteHistory(1);
 			stateinfo.setPageOfTask(1);
