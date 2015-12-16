@@ -68,6 +68,7 @@ public class OrderDetail extends Activity {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
 			myStateInfo.setCurrentState(11);
+			myStateInfo.setCurrentTask(taskInfo);
 			myGetStateInfo.setStateinfo(myStateInfo);
 			
 		} catch (Exception e1) {

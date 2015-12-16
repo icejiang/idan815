@@ -60,7 +60,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.route_note);
@@ -69,43 +69,19 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
 			myStateInfo.setCurrentState(16);
-			myGetStateInfo.setStateinfo(myStateInfo);
-			
+			noteInfo = myStateInfo.getCurrentNote();
+			taskInfo = myStateInfo.getCurrentTask();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		findView();
-		Intent intent = getIntent();
-		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
-		position = intent.getIntExtra("TYPE",0);
-		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		setView();
+		myStateInfo.setCurrentNote(noteInfo);
+		myGetStateInfo.setStateinfo(myStateInfo);
 		tv_addPay.setOnClickListener(this);
 		tv_print.setOnClickListener(this);
 		tv_addRecord.setOnClickListener(this);
-//		btn_confirmEnd.setOnClickListener(this);
-//		tv_addPay.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent();
-//				intent.setClass(getApplicationContext(), AddPay.class);
-//				startActivityForResult(intent, REQUEST_CODE);
-//				
-//			}
-//		});
-//		
-//		btn_confirmEnd.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent();
-//				intent.setClass(getApplicationContext(), MainActivity.class);
-//				startActivity(intent);
-//				
-//			}
-//		});
+
 		
 	}
 	
@@ -116,7 +92,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		tv_road = (TextView) findViewById(R.id.tv_road);
 		tv_parking = (TextView) findViewById(R.id.tv_parking);
 		tv_base = (TextView) findViewById(R.id.tv_base);
-		tv_hotel = (TextView) findViewById(R.id.tv_hotel);
+		tv_hotel = (TextView) findViewById(R.id.tv_hotel1);
 		tv_all = (TextView) findViewById(R.id.tv_all);
 		tv_print = (TextView) findViewById(R.id.tv_print);
 		tv_addRecord = (TextView) findViewById(R.id.tv_add_record);
@@ -134,11 +110,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	}
 	
 	private void setView(){
-//		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-//		Date curDate = new Date(System.currentTimeMillis());
-//		String str = formatter.format(curDate);
-		SimpleDateFormat sDateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd");
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String curDate = sDateFormat.format(new Date(System.currentTimeMillis()));
 		date.setText(curDate);
 		startTime.setText(noteInfo.getServiceBegin());
@@ -146,8 +118,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		type.setText(taskInfo.ServiceTypeName());
 		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
 		mile.setText(totalMile+"公里");
-//		int timeStart = Integer.parseInt(noteInfo.getServiceBegin());
-		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		noteInfo.setDoServiceKms(totalMile);
+		DateFormat df = new SimpleDateFormat("HH:mm");
 		int hours = 0;
 		try {
 			Date d1 = df.parse(noteInfo.getServiceBegin());
@@ -156,20 +128,23 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			long hour = diff/(1000* 60 * 60);
 			hours = Integer.parseInt(Long.toString(hour));
 			time.setText(Long.toString(hour)+"小时");
+			noteInfo.setDoServiceTime(hours);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int serviceMile = (int) noteInfo.getServiceKMs();
-		int serviceHour = (int) noteInfo.getServiceTime();
+		int serviceMile = noteInfo.getServiceKMs();
+		int serviceHour = noteInfo.getServiceTime();
 		if(serviceMile<totalMile){
 			extraMile.setText((totalMile - serviceMile)+"公里" );
+			double price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
+//			noteInfo.set
 		}
 		if(hours > serviceHour){
 			extraTime.setText((hours - serviceHour)+"小时");
+			double price_extraTime = (hours - serviceHour)*(taskInfo.SalePricePerHour());
 		}
-		tv_base.setText(noteInfo.getFeePrice()+"");
-		tv_all.setText(noteInfo.getFeePrice()+"");
+		tv_base.setText(noteInfo.getFeePrice()+"元");
+		tv_all.setText(noteInfo.getFeePrice()+"元");
 	}
 	
 	
@@ -184,17 +159,10 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			intent1.setClass(getApplicationContext(), AddPay.class);
 			startActivityForResult(intent1, REQUEST_CODE);
 			break;
-//		case R.id.confirm_end:
-//			Intent intent2 = new Intent();
-//			intent2.setClass(getApplicationContext(), MainActivity.class);
-//			startActivity(intent2);
-//			break;
 		case R.id.tv_print:
-			myStateInfo.setCurrentState(18);
-			myGetStateInfo.setStateinfo(myStateInfo);
 			Intent intent3 = new Intent();
-			intent3.putExtra(NOTEKEY, noteInfo);
-			intent3.putExtra(TASKKEY, position);
+//			intent3.putExtra(NOTEKEY, noteInfo);
+//			intent3.putExtra(TASKKEY, position);
 			intent3.setClass(getApplicationContext(), PrintActivity.class);
 			startActivity(intent3);
 			break;
@@ -215,6 +183,9 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 									String input = editText.getText()
 											.toString();
 									tv_record.setText(input);
+									noteInfo.setServiceRoute(input);
+									myStateInfo.setCurrentNote(noteInfo);
+									myGetStateInfo.setStateinfo(myStateInfo);
 								}
 
 							}).show();
@@ -254,7 +225,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					if (!parking.equals("")) {
 						all += Integer.parseInt(parking);
 						tv_parking.setText(parking + "元");
-//						noteInfo.setf
+						noteInfo.setFeePark(Double.valueOf(parking));
 					}
 					if (!other.equals("")) {
 						all += Integer.parseInt(other);
@@ -269,6 +240,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					all = (int) (all+noteInfo.getFeePrice());
 					tv_all.setText(all + "元");
 					noteInfo.setFeeTotal(all);
+					myStateInfo.setCurrentNote(noteInfo);
+					myGetStateInfo.setStateinfo(myStateInfo);
 					this.all = all;
 				}
 			}
