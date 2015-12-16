@@ -32,25 +32,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:launchMode="singleTask">
+        <activity 
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" 
+            android:launchMode="singleTask" >
         </activity>
-        <activity android:name=".OrderDetail" >
+        <activity 
+            android:name=".OrderDetail"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".OrderDetailEnd" >
+        <activity 
+            android:name=".OrderDetailEnd"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".AddPay" >
+        <activity 
+            android:name=".AddPay"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".PrintActivity" >
+        <activity 
+            android:name=".PrintActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".PersonalInfo" >
+        <activity 
+            android:name=".PersonalInfo"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".OrderHistory" >
+        <activity 
+            android:name=".OrderHistory"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".InService" >
+        <activity 
+            android:name=".InService"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".BlueToothManage" >
+        <activity 
+            android:name=".BlueToothManage"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".PasswordAlter" >
+        <activity 
+            android:name=".PasswordAlter"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

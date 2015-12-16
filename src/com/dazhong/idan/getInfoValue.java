@@ -231,7 +231,7 @@ public abstract class getInfoValue {
 			if (i < 0) {
 				return false;
 			}
-			System.out.println(sInfo);
+//			System.out.println(sInfo);
 			// MainActivity.USERNAME = getDZService.getInfoValue(sInfo,
 			// "DriverName");
 			iDanApp.getInstance().setUSERNAME(
