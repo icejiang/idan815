@@ -50,7 +50,11 @@ public class InService extends Activity {
 		Intent intent = getIntent();
 		position = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
 		input_start = intent.getStringExtra("input_start");
-		taskInfo = iDanApp.getInstance().getTasklist().get(position);
+		try {
+			taskInfo = getStateInfo.getInstance(getApplicationContext()).getStateinfo().getCurrentTask();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		noteInfo = new NoteInfo();
 		findView();
 		setData();
@@ -60,8 +64,8 @@ public class InService extends Activity {
 			myStateInfo = myGetStateInfo.getStateinfo();
 			myStateInfo.setCurrentState(13);
 			myStateInfo.setCurrentNote(noteInfo);
+			myStateInfo.setCurrentKMS(input_start);
 			myGetStateInfo.setStateinfo(myStateInfo);
-			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -88,17 +92,27 @@ public class InService extends Activity {
 						} else {
 							input_end = Integer.parseInt(input);
 							Log.i("jxb", "结束路码 = "+input_end);
-							if (input_end < Integer.parseInt(input_start)){
+							String lastKMS = null;
+							try {
+								lastKMS = getStateInfo.getInstance(InService.this).getStateinfo().getCurrentKMS();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							if (input_end < Integer.parseInt(lastKMS)){
 								Toast.makeText(getApplicationContext(), "结束路码小于起始路码，请确认输入", Toast.LENGTH_SHORT).show();
 							} else {
-								SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+								SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 								Date curDate = new Date(System.currentTimeMillis());
 								String str = formatter.format(curDate);
 								noteInfo.setServiceEnd(str);
 								noteInfo.setRouteEnd(input);
+								myStateInfo.setCurrentNote(noteInfo);
+								myStateInfo.setCurrentKMS(input);
+								myGetStateInfo.setStateinfo(myStateInfo);
 								Intent intent = new Intent();
-								intent.putExtra("TYPE", position);
-								intent.putExtra(INPUT_TOTAL_KEY, noteInfo);
+//								intent.putExtra("TYPE", position);
+//								intent.putExtra(INPUT_TOTAL_KEY, noteInfo);
+								
 								intent.setClass(InService.this, OrderDetailEnd.class);
 								startActivity(intent);
 							}
@@ -143,6 +157,9 @@ public class InService extends Activity {
 	}
 	
 	private void putDataIntoNote(){
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String curDate = sDateFormat.format(new Date(System.currentTimeMillis()));
+		noteInfo.setNoteDate(curDate);
 		noteInfo.setCarID(taskInfo.CarID());
 		noteInfo.setCarNumber(taskInfo.CarNumber());
 		noteInfo.setDriverID(taskInfo.DriverID());
@@ -159,6 +176,9 @@ public class InService extends Activity {
 		noteInfo.setServiceKMs(taskInfo.SaleKMs());
 		noteInfo.setServiceTime(taskInfo.SaleTime());
 		noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
+		noteInfo.setServiceKMs(taskInfo.SaleKMs());
+		noteInfo.setServiceTime(taskInfo.SaleTime());
+		noteInfo.setCustomerName(taskInfo.Customer());
 	}
 	
 	

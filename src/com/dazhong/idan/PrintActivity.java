@@ -15,6 +15,7 @@ import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -56,6 +57,8 @@ public class PrintActivity extends Activity {
 	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
 	private int position;
+	private getStateInfo myGetStateInfo;
+	private StateInfo myStateInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +66,19 @@ public class PrintActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.printf);
 
-		Intent intent = getIntent();
-		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
-		position = intent.getIntExtra("TYPE",0);
-		taskInfo = iDanApp.getInstance().getTasklist().get(position);
+//		Intent intent = getIntent();
+////		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
+//		position = intent.getIntExtra("TYPE",0);
+//		taskInfo = iDanApp.getInstance().getTasklist().get(position);
+		try {
+			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+			myStateInfo = myGetStateInfo.getStateinfo();
+			myStateInfo.setCurrentState(18);
+			noteInfo = myStateInfo.getCurrentNote();
+			taskInfo = myStateInfo.getCurrentTask();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		
 		findView();
 		setData();
@@ -281,72 +293,57 @@ public class PrintActivity extends Activity {
 	}
 
 	private void setData() {
-//		Bundle bundle = getIntent().getBundleExtra("MYKEY");
-//		int all = getIntent().getIntExtra("ALL", 0);
-//		int mile = getIntent().getIntExtra("MILE", 0);
-//		if (bundle != null) {
-//			String road = bundle.getString(AddPay.key_road);
-//			String meals = bundle.getString(AddPay.key_meals);
-//			String parking = bundle.getString(AddPay.key_parking);
-//			String other = bundle.getString(AddPay.key_other);
-//			if (!road.equals("")) {
-//				tv_road.setText(road + "元");
-//			}
-//			if (!meals.equals("")) {
-//				tv_meals.setText(meals + "元");
-//			}
-//			if (!parking.equals("")) {
-//				tv_parking.setText(parking + "元");
-//			}
-//			if (!other.equals("")) {
-//				tv_other.setText(other + "元");
-//			}
-//		}
-//		tv_all.setText(all + "元");
-//		serviceMile.setText(mile + "公里");
 		SimpleDateFormat sDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd");
 		String curDate = sDateFormat.format(new Date(System.currentTimeMillis()));
 		date.setText(curDate);
-//		time.setText(noteInfo.getServiceBegin()+"-"+noteInfo.getServiceEnd());
+		time.setText(noteInfo.getServiceBegin()+"-"+noteInfo.getServiceEnd());
 		type.setText(taskInfo.ServiceTypeName());
-		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
-		serviceMile.setText(totalMile+"公里");
-		DateFormat df = new SimpleDateFormat("HH:mm");
-		int hours = 0;
-		try {
-			Date d1 = df.parse(noteInfo.getServiceBegin());
-			Date d2 = df.parse(noteInfo.getServiceEnd());
-			long diff = d1.getTime() - d2.getTime();
-			long hour = diff/(1000* 60 * 60);
-			hours = Integer.parseInt(Long.toString(hour));
-			serviceTime.setText(Long.toString(hour)+"小时");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		int serviceMile = (int) noteInfo.getServiceKMs();
-		int serviceHour = (int) noteInfo.getServiceTime();
+//		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
+		int totalMile = noteInfo.getDoServiceKms();
+		int hours = noteInfo.getDoServiceTime();
+		serviceMile.setText(noteInfo.getDoServiceKms()+"公里");
+		serviceTime.setText(noteInfo.getDoServiceTime()+"小时");
+//		DateFormat df = new SimpleDateFormat("HH:mm");
+//		int hours = 0;
+//		try {
+//			Date d1 = df.parse(noteInfo.getServiceBegin());
+//			Date d2 = df.parse(noteInfo.getServiceEnd());
+//			long diff = d1.getTime() - d2.getTime();
+//			long hour = diff/(1000* 60 * 60);
+//			hours = Integer.parseInt(Long.toString(hour));
+//			serviceTime.setText(Long.toString(hour)+"小时");
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		int serviceMile = noteInfo.getServiceKMs();
+		int serviceHour = noteInfo.getServiceTime();
+		Log.i("jxb", "serviceMile = "+serviceMile);
 		if(serviceMile<totalMile){
 			extraMile.setText((totalMile - serviceMile)+"公里" );
+			double price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
+			tv_beyondMile.setText(price_extraMile+"元");
 		}
 		if(hours > serviceHour){
 			extraTime.setText((hours - serviceHour)+"小时");
+			double price_extraTime = (hours - serviceHour)*(taskInfo.SalePricePerHour());
+			tv_beyondTime.setText(price_extraTime+"元");
 		}
-		tv_base.setText(noteInfo.getFeeChoice()+"元");
+		
+		tv_base.setText(noteInfo.getFeePrice()+"元");
 		tv_road.setText(noteInfo.getFeeBridge()+"元");
-//		tv_parking.setText(text);
+		tv_parking.setText(noteInfo.getFeePark()+"元");
 		tv_meals.setText(noteInfo.getFeeLunch()+"元");
 		tv_hotel.setText(noteInfo.getFeeHotel()+"元");
 		tv_other.setText(noteInfo.getFeeOther()+"元");
-//		extraMile
 		tv_all.setText(noteInfo.getFeeTotal()+"元");
 		tv_dateLast.setText(curDate);
 	}
 
 	private void findView() {
 		print_confirm = (TextView) findViewById(R.id.print_confirm);
-		tv_base = (TextView) findViewById(R.id.tv_base);
+		tv_base = (TextView) findViewById(R.id.tv_base_print);
 		tv_road = (TextView) findViewById(R.id.tv_road_print);
 		tv_parking = (TextView) findViewById(R.id.tv_parking_print);
 		tv_meals = (TextView) findViewById(R.id.tv_meals_print);
@@ -364,5 +361,7 @@ public class PrintActivity extends Activity {
 		extraMile = (TextView) findViewById(R.id.print_extraMile);
 		extraTime = (TextView) findViewById(R.id.print_extraTime);
 		tv_dateLast = (TextView) findViewById(R.id.print_date_last);
+		tv_beyondMile = (TextView) findViewById(R.id.tv_beyond_mile);
+		tv_beyondTime = (TextView) findViewById(R.id.tv_beyond_time);
 	}
 }
