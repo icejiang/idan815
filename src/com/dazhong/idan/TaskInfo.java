@@ -1,6 +1,12 @@
 package com.dazhong.idan;
 
-public class TaskInfo {
+import java.io.Serializable;
+
+public class TaskInfo  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5637165045953489815L;
 	private String bookman;
 	private String booktel;
 	private String carid;

@@ -26,11 +26,12 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	// 系统接口地址
-//	public static String SERVICEADRRESS = "http://192.168.75.200:8084/DriverService.asmx";
-//	public static String USERNAME = "";// 用户名称
-//	public static String WORKNUMBER = "";// 工号
-//	public static String EMPLOYEEID = "";// 系统代码
-//	public static StateInfo stateInfo = null;// 状态管理
+	// public static String SERVICEADRRESS =
+	// "http://192.168.75.200:8084/DriverService.asmx";
+	// public static String USERNAME = "";// 用户名称
+	// public static String WORKNUMBER = "";// 工号
+	// public static String EMPLOYEEID = "";// 系统代码
+	// public static StateInfo stateInfo = null;// 状态管理
 	// ************************************************
 	public static String POSITION = "POSITON";
 	private iDanApp idanapp;
@@ -52,11 +53,11 @@ public class MainActivity extends Activity {
 				.build());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.business_list);
-		idanapp =iDanApp.getInstance();
-		stateinfo=idanapp.getStateInfo();
-		tasklist=idanapp.getTasklist();
+		idanapp = iDanApp.getInstance();
+		stateinfo = idanapp.getStateInfo();
+		tasklist = idanapp.getTasklist();
 		ActivityControler.addActivity(this);
-//System.out.println(idanapp.getSERVICEADRRESS());
+		// System.out.println(idanapp.getSERVICEADRRESS());
 
 		findView();
 		MyAdapter mAdapter = new MyAdapter(this);
@@ -67,7 +68,7 @@ public class MainActivity extends Activity {
 					int position, long id) {
 				// tasklist.get(position).setReadmark(0);
 				curTask = tasklist.get(position);
-//				curTask=iDanApp.getInstance().getTasklist().get(position);
+				// curTask=iDanApp.getInstance().getTasklist().get(position);
 				curTask.setReadmark(0);
 				Intent intent = new Intent();
 				intent.putExtra(POSITION, position);
@@ -91,7 +92,7 @@ public class MainActivity extends Activity {
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.left_menu);
 		iv_return.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -101,11 +102,15 @@ public class MainActivity extends Activity {
 
 	}
 
+	public void onBackPressed() {
+		ActivityControler.finishAll();
+	}
+
 	private void PageJump() {
 		Intent intent;
 		// 登陆后，选择显示页面
-		 switch (88) {
-//		switch (stateinfo.getCurrentState()) {
+		switch (88) {
+		// switch (stateinfo.getCurrentState()) {
 		case 101:
 			intent = new Intent();
 			intent.setClass(getApplicationContext(), LoginActivity.class);
