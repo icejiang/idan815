@@ -67,36 +67,40 @@ public class LoginActivity extends Activity {
 				// TODO Auto-generated method stub
 				String account = logname.getText().toString();
 				String psw = password.getText().toString();
-				if(account.equals("")|| account == null || psw.equals("")||psw == null){
-					Toast.makeText(getApplicationContext(), " ‰»Î¥ÌŒÛ", Toast.LENGTH_SHORT).show();;
+				if (account.equals("") || account == null || psw.equals("")
+						|| psw == null) {
+					Toast.makeText(getApplicationContext(), " ‰»Î¥ÌŒÛ",
+							Toast.LENGTH_SHORT).show();
+					;
 				} else {
-			
-		
-				if (getInfoValue.getLogin(account,psw))
-//				 if (getInfoValue.getLogin("15821151093", "1234abcd"))
-				// 13061613032 1234abcd1
-				// 13918878436 1234abcd2
-				{
-					PersonInfo personinfo;
-					try {
-						personinfo = getInfoValue.getPersonInfo(idanapp
-								.getEMPLOYEEID());
-						personinfo.setPersonID(idanapp.getEMPLOYEEID());
-						textView.setText(personinfo.toString());
-						FirstLog(personinfo);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if (getStateRec())
-						PageJump();
-				} else
-					textView.setText("no info");
+					if (getInfoValue.getLogin(account, psw))
+					// if (getInfoValue.getLogin("15821151093", "1234abcd"))
+					// 13061613032 1234abcd1
+					// 13918878436 1234abcd2
+					{
+						PersonInfo personinfo;
+						try {
+							personinfo = getInfoValue.getPersonInfo(idanapp
+									.getEMPLOYEEID());
+							personinfo.setPersonID(idanapp.getEMPLOYEEID());
+//							textView.setText(personinfo.toString());
+							System.out.println(personinfo.toString());
+							FirstLog(personinfo);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if (getStateRec())
+							PageJump();
+					} else
+						textView.setText("no info");
 				}
 				// LoginActivity.this.finish();
 			}
 		});
 
+		if (getStateRec())
+			PageJump();
 	}
 
 	@Override
@@ -149,16 +153,17 @@ public class LoginActivity extends Activity {
 		Intent intent;
 		// µ«¬Ω∫Û£¨—°‘Òœ‘ æ“≥√Ê
 		// switch (88) {
+		System.out.println(stateinfo.getCurrentState());
 		switch (stateinfo.getCurrentState()) {
 		case 101:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
+			// intent = new Intent();
+			// intent.setClass(getApplicationContext(), LoginActivity.class);
+			// startActivity(intent);
 			break;
 		case 0:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
+			// intent = new Intent();
+			// intent.setClass(getApplicationContext(), LoginActivity.class);
+			// startActivity(intent);
 			break;
 		case 1:
 			intent = new Intent();
@@ -215,7 +220,7 @@ public class LoginActivity extends Activity {
 		getStateInfo gs;
 		try {
 			gs = getStateInfo.getInstance(getApplicationContext());
-			stateinfo = new StateInfo();
+//			stateinfo = new StateInfo();
 			stateinfo.setToday(getInfoValue.getNowDate());
 			stateinfo.setPageOfNoteHistory(1);
 			stateinfo.setPageOfTask(1);
@@ -223,6 +228,7 @@ public class LoginActivity extends Activity {
 			stateinfo.setCurrentState(1);
 			stateinfo.setCurrentLogin(true);
 			stateinfo.setTimeOfTaskOneDay(0);
+			System.out.println(stateinfo.toString());
 			gs.setStateinfo(stateinfo);
 
 		} catch (Exception e) {
