@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -43,10 +44,13 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private TextView time;
 	private TextView extraMile;
 	private TextView extraTime;
+	private TextView extraMile_price;
+	private TextView extraTime_price;
+	private TextView routeID;
 	
 	private Bundle mBundle;
 	private int mileInt;
-	private int all;
+	private Double totalPrice;
 	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
 	private int position;
@@ -106,10 +110,14 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		time = (TextView) findViewById(R.id.route_time);
 		extraMile = (TextView) findViewById(R.id.route_extraMile);
 		extraTime = (TextView) findViewById(R.id.route_extraTime);
+		extraMile_price = (TextView) findViewById(R.id.tv_extraMile);
+		extraTime_price = (TextView) findViewById(R.id.tv_extraTime);
+		routeID = (TextView) findViewById(R.id.route_titleID);
 		
 	}
 	
 	private void setView(){
+		routeID.setText(noteInfo.getNoteID());
 		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String curDate = sDateFormat.format(new Date(System.currentTimeMillis()));
 		date.setText(curDate);
@@ -134,17 +142,38 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		}
 		int serviceMile = noteInfo.getServiceKMs();
 		int serviceHour = noteInfo.getServiceTime();
+		Double price_all = noteInfo.getFeePrice();
+		Double price_extraMile = 0.0;
+		Double price_extraTime = 0.0;
+		int feeChoice = noteInfo.getFeeChoice();
 		if(serviceMile<totalMile){
 			extraMile.setText((totalMile - serviceMile)+"公里" );
-			double price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
-//			noteInfo.set
+			price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
+			noteInfo.setFeeOverKMs(price_extraMile);
+			extraMile_price.setText(price_extraMile+"元");
 		}
 		if(hours > serviceHour){
 			extraTime.setText((hours - serviceHour)+"小时");
-			double price_extraTime = (hours - serviceHour)*(taskInfo.SalePricePerHour());
+			price_extraTime = (hours - serviceHour)*(taskInfo.SalePricePerHour());
+			noteInfo.setFeeOverTime(price_extraTime);
+			extraTime_price.setText(price_extraTime+"元");
 		}
+		if(feeChoice == 1){
+			price_all += price_extraMile+price_extraTime;
+		} else {
+			if(price_extraMile>price_extraTime && price_extraTime!=0){
+				price_all+=price_extraTime;
+			} else if(price_extraMile>price_extraTime){
+				price_all+=price_extraMile;
+			} else if(price_extraTime>price_extraMile && price_extraMile!=0){
+				price_all+=price_extraMile;
+			} else {
+				price_all+=price_extraTime;
+			}
+		}
+		noteInfo.setFeeTotal(price_all);
 		tv_base.setText(noteInfo.getFeePrice()+"元");
-		tv_all.setText(noteInfo.getFeePrice()+"元");
+		tv_all.setText(price_all+"元");
 	}
 	
 	
@@ -161,14 +190,11 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			break;
 		case R.id.tv_print:
 			Intent intent3 = new Intent();
-//			intent3.putExtra(NOTEKEY, noteInfo);
-//			intent3.putExtra(TASKKEY, position);
 			intent3.setClass(getApplicationContext(), PrintActivity.class);
 			startActivity(intent3);
 			break;
 		case R.id.tv_add_record:
 			final EditText editText = new EditText(OrderDetailEnd.this);
-//			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 			new AlertDialog.Builder(OrderDetailEnd.this)
 					.setTitle("请填写营运记录")
 					.setView(editText)
@@ -211,38 +237,37 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					String parking = bundle.getString(AddPay.key_parking);
 					String other = bundle.getString(AddPay.key_other);
 					String hotel = bundle.getString(AddPay.key_hotel);
-					int all = 0;
+					double all = noteInfo.getFeeTotal();
 					if (!road.equals("")) {
-						all = Integer.parseInt(road);
-						tv_road.setText(road + "元");
+						all += Double.valueOf(road);
+						tv_road.setText(Double.valueOf(road) + "元");
 						noteInfo.setFeeBridge(Double.valueOf(road));
 					}
 					if (!meals.equals("")) {
-						all += Integer.parseInt(meals);
-						tv_meals.setText(meals + "元");
+						all += Double.valueOf(meals);
+						tv_meals.setText(Double.valueOf(meals) + "元");
 						noteInfo.setFeeLunch(Double.valueOf(meals));
 					}
 					if (!parking.equals("")) {
-						all += Integer.parseInt(parking);
-						tv_parking.setText(parking + "元");
+						all += Double.valueOf(parking);
+						tv_parking.setText(Double.valueOf(parking) + "元");
 						noteInfo.setFeePark(Double.valueOf(parking));
 					}
 					if (!other.equals("")) {
-						all += Integer.parseInt(other);
-						tv_other.setText(other + "元");
+						all += Double.valueOf(other);
+						tv_other.setText(Double.valueOf(other) + "元");
 						noteInfo.setFeeOther(Double.valueOf(other));
 					}
 					if (!hotel.equals("")) {
-						all += Integer.parseInt(hotel);
-						tv_hotel.setText(hotel + "元");
+						all += Double.valueOf(hotel);
+						tv_hotel.setText(Double.valueOf(hotel) + "元");
 						noteInfo.setFeeHotel(Double.valueOf(hotel));
 					}
-					all = (int) (all+noteInfo.getFeePrice());
+					
 					tv_all.setText(all + "元");
 					noteInfo.setFeeTotal(all);
 					myStateInfo.setCurrentNote(noteInfo);
 					myGetStateInfo.setStateinfo(myStateInfo);
-					this.all = all;
 				}
 			}
 		}
@@ -257,7 +282,15 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		myGetStateInfo.setStateinfo(myStateInfo);
 	}
 	
-	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+		}
+
+		return true;
+
+	}
 	
 	
 	

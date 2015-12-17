@@ -32,7 +32,7 @@
             android:background="#808080"
             android:textColor="#ffffff"
             android:layout_above="@+id/imageView3" android:layout_alignParentLeft="true" android:text="路单号" android:textSize="20dp"/>
-        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView3" android:text="SR20151025000001" 
+        <TextView android:id="@+id/service_noteid" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView3" android:text="SR20151025000001" 
             android:layout_marginLeft="10dp"
             android:textSize="20dp"/>
     </RelativeLayout>
@@ -255,8 +255,123 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
          android:background="#000000"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上车路码:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/service_startMile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="人民广场"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调度员:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/service_dispatcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="人民广场"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调度员号码:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/service_dispatchNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="人民广场"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="业务员:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/service_salesman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="人民广场"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="业务员号码:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/service_salesNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="人民广场"
+            android:textSize="16dp" />
+
+    </LinearLayout>
     </LinearLayout>
 
      <RelativeLayout

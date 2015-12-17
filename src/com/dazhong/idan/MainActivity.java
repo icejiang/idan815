@@ -7,10 +7,13 @@ import java.util.zip.Inflater;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,6 +42,8 @@ public class MainActivity extends Activity {
 	private TaskInfo curTask = null;
 	private ListView mListView;
 	private ImageView iv_return;
+	private TextView tv_addStart;
+	private TextView tv_addEnd;
 	private StateInfo stateinfo;
 	private List<TaskInfo> tasklist = null;
 
@@ -99,7 +105,40 @@ public class MainActivity extends Activity {
 				menu.showMenu();
 			}
 		});
-
+		tv_addStart.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				final EditText editText = new EditText(MainActivity.this);
+				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+				new AlertDialog.Builder(MainActivity.this).setTitle("请填写上班路码").
+					setView(editText).setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							
+							String input = editText.getText().toString();
+							if(input.equals("")){
+								Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
+							} else {
+								try {
+									getStateInfo myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+									StateInfo myStateInfo = myGetStateInfo.getStateinfo();
+									myStateInfo.setCurrentKMS(input);
+									myGetStateInfo.setStateinfo(myStateInfo);
+									tv_addStart.setVisibility(View.GONE);
+									tv_addEnd.setVisibility(View.VISIBLE);
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+						}
+					}).show();
+				
+			}
+		});
 	}
 
 	public void onBackPressed() {
@@ -109,7 +148,7 @@ public class MainActivity extends Activity {
 	private void PageJump() {
 		Intent intent;
 		// 登陆后，选择显示页面
-		switch (88) {
+		switch (1) {
 		// switch (stateinfo.getCurrentState()) {
 		case 101:
 			intent = new Intent();
@@ -174,6 +213,8 @@ public class MainActivity extends Activity {
 	private void findView() {
 		mListView = (ListView) findViewById(R.id.listView_main);
 		iv_return = (ImageView) findViewById(R.id.return_main);
+		tv_addStart = (TextView) findViewById(R.id.main_addStart);
+		tv_addEnd = (TextView) findViewById(R.id.main_addEnd);
 	}
 
 	class MyAdapter extends BaseAdapter {

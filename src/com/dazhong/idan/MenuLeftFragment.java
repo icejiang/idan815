@@ -20,7 +20,7 @@ public class MenuLeftFragment extends LinearLayout{
 	private Context mContext;
 	private ListView mListView;
 	private List<String> mDatas = Arrays
-            .asList("个人信息", "打印设置","历史订单","修改密码","退出");
+            .asList("派单信息","个人信息", "打印设置","历史订单","修改密码","退出");
     private ListAdapter mAdapter;
 	
 	
@@ -44,26 +44,31 @@ public class MenuLeftFragment extends LinearLayout{
 					int position, long id) {
 				switch (position) {
 				case 0:
+					Intent intent0 = new Intent();
+					intent0.setClass(mContext, MainActivity.class);
+					mContext.startActivity(intent0);
+					break;
+				case 1:
 					Intent intent = new Intent();
 					intent.setClass(mContext, PersonalInfo.class);
 					mContext.startActivity(intent);
 					break;
-				case 1:
+				case 2:
 					Intent intent4 = new Intent();
 					intent4.setClass(mContext, BlueToothManage.class);
 					mContext.startActivity(intent4);
 					break;
-				case 2:
+				case 3:
 					Intent intent2 = new Intent();
 					intent2.setClass(mContext, OrderHistory.class);
 					mContext.startActivity(intent2);
 					break;
-				case 3:
+				case 4:
 					Intent intent3 = new Intent();
 					intent3.setClass(mContext, PasswordAlter.class);
 					mContext.startActivity(intent3);
 					break;
-				case 4:
+				case 5:
 					try {
 						getStateInfo myGetStateInfo = getStateInfo.getInstance(mContext);
 						StateInfo myStateInfo = myGetStateInfo.getStateinfo();

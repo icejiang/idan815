@@ -48,7 +48,7 @@
             android:background="#808080"
             android:textColor="#ffffff"
             android:layout_above="@+id/imageView3" android:layout_alignParentLeft="true" android:text="调度单号" android:textSize="20dp"/>
-        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView3" android:text="SR20151025000001" 
+        <TextView android:id="@+id/detail_titleid" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView3" android:text="SR20151025000001" 
             android:layout_marginLeft="10dp"
             android:textSize="20dp"/>
     </RelativeLayout>
