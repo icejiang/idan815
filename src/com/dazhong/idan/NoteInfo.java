@@ -52,6 +52,10 @@ public class NoteInfo implements Serializable {
 	 */
 	private double FeeOther = 0;
 	/**
+	 * 修正费
+	 * */
+	private double FeeBack=0;
+	/**
 	 * 超里程费
 	 */
 	private double FeeOverKMs = 0;
@@ -143,6 +147,7 @@ public class NoteInfo implements Serializable {
 	 * 实际服务时间
 	 * */
 	private int DoServiceTime;
+	
 	public String getNoteDate() {
 		return NoteDate;
 	}
@@ -405,6 +410,13 @@ public class NoteInfo implements Serializable {
 	public void setDoServiceTime(int doServiceTime) {
 		DoServiceTime = doServiceTime;
 	}
+	public double getFeeBack() {
+		return FeeBack;
+	}
+
+	public void setFeeBack(double feeBack) {
+		FeeBack = feeBack;
+	}
 
 	public NoteInfo() {
 
@@ -419,7 +431,7 @@ public class NoteInfo implements Serializable {
 			String serviceBegin, String serviceEnd, int serviceKMs,
 			int serviceTime, int overKMs, int overHours, int feeChoice,
 			double feeOverCal, String serviceRoute, String customerCompany,
-			String customerName, double feePark,int doservicekms,int doservicetime) {
+			String customerName, double feePark,int doservicekms,int doservicetime,double feeback) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -453,6 +465,7 @@ public class NoteInfo implements Serializable {
 		FeePark = feePark;
 		DoServiceKms=doservicekms;
 		DoServiceTime=doservicetime;
+		FeeBack=feeback;
 	}
 
 	/**
@@ -484,7 +497,8 @@ public class NoteInfo implements Serializable {
 				+ ServiceKMs + "," + ServiceTime + "," + OverKMs + ","
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
 				+ ServiceRoute + "," + CustomerCompany + ","
-				+ CustomerName+","+FeePark+","+DoServiceKms+","+DoServiceTime
+				+ CustomerName+","+FeePark+","+DoServiceKms+","+DoServiceTime+","
+				+NoteDate+","+FeeBack
 				+ "]";
 	}
 
