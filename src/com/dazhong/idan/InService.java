@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,7 +23,6 @@ public class InService extends Activity {
 	
 	private TextView btn_end;
 	private int input_end;
-	private int position;
 //	private NoteInfo noteInfo;
 	private String input_start;
 	private TaskInfo taskInfo;
@@ -38,8 +38,15 @@ public class InService extends Activity {
 	private TextView number;
 	private TextView location;
 	private TextView destination;
+	private TextView mileStart;
+	private TextView dispatcher;
+	private TextView dispatchNum;
+	private TextView salesman;
+	private TextView salesNum;
+	private TextView noteID;
 	private StateInfo myStateInfo;
 	private getStateInfo myGetStateInfo;
+	private int taskAccount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +55,11 @@ public class InService extends Activity {
 		setContentView(R.layout.in_service);
 		ActivityControler.addActivity(this);
 		Intent intent = getIntent();
-		position = intent.getIntExtra(OrderDetail.INPUT_KEY, 0);
 		input_start = intent.getStringExtra("input_start");
 		try {
-			taskInfo = getStateInfo.getInstance(getApplicationContext()).getStateinfo().getCurrentTask();
+			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+			myStateInfo = myGetStateInfo.getStateinfo();
+			taskInfo = myGetStateInfo.getStateinfo().getCurrentTask();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,17 +67,11 @@ public class InService extends Activity {
 		findView();
 		setData();
 		putDataIntoNote();
-		try {
-			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
-			myStateInfo = myGetStateInfo.getStateinfo();
-			myStateInfo.setCurrentState(13);
-			myStateInfo.setCurrentNote(noteInfo);
-			myStateInfo.setCurrentKMS(input_start);
-			myGetStateInfo.setStateinfo(myStateInfo);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		myStateInfo.setCurrentState(13);
+		myStateInfo.setCurrentNote(noteInfo);
+		myStateInfo.setCurrentKMS(input_start);
+		myGetStateInfo.setStateinfo(myStateInfo);
+		
 		
 		btn_end.setOnClickListener(new OnClickListener() {
 			
@@ -110,9 +112,6 @@ public class InService extends Activity {
 								myStateInfo.setCurrentKMS(input);
 								myGetStateInfo.setStateinfo(myStateInfo);
 								Intent intent = new Intent();
-//								intent.putExtra("TYPE", position);
-//								intent.putExtra(INPUT_TOTAL_KEY, noteInfo);
-								
 								intent.setClass(InService.this, OrderDetailEnd.class);
 								startActivity(intent);
 							}
@@ -137,10 +136,30 @@ public class InService extends Activity {
 		number = (TextView) findViewById(R.id.service_number);
 		location = (TextView) findViewById(R.id.service_location);
 		destination = (TextView) findViewById(R.id.service_destination);
-		
+		mileStart = (TextView) findViewById(R.id.service_startMile);
+		dispatcher = (TextView) findViewById(R.id.service_dispatcher);
+		dispatchNum = (TextView) findViewById(R.id.service_dispatchNum);
+		salesman = (TextView) findViewById(R.id.service_salesman);
+		salesNum = (TextView) findViewById(R.id.service_salesNum);
+		noteID = (TextView) findViewById(R.id.service_noteid);
 	}
 	
 	private void setData(){
+		taskAccount = myStateInfo.getTimeOfTaskOneDay()+1;
+		myStateInfo.setTimeOfTaskOneDay(taskAccount);
+		String account = "";
+		if(taskAccount<10){
+			account = "00"+taskAccount;
+		} else if (taskAccount<100) {
+			account = "0"+taskAccount;
+		} else {
+			account = taskAccount+"";
+		}
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd");
+		String today = sDateFormat.format(new Date(System.currentTimeMillis()));
+		String noteId = "DZ"+today+taskInfo.DriverID()+account;
+		noteID.setText(noteId);
+		noteInfo.setNoteID(noteId);
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		Date curDate = new Date(System.currentTimeMillis());
 		String str = formatter.format(curDate);
@@ -154,6 +173,12 @@ public class InService extends Activity {
 		number.setText(taskInfo.CustomerTel());
 		location.setText(taskInfo.PickupAddress());
 		destination.setText(taskInfo.LeaveAddress());
+		mileStart.setText(input_start);
+		dispatcher.setText(taskInfo.Planner());
+		dispatchNum.setText(taskInfo.PlannerTel());
+		salesman.setText(taskInfo.Salesman());
+		salesNum.setText(taskInfo.SalesmanTel());
+		
 	}
 	
 	private void putDataIntoNote(){
@@ -182,7 +207,15 @@ public class InService extends Activity {
 	}
 	
 	
-	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+		}
+
+		return true;
+
+	}
 	
 	
 	

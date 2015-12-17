@@ -18,6 +18,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,10 +54,11 @@ public class PrintActivity extends Activity {
 	private TextView serviceMile;
 	private TextView extraTime;
 	private TextView extraMile;
+	private TextView route_id;
+	private ImageView iv_return;
 	
 	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
-	private int position;
 	private getStateInfo myGetStateInfo;
 	private StateInfo myStateInfo;
 
@@ -66,10 +68,6 @@ public class PrintActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.printf);
 
-//		Intent intent = getIntent();
-////		noteInfo = (NoteInfo) intent.getSerializableExtra(InService.INPUT_TOTAL_KEY);
-//		position = intent.getIntExtra("TYPE",0);
-//		taskInfo = iDanApp.getInstance().getTasklist().get(position);
 		try {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
@@ -83,6 +81,13 @@ public class PrintActivity extends Activity {
 		findView();
 		setData();
 		
+		iv_return.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				PrintActivity.this.finish();
+			}
+		});
 		print_confirm.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -107,7 +112,7 @@ public class PrintActivity extends Activity {
 							PrintActivity.this.getResources().getString(
 									R.string.str_printfail), 2000).show();
 				}
-
+				iv_return.setVisibility(View.GONE);
 				// Intent intent = new Intent();
 				// intent.setClass(getApplicationContext(), MainActivity.class);
 				// startActivity(intent);
@@ -304,30 +309,17 @@ public class PrintActivity extends Activity {
 		int hours = noteInfo.getDoServiceTime();
 		serviceMile.setText(noteInfo.getDoServiceKms()+"公里");
 		serviceTime.setText(noteInfo.getDoServiceTime()+"小时");
-//		DateFormat df = new SimpleDateFormat("HH:mm");
-//		int hours = 0;
-//		try {
-//			Date d1 = df.parse(noteInfo.getServiceBegin());
-//			Date d2 = df.parse(noteInfo.getServiceEnd());
-//			long diff = d1.getTime() - d2.getTime();
-//			long hour = diff/(1000* 60 * 60);
-//			hours = Integer.parseInt(Long.toString(hour));
-//			serviceTime.setText(Long.toString(hour)+"小时");
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		int serviceMile = noteInfo.getServiceKMs();
 		int serviceHour = noteInfo.getServiceTime();
 		Log.i("jxb", "serviceMile = "+serviceMile);
 		if(serviceMile<totalMile){
 			extraMile.setText((totalMile - serviceMile)+"公里" );
-			double price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
+			double price_extraMile = noteInfo.getFeeOverKMs();
 			tv_beyondMile.setText(price_extraMile+"元");
 		}
 		if(hours > serviceHour){
 			extraTime.setText((hours - serviceHour)+"小时");
-			double price_extraTime = (hours - serviceHour)*(taskInfo.SalePricePerHour());
+			double price_extraTime = noteInfo.getFeeOverTime();
 			tv_beyondTime.setText(price_extraTime+"元");
 		}
 		
@@ -339,6 +331,7 @@ public class PrintActivity extends Activity {
 		tv_other.setText(noteInfo.getFeeOther()+"元");
 		tv_all.setText(noteInfo.getFeeTotal()+"元");
 		tv_dateLast.setText(curDate);
+		route_id.setText(noteInfo.getNoteID());
 	}
 
 	private void findView() {
@@ -363,5 +356,7 @@ public class PrintActivity extends Activity {
 		tv_dateLast = (TextView) findViewById(R.id.print_date_last);
 		tv_beyondMile = (TextView) findViewById(R.id.tv_beyond_mile);
 		tv_beyondTime = (TextView) findViewById(R.id.tv_beyond_time);
+		route_id = (TextView) findViewById(R.id.print_routeID);
+		iv_return = (ImageView) findViewById(R.id.return_print);
 	}
 }

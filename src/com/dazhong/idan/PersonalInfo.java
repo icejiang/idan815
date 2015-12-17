@@ -1,7 +1,12 @@
 package com.dazhong.idan;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PersonalInfo extends Activity{
@@ -11,6 +16,7 @@ public class PersonalInfo extends Activity{
 	private TextView workNum;
 	private TextView post;
 	private TextView team;
+	private ImageView iv_return;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +25,10 @@ public class PersonalInfo extends Activity{
 		setContentView(R.layout.personal_info);
 		
 		findView();
+		final SlidingMenu menu = new SlidingMenu(this);
+		showLeftMenu(menu);
 		try {
-//			PersonInfo personInfo = getInfoValue.getPersonInfo(MainActivity.EMPLOYEEID);
 			PersonInfo personInfo = getInfoValue.getPersonInfo(iDanApp.getInstance().getEMPLOYEEID());
-//			PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
-//					MainActivity.WORKNUMBER, MainActivity.USERNAME);
 			name.setText(personInfo.getName());
 			company.setText(personInfo.getCompany());
 			workNum.setText(personInfo.getWorkNum());
@@ -33,6 +38,14 @@ public class PersonalInfo extends Activity{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		iv_return.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				menu.showMenu();
+			}
+		});
 	}
 	
 	
@@ -43,5 +56,18 @@ public class PersonalInfo extends Activity{
 		workNum = (TextView) findViewById(R.id.tv_personalworkNum);
 		post = (TextView) findViewById(R.id.tv_personalPost);
 		team = (TextView) findViewById(R.id.tv_personalType);
+		iv_return = (ImageView) findViewById(R.id.return_person);
+	}
+	
+	private void showLeftMenu(SlidingMenu menu){
+		MenuLeftFragment menuLayout = new MenuLeftFragment(
+				getApplicationContext());
+		menu.setMode(SlidingMenu.LEFT);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setFadeDegree(0.35f);
+		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		menu.setMenu(R.layout.left_menu);
 	}
 }

@@ -20,7 +20,7 @@
             android:text="打印预览" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/return_print"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
@@ -63,7 +63,7 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/print_routeID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

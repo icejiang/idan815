@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AddPay extends Activity {
@@ -17,6 +18,7 @@ public class AddPay extends Activity {
 	private EditText et_other;
 	private EditText et_hotel;
 	private TextView bt_save;
+	private ImageView iv_return;
 	public final static String key_road = "ROAD";
 	public final static String key_meals = "MEALS";
 	public final static String key_parking = "PARKING";
@@ -50,6 +52,13 @@ public class AddPay extends Activity {
 				
 			}
 		});
+		iv_return.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				AddPay.this.finish();
+			}
+		});
 	}
 	
 	
@@ -61,6 +70,6 @@ public class AddPay extends Activity {
 		et_other = (EditText) findViewById(R.id.pay_other);
 		bt_save = (TextView) findViewById(R.id.bt_save);
 		et_hotel = (EditText) findViewById(R.id.pay_hotel);
-		
+		iv_return = (ImageView) findViewById(R.id.return_addPay);
 	}
 }

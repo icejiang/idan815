@@ -57,7 +57,6 @@ public class LoginActivity extends Activity {
 		// UpdateManager mUpdateManager = new UpdateManager(LoginActivity.this);
 		// // 注意此处不能传入getApplicationContext();会报错，因为只有是一个Activity才可以添加窗体
 		// mUpdateManager.checkUpdateInfo();
-		textView = (TextView) findViewById(R.id.textView1);
 		btn_login = (Button) findViewById(R.id.login);
 		logname = (EditText) findViewById(R.id.editText1);
 		password = (EditText) findViewById(R.id.editText2);
@@ -157,7 +156,7 @@ public class LoginActivity extends Activity {
 		// 登陆后，选择显示页面
 		// switch (88) {
 		// System.out.println(stateinfo.getCurrentState());
-		switch (stateinfo.getCurrentState()) {
+		switch (1) {
 		case 101:
 			// intent = new Intent();
 			// intent.setClass(getApplicationContext(), LoginActivity.class);

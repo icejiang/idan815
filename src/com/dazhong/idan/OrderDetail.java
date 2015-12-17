@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -53,6 +54,7 @@ public class OrderDetail extends Activity {
 	private LinearLayout flightLayout;
 	private StateInfo myStateInfo;
 	private getStateInfo myGetStateInfo;
+	private TextView titleid;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -172,10 +174,12 @@ public class OrderDetail extends Activity {
 		remark_sales = (TextView) findViewById(R.id.detail_remark_sales);
 		flightLayout = (LinearLayout) findViewById(R.id.layout_flight);
 		payments = (TextView) findViewById(R.id.payments);
+		titleid = (TextView) findViewById(R.id.detail_titleid);
 			
 	}
 	
 	private void setData(){
+		titleid.setText(taskInfo.TaskCode());
 		service_start.setText(taskInfo.ServiceBegin());
 		service_end.setText(taskInfo.ServiceEnd());
 		onboardTime.setText(taskInfo.OnboardTime());
@@ -206,8 +210,6 @@ public class OrderDetail extends Activity {
 		carType.setText(taskInfo.CarType());
 		payments.setText(taskInfo.getBalancetypename());
 	}
-	
-	
 	
 	
 }

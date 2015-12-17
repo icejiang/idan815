@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dazhong.idan.MainActivity.MyAdapter;
 import com.dazhong.idan.MainActivity.ViewHolder;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +13,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ public class OrderHistory extends Activity {
 
 	private ListView mListView;
 	private List<Order> mList;
+	private ImageView iv_return;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +32,20 @@ public class OrderHistory extends Activity {
 		setContentView(R.layout.order_history);
 		ActivityControler.addActivity(this);
 		mListView = (ListView) findViewById(R.id.listview_history);
+		iv_return = (ImageView) findViewById(R.id.return_history);
 		addData();
 		MyAdapter mAdapter = new MyAdapter(this);
 		mListView.setAdapter(mAdapter);
-		
+		final SlidingMenu menu = new SlidingMenu(this);
+		showLeftMenu(menu);
+		iv_return.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				menu.showMenu();
+			}
+		});
 	}
 	
 	
@@ -41,6 +55,18 @@ public class OrderHistory extends Activity {
 		mList.add(new Order("2015/11/11 22:22", "SR20151111000002", "市用", "李先生", "13838385438", "人民广场"));
 	}
 	
+	
+	private void showLeftMenu(SlidingMenu menu){
+		MenuLeftFragment menuLayout = new MenuLeftFragment(
+				getApplicationContext());
+		menu.setMode(SlidingMenu.LEFT);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setFadeDegree(0.35f);
+		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		menu.setMenu(R.layout.left_menu);
+	}
 	
 class MyAdapter extends BaseAdapter{
 		

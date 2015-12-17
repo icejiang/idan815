@@ -70,7 +70,7 @@
         android:background="@drawable/bg_red" >
 
         <TextView
-            android:id="@+id/button1"
+            android:id="@+id/main_addStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -78,7 +78,16 @@
             android:text="上班填写路码"
             android:textColor="#ffffff"
             android:textSize="20dp" />
-
+		<TextView
+            android:id="@+id/main_addEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="下班填写路码"
+            android:visibility="gone"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
     </RelativeLayout>
 
 </LinearLayout>
