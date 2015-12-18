@@ -246,7 +246,8 @@ public class PrintActivity extends Activity {
 		String messages = null;
 		try {
 			String mes = "\r\n\r\n";
-			 NoteInfo note = iDanApp.getInstance().getStateInfo().getCurrentNote();
+//			 NoteInfo note = iDanApp.getInstance().getStateInfo().getCurrentNote();
+			 NoteInfo note=myStateInfo.getCurrentNote();
 			//在此调整数据格式，将实际的路单信息传入
 //			NoteInfo note = new NoteInfo();
 //			note.setCarNumber("沪BZ8911");
@@ -275,9 +276,9 @@ public class PrintActivity extends Activity {
 			messages = messages + "下车地址：" + note.getLeaveAddress() + mes;
 			messages = messages + "途径地点：" + note.getServiceRoute() + mes;
 			messages = messages + "服务里程："
-					+ Double.toString(note.getServiceKMs()) + mes;
+					+ Double.toString(note.getDoServiceKms()) + mes;
 			messages = messages + "服务时长："
-					+ Double.toString(note.getServiceTime()) + mes;
+					+ Double.toString(note.getDoServiceTime()) + mes;
 			if (note.getOverHours() > 0)
 				messages = messages + "超时服务"
 						+ Integer.toString(note.getOverHours()) + mes;
