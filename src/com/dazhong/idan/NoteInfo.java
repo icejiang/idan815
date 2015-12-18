@@ -147,7 +147,20 @@ public class NoteInfo implements Serializable {
 	 * 实际服务时间
 	 * */
 	private int DoServiceTime;
+	/**
+	 * 调度单序号
+	 * */
+	private String TaskID;
 	
+	
+	public String getTaskID() {
+		return TaskID;
+	}
+
+	public void setTaskID(String taskID) {
+		TaskID = taskID;
+	}
+
 	public String getNoteDate() {
 		return NoteDate;
 	}
@@ -431,7 +444,8 @@ public class NoteInfo implements Serializable {
 			String serviceBegin, String serviceEnd, int serviceKMs,
 			int serviceTime, int overKMs, int overHours, int feeChoice,
 			double feeOverCal, String serviceRoute, String customerCompany,
-			String customerName, double feePark,int doservicekms,int doservicetime,double feeback) {
+			String customerName, double feePark,int doservicekms,int doservicetime,
+			String taskID,double feeback) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -466,13 +480,14 @@ public class NoteInfo implements Serializable {
 		DoServiceKms=doservicekms;
 		DoServiceTime=doservicetime;
 		FeeBack=feeback;
+		TaskID=taskID;
 	}
 
 	/**
 	 * 上传到服务器的格式
 	 * */
 	public String toUploadNote() {
-		return "NoteInfo [" + NoteID + "," + PlanID + "," + CarID + ","
+		return "NoteInfo [" + NoteID + "," + TaskID + "," + CarID + ","
 				+ CarNumber + "," + DriverID + "," + DriverName + ","
 				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
 				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
@@ -482,7 +497,7 @@ public class NoteInfo implements Serializable {
 				+ DoServiceKms + "," + DoServiceTime + "," + OverKMs + ","
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
 				+ ServiceRoute.replace(",", "$$") + "," 
-				+ FeePark+","+NoteDate + "]";
+				+ FeePark+","+NoteDate.replaceAll("-", "") + "]";
 	}
 
 	@Override
@@ -498,7 +513,7 @@ public class NoteInfo implements Serializable {
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
 				+ ServiceRoute + "," + CustomerCompany + ","
 				+ CustomerName+","+FeePark+","+DoServiceKms+","+DoServiceTime+","
-				+NoteDate+","+FeeBack
+				+NoteDate+","+FeeBack+","+TaskID
 				+ "]";
 	}
 

@@ -29,6 +29,22 @@ public abstract class getInfoValue {
 	}
 
 	/**
+	 * 插入路单
+	 * */
+	public static int InsertNote(String note){
+		int iInsertResult=0;
+		String sInfo;
+		try {
+			sInfo=getDZService.getServiceConnect(note, "InsertRouteNote");
+			System.out.println(sInfo);
+			iInsertResult=Integer.parseInt(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return iInsertResult;
+	}
+	/**
 	 * 设置用户状态，等待接单
 	 * */
 	public static boolean ServiceStandby(String userid, String taskid) {
