@@ -51,18 +51,25 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectDiskReads().detectDiskWrites().detectNetwork()
-				.penaltyLog().build());
-
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
-				.build());
+		// StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+		// .detectDiskReads().detectDiskWrites().detectNetwork()
+		// .penaltyLog().build());
+		//
+		// StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+		// .detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
+		// .build());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.business_list);
 		idanapp = iDanApp.getInstance();
-		stateinfo = idanapp.getStateInfo();
 		tasklist = idanapp.getTasklist();
+		try {
+			stateinfo = getStateInfo.getInstance(getApplicationContext())
+					.getStateinfo();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Toast.makeText(this.getApplicationContext(), R.string.error, 2000);
+		}// idanapp.getStateInfo();
 		ActivityControler.addActivity(this);
 		// System.out.println(idanapp.getSERVICEADRRESS());
 
@@ -86,7 +93,7 @@ public class MainActivity extends Activity {
 		// configure the SlidingMenu
 		MenuLeftFragment menuLayout = new MenuLeftFragment(
 				getApplicationContext());
-//		final SlidingMenu 
+		// final SlidingMenu
 		menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -104,102 +111,152 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				menu.showMenu();
+				// menu.showMenu();
+				refreshTasks();
 			}
 		});
 		tv_addStart.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				final EditText editText = new EditText(MainActivity.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-				new AlertDialog.Builder(MainActivity.this).setTitle("请填写上班路码").
-					setView(editText).setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-							String input = editText.getText().toString();
-							if(input.equals("")){
-								Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
-							} else {
-								try {
-									getStateInfo myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
-									StateInfo myStateInfo = myGetStateInfo.getStateinfo();
-									if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
-										Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
-										Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
-									} else {
-										myStateInfo.setCurrentKMS(input);
-										myGetStateInfo.setStateinfo(myStateInfo);
-										tv_addStart.setVisibility(View.GONE);
-										tv_addEnd.setVisibility(View.VISIBLE);
+				new AlertDialog.Builder(MainActivity.this)
+						.setTitle("请填写上班路码")
+						.setView(editText)
+						.setPositiveButton(
+								"确定",
+								new android.content.DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+										String input = editText.getText()
+												.toString();
+										if (input.equals("")) {
+											Toast.makeText(
+													getApplicationContext(),
+													"路码不能为空",
+													Toast.LENGTH_SHORT).show();
+										} else {
+											try {
+												getStateInfo myGetStateInfo = getStateInfo
+														.getInstance(getApplicationContext());
+												StateInfo myStateInfo = myGetStateInfo
+														.getStateinfo();
+												if (Integer.parseInt(input) < Integer.parseInt(myStateInfo
+														.getCurrentKMS())) {
+													Toast.makeText(
+															getApplicationContext(),
+															"输入路码小于历史路码,请确认输入",
+															Toast.LENGTH_SHORT)
+															.show();
+													Log.i("jxb",
+															"历史路码 = "
+																	+ myStateInfo
+																			.getCurrentKMS());
+												} else {
+													myStateInfo
+															.setCurrentKMS(input);
+													myGetStateInfo
+															.setStateinfo(myStateInfo);
+													tv_addStart
+															.setVisibility(View.GONE);
+													tv_addEnd
+															.setVisibility(View.VISIBLE);
+												}
+											} catch (Exception e1) {
+												// TODO Auto-generated catch
+												// block
+												e1.printStackTrace();
+											}
+										}
 									}
-								} catch (Exception e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-							}
-						}
-					}).show();
-				
+								}).show();
+
 			}
 		});
 		tv_addEnd.setOnClickListener(myClickListener);
 	}
 
 	private OnClickListener myClickListener = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
 			final EditText editText = new EditText(MainActivity.this);
 			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-			new AlertDialog.Builder(MainActivity.this).setTitle("请填写下班路码").
-				setView(editText).setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						
-						String input = editText.getText().toString();
-						if(input.equals("")){
-							Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
-						} else {
-							try {
-								getStateInfo myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
-								StateInfo myStateInfo = myGetStateInfo.getStateinfo();
-								if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
-									Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
-									Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
-								} else {
-									myStateInfo.setCurrentKMS(input);
-									myStateInfo.setEndKMsOfToday(input);
-									myGetStateInfo.setStateinfo(myStateInfo);
-									tv_addEnd.setVisibility(View.GONE);
-									tv_addStart.setVisibility(View.VISIBLE);
+			new AlertDialog.Builder(MainActivity.this)
+					.setTitle("请填写下班路码")
+					.setView(editText)
+					.setPositiveButton(
+							"确定",
+							new android.content.DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+
+									String input = editText.getText()
+											.toString();
+									if (input.equals("")) {
+										Toast.makeText(getApplicationContext(),
+												"路码不能为空", Toast.LENGTH_SHORT)
+												.show();
+									} else {
+										try {
+											getStateInfo myGetStateInfo = getStateInfo
+													.getInstance(getApplicationContext());
+											StateInfo myStateInfo = myGetStateInfo
+													.getStateinfo();
+											if (Integer.parseInt(input) < Integer
+													.parseInt(myStateInfo
+															.getCurrentKMS())) {
+												Toast.makeText(
+														getApplicationContext(),
+														"输入路码小于历史路码,请确认输入",
+														Toast.LENGTH_SHORT)
+														.show();
+												Log.i("jxb",
+														"历史路码 = "
+																+ myStateInfo
+																		.getCurrentKMS());
+											} else {
+												myStateInfo
+														.setCurrentKMS(input);
+												myStateInfo
+														.setEndKMsOfToday(input);
+												myGetStateInfo
+														.setStateinfo(myStateInfo);
+												tv_addEnd
+														.setVisibility(View.GONE);
+												tv_addStart
+														.setVisibility(View.VISIBLE);
+											}
+										} catch (Exception e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+									}
 								}
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					}
-				}).show();
-			
+							}).show();
+
 		}
-			
+
 	};
-//	};
-	
-//	@Override
-//	protected void onResume() {
-//		// TODO Auto-generated method stub
-//		super.onResume();
-//		if (menu.isShown()){
-//			menu.showMenu();
-//		}
-//	}
-	
+
+	// };
+
+	// @Override
+	// protected void onResume() {
+	// // TODO Auto-generated method stub
+	// super.onResume();
+	// if (menu.isShown()){
+	// menu.showMenu();
+	// }
+	// }
+
 	public void onBackPressed() {
 		ActivityControler.finishAll();
 	}
@@ -274,6 +331,21 @@ public class MainActivity extends Activity {
 		iv_return = (ImageView) findViewById(R.id.return_main);
 		tv_addStart = (TextView) findViewById(R.id.main_addStart);
 		tv_addEnd = (TextView) findViewById(R.id.main_addEnd);
+	}
+
+	private void refreshTasks() {
+		try {
+			idanapp.setTasklist(getInfoValue.getTasks(stateinfo
+					.getCurrentPerson().getPersonID()));
+			tasklist = idanapp.getTasklist();
+			// System.out.println("refresh ok");
+			MyAdapter mAdapter = new MyAdapter(this);
+			mListView.setAdapter(mAdapter);
+			// System.out.println("rebind data");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	class MyAdapter extends BaseAdapter {

@@ -146,7 +146,7 @@ public abstract class getInfoValue {
 						"BusinessRecord"));
 				noteinfo.setNoteDate(getDZService.getInfoValue(sinf,
 						"RouteNoteDate"));
-				 System.out.println(noteinfo.toString());
+//				 System.out.println(noteinfo.toString());
 				listNotes.add(noteinfo);
 			}
 			 System.out.println("task count:" + listNotes.size());
