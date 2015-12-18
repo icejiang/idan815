@@ -204,6 +204,7 @@ public class InService extends Activity {
 		noteInfo.setServiceKMs(taskInfo.SaleKMs());
 		noteInfo.setServiceTime(taskInfo.SaleTime());
 		noteInfo.setCustomerName(taskInfo.Customer());
+		noteInfo.setTaskID(taskInfo.TaskID());
 	}
 	
 	

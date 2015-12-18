@@ -83,14 +83,11 @@ public abstract class getInfoValue {
 		List<String> listInfo = null;
 		NoteInfo noteinfo = null;
 		String sInfo = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		Timestamp now = new Timestamp(System.currentTimeMillis());
-		String sf = sdf.format(now);
-		// System.out.println(sf);
 		try {
+//			System.out.println(employeeid);
 			sInfo = getDZService.getServiceConnect(employeeid, Integer.toString(pages),
-					"GetDispatchInfo");
-			 System.out.println(sInfo);
+					"GetRouteNoteInfo");
+//			 System.out.println(sInfo);
 			if (sInfo == null)
 				return null;
 			listInfo = getDZService.getInfoValue(sInfo);

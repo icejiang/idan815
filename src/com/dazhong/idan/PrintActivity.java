@@ -76,6 +76,9 @@ public class PrintActivity extends Activity {
 			myStateInfo.setCurrentState(18);
 			noteInfo = myStateInfo.getCurrentNote();
 			taskInfo = myStateInfo.getCurrentTask();
+
+			int k=getInfoValue.InsertNote(noteInfo.toUploadNote());
+			System.out.println("inser note return is "+k);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
