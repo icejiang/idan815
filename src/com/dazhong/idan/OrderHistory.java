@@ -9,7 +9,9 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +24,9 @@ import android.widget.TextView;
 public class OrderHistory extends Activity {
 
 	private ListView mListView;
-	private List<Order> mList;
 	private ImageView iv_return;
+	private ImageView iv_home;
+	private List<NoteInfo> noteList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,17 @@ public class OrderHistory extends Activity {
 		ActivityControler.addActivity(this);
 		mListView = (ListView) findViewById(R.id.listview_history);
 		iv_return = (ImageView) findViewById(R.id.return_history);
-		addData();
+		iv_home = (ImageView) findViewById(R.id.home_history);
+//		addData();
+		try {
+			String id = getStateInfo.getInstance(getApplicationContext())
+					.getStateinfo().getCurrentPerson().getPersonID();
+			Log.i("jxb", "size = "+id);
+			noteList = getInfoValue.getNotes(id, 1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		MyAdapter mAdapter = new MyAdapter(this);
 		mListView.setAdapter(mAdapter);
 		final SlidingMenu menu = new SlidingMenu(this);
@@ -46,14 +59,24 @@ public class OrderHistory extends Activity {
 				menu.showMenu();
 			}
 		});
+		iv_home.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 Intent intent = new Intent();
+				 intent.setClass(getApplicationContext(), MainActivity.class);
+				 startActivity(intent);
+
+			}
+		});
 	}
 	
 	
-	private void addData(){
-		mList = new ArrayList<Order>();
-		mList.add(new Order("2015/11/11 11:11", "SR20151111000001", "机场接机", "王先生", "13838385438", "虹桥机场T1航站楼"));
-		mList.add(new Order("2015/11/11 22:22", "SR20151111000002", "市用", "李先生", "13838385438", "人民广场"));
-	}
+//	private void addData(){
+//		mList = new ArrayList<Order>();
+//		mList.add(new Order("2015/11/11 11:11", "SR20151111000001", "机场接机", "王先生", "13838385438", "虹桥机场T1航站楼"));
+//		mList.add(new Order("2015/11/11 22:22", "SR20151111000002", "市用", "李先生", "13838385438", "人民广场"));
+//	}
 	
 	
 	private void showLeftMenu(SlidingMenu menu){
@@ -80,8 +103,11 @@ class MyAdapter extends BaseAdapter{
 		
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return mList.size();
+			if (noteList != null) {
+				return noteList.size();
+			} else {
+				return 0;
+			}
 		}
 		
 		@Override
@@ -101,27 +127,18 @@ class MyAdapter extends BaseAdapter{
 			ViewHolder holder;
 			if(convertView == null){
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(R.layout.order_item, null);
-				holder.date = (TextView) convertView.findViewById(R.id.item_date);
-				holder.location = (TextView) convertView.findViewById(R.id.item_location);
-				holder.name = (TextView) convertView.findViewById(R.id.item_name);
-				holder.nubmer = (TextView) convertView.findViewById(R.id.item_number);
-				holder.time = (TextView) convertView.findViewById(R.id.item_time);
-				holder.type = (TextView) convertView.findViewById(R.id.item_type);
+				convertView = mInflater.inflate(R.layout.history_item, null);
+				holder.date = (TextView) convertView.findViewById(R.id.history_date);
+				holder.id = (TextView) convertView.findViewById(R.id.history_id);
+				holder.sum = (TextView) convertView.findViewById(R.id.history_sum);
 				convertView.setTag(holder);
 			}else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			Order mOrder = mList.get(position);
-			holder.time.setText(mOrder.getTime());
-			holder.date.setText(mOrder.getId());
-			holder.location.setText(mOrder.getLocation());
-			holder.name.setText(mOrder.getName());
-			holder.nubmer.setText(mOrder.getNubmer());
-			holder.type.setText(mOrder.getType()); 
-			
-			
-			
+			NoteInfo noteInfo = noteList.get(position);
+			holder.date.setText(noteInfo.getNoteDate());
+			holder.id.setText(noteInfo.getNoteID());
+			holder.sum.setText(noteInfo.getFeePrice()+"元");
 			return convertView;
 		}
 		
@@ -129,12 +146,9 @@ class MyAdapter extends BaseAdapter{
 	}
 	static class ViewHolder  
 	{  
-		public TextView time;  
 		public TextView date;  
-		public TextView type;  
-		public TextView name;  
-		public TextView nubmer;  
-		public TextView location;  
+		public TextView id;  
+		public TextView sum;  
 	}
 	
 }

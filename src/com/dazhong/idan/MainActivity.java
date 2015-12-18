@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
 	private TextView tv_addEnd;
 	private StateInfo stateinfo;
 	private List<TaskInfo> tasklist = null;
+	private SlidingMenu menu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,8 @@ public class MainActivity extends Activity {
 		// configure the SlidingMenu
 		MenuLeftFragment menuLayout = new MenuLeftFragment(
 				getApplicationContext());
-		final SlidingMenu menu = new SlidingMenu(this);
+//		final SlidingMenu 
+		menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
@@ -125,10 +127,15 @@ public class MainActivity extends Activity {
 								try {
 									getStateInfo myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 									StateInfo myStateInfo = myGetStateInfo.getStateinfo();
-									myStateInfo.setCurrentKMS(input);
-									myGetStateInfo.setStateinfo(myStateInfo);
-									tv_addStart.setVisibility(View.GONE);
-									tv_addEnd.setVisibility(View.VISIBLE);
+									if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
+										Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
+										Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
+									} else {
+										myStateInfo.setCurrentKMS(input);
+										myGetStateInfo.setStateinfo(myStateInfo);
+										tv_addStart.setVisibility(View.GONE);
+										tv_addEnd.setVisibility(View.VISIBLE);
+									}
 								} catch (Exception e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
@@ -139,8 +146,60 @@ public class MainActivity extends Activity {
 				
 			}
 		});
+		tv_addEnd.setOnClickListener(myClickListener);
 	}
 
+	private OnClickListener myClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			final EditText editText = new EditText(MainActivity.this);
+			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+			new AlertDialog.Builder(MainActivity.this).setTitle("请填写下班路码").
+				setView(editText).setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+						String input = editText.getText().toString();
+						if(input.equals("")){
+							Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
+						} else {
+							try {
+								getStateInfo myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+								StateInfo myStateInfo = myGetStateInfo.getStateinfo();
+								if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
+									Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
+									Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
+								} else {
+									myStateInfo.setCurrentKMS(input);
+									myStateInfo.setEndKMsOfToday(input);
+									myGetStateInfo.setStateinfo(myStateInfo);
+									tv_addEnd.setVisibility(View.GONE);
+									tv_addStart.setVisibility(View.VISIBLE);
+								}
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}
+				}).show();
+			
+		}
+			
+	};
+//	};
+	
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		super.onResume();
+//		if (menu.isShown()){
+//			menu.showMenu();
+//		}
+//	}
+	
 	public void onBackPressed() {
 		ActivityControler.finishAll();
 	}

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +24,8 @@ import android.widget.Toast;
 public class OrderDetail extends Activity {
 	
 	private TextView tv_start;
-	private int input_start;
-	private int input_end;
+//	private int input_start;
+//	private int input_end;
 	private int position;
 	public static String INPUT_KEY = "INPUT";
 	private TaskInfo taskInfo;
@@ -51,6 +52,7 @@ public class OrderDetail extends Activity {
 	private TextView remark;
 	private TextView remark_sales;
 	private TextView payments;
+	private ImageView iv_return;
 	private LinearLayout flightLayout;
 	private StateInfo myStateInfo;
 	private getStateInfo myGetStateInfo;
@@ -97,54 +99,31 @@ public class OrderDetail extends Activity {
 							if(input.equals("")){
 								Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
 							} else {
-								input_start = Integer.parseInt(input);
-								Log.i("jxb", "起始路码 = "+input_start);
+								if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
+									Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
+									Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
+								} else {
+//								input_start = Integer.parseInt(input);
+//								Log.i("jxb", "起始路码 = "+input_start);
 								Intent intent = new Intent();
 								intent.putExtra("input_start", input);
 								intent.putExtra(INPUT_KEY, position);
 								intent.setClass(OrderDetail.this, InService.class);
 								startActivity(intent);
 							}
+							}
 						}
 					}).show();
 				
 			}
 		});
-		
-		
-		/*btn_end.setOnClickListener(new OnClickListener() {
+		iv_return.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				final EditText editText = new EditText(OrderDetail.this);
-				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-				new AlertDialog.Builder(OrderDetail.this).setTitle("请填写结束路码").
-				setView(editText).setPositiveButton("填写下一步", new android.content.DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						
-						String input = editText.getText().toString();
-						if(input.equals("")){
-							Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
-						} else {
-							input_end = Integer.parseInt(input);
-							Log.i("jxb", "结束路码 = "+input_end);
-							if (input_end < input_start){
-								Toast.makeText(getApplicationContext(), "结束路码小于起始路码，请确认输入", Toast.LENGTH_SHORT).show();
-							} else {
-								Intent intent = new Intent();
-								intent.putExtra(INPUT_KEY, input_end-input_start);
-								intent.setClass(OrderDetail.this, OrderDetailEnd.class);
-								startActivity(intent);
-							}
-						}
-					}
-				}).show();
+				OrderDetail.this.finish();
 			}
-		});*/
-		
+		});
 		
 	}
 	
@@ -175,7 +154,7 @@ public class OrderDetail extends Activity {
 		flightLayout = (LinearLayout) findViewById(R.id.layout_flight);
 		payments = (TextView) findViewById(R.id.payments);
 		titleid = (TextView) findViewById(R.id.detail_titleid);
-			
+		iv_return = (ImageView) findViewById(R.id.return_detail);
 	}
 	
 	private void setData(){

@@ -3,6 +3,7 @@ package com.dazhong.idan;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 public class PasswordAlter extends Activity {
 	
 	private ImageView iv_return;
+	private ImageView iv_home;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,7 @@ public class PasswordAlter extends Activity {
 		ActivityControler.addActivity(this);
 		
 		iv_return = (ImageView) findViewById(R.id.return_pswAlter);
+		iv_home = (ImageView) findViewById(R.id.home_pswAlter);
 		
 		final SlidingMenu menu = new SlidingMenu(this);
 		showLeftMenu(menu);
@@ -31,6 +34,16 @@ public class PasswordAlter extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				menu.showMenu();
+			}
+		});
+		iv_home.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 Intent intent = new Intent();
+				 intent.setClass(getApplicationContext(), MainActivity.class);
+				 startActivity(intent);
+
 			}
 		});
 	}

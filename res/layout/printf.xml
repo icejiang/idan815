@@ -27,6 +27,15 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@drawable/return_icon" />
+        <ImageView
+            android:id="@+id/home_print"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:src="@drawable/home" />
 
     </RelativeLayout>
 <ScrollView
@@ -36,6 +45,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -290,7 +300,27 @@
                 android:text="0小时"
                 android:textSize="16dp" />
         </LinearLayout>
+		<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="营运记录:"
+                android:textScaleX="0.9"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/print_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text=""
+                android:textSize="16dp" />
+        </LinearLayout>
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="match_parent"

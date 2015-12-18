@@ -70,8 +70,9 @@
 
         <EditText
             android:id="@+id/pay_road"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:inputType="number"
             android:textSize="20dp" />
 
@@ -158,6 +159,72 @@
 
         <EditText
             android:id="@+id/pay_other"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="60dp" >
+
+        <TextView
+            
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="费用修正"
+            android:textScaleX="0.9"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/price_alter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="60dp" >
+
+        <TextView
+            
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="上车路码: "
+            android:textScaleX="0.9"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/route_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="60dp" >
+
+        <TextView
+            
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="下车路码: "
+            android:textScaleX="0.9"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/route_off"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
