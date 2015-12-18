@@ -156,7 +156,7 @@ public class LoginActivity extends Activity {
 		// 登陆后，选择显示页面
 		// switch (88) {
 		// System.out.println(stateinfo.getCurrentState());
-		switch (1) {
+		switch (stateinfo.getCurrentState()) {
 		case 101:
 			// intent = new Intent();
 			// intent.setClass(getApplicationContext(), LoginActivity.class);
