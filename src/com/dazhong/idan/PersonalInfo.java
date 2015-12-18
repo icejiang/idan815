@@ -3,6 +3,7 @@ package com.dazhong.idan;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +18,7 @@ public class PersonalInfo extends Activity{
 	private TextView post;
 	private TextView team;
 	private ImageView iv_return;
+	private ImageView iv_home;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,16 @@ public class PersonalInfo extends Activity{
 				menu.showMenu();
 			}
 		});
+		iv_home.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 Intent intent = new Intent();
+				 intent.setClass(getApplicationContext(), MainActivity.class);
+				 startActivity(intent);
+
+			}
+		});
 	}
 	
 	
@@ -57,6 +69,7 @@ public class PersonalInfo extends Activity{
 		post = (TextView) findViewById(R.id.tv_personalPost);
 		team = (TextView) findViewById(R.id.tv_personalType);
 		iv_return = (ImageView) findViewById(R.id.return_person);
+		iv_home = (ImageView) findViewById(R.id.home_personal);
 	}
 	
 	private void showLeftMenu(SlidingMenu menu){

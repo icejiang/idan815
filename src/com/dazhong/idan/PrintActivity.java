@@ -55,7 +55,9 @@ public class PrintActivity extends Activity {
 	private TextView extraTime;
 	private TextView extraMile;
 	private TextView route_id;
+	private TextView record;
 	private ImageView iv_return;
+	private ImageView iv_home;
 	
 	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
@@ -88,6 +90,16 @@ public class PrintActivity extends Activity {
 				PrintActivity.this.finish();
 			}
 		});
+		iv_home.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 Intent intent = new Intent();
+				 intent.setClass(getApplicationContext(), MainActivity.class);
+				 startActivity(intent);
+
+			}
+		});
 		print_confirm.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -113,10 +125,7 @@ public class PrintActivity extends Activity {
 									R.string.str_printfail), 2000).show();
 				}
 				iv_return.setVisibility(View.GONE);
-				// Intent intent = new Intent();
-				// intent.setClass(getApplicationContext(), MainActivity.class);
-				// startActivity(intent);
-
+				iv_home.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -305,6 +314,9 @@ public class PrintActivity extends Activity {
 		date.setText(curDate);
 		time.setText(noteInfo.getServiceBegin()+"-"+noteInfo.getServiceEnd());
 		type.setText(taskInfo.ServiceTypeName());
+		name.setText(noteInfo.getCustomerName());
+		location.setText(noteInfo.getOnBoardAddress());
+		destination.setText(noteInfo.getLeaveAddress());
 //		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin());
 		int totalMile = noteInfo.getDoServiceKms();
 		int hours = noteInfo.getDoServiceTime();
@@ -333,6 +345,7 @@ public class PrintActivity extends Activity {
 		tv_all.setText(noteInfo.getFeeTotal()+"Ԫ");
 		tv_dateLast.setText(curDate);
 		route_id.setText(noteInfo.getNoteID());
+		record.setText(noteInfo.getServiceRoute());
 	}
 
 	private void findView() {
@@ -359,5 +372,7 @@ public class PrintActivity extends Activity {
 		tv_beyondTime = (TextView) findViewById(R.id.tv_beyond_time);
 		route_id = (TextView) findViewById(R.id.print_routeID);
 		iv_return = (ImageView) findViewById(R.id.return_print);
+		iv_home = (ImageView) findViewById(R.id.home_print);
+		record = (TextView) findViewById(R.id.print_record);
 	}
 }
