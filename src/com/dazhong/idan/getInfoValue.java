@@ -29,6 +29,22 @@ public abstract class getInfoValue {
 	}
 
 	/**
+	 * 插入路单
+	 * */
+	public static int InsertNote(String note){
+		int iInsertResult=0;
+		String sInfo;
+		try {
+			sInfo=getDZService.getServiceConnect(note, "InsertRouteNote");
+			System.out.println(sInfo);
+			iInsertResult=Integer.parseInt(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return iInsertResult;
+	}
+	/**
 	 * 设置用户状态，等待接单
 	 * */
 	public static boolean ServiceStandby(String userid, String taskid) {
@@ -67,14 +83,11 @@ public abstract class getInfoValue {
 		List<String> listInfo = null;
 		NoteInfo noteinfo = null;
 		String sInfo = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		Timestamp now = new Timestamp(System.currentTimeMillis());
-		String sf = sdf.format(now);
-		// System.out.println(sf);
 		try {
+//			System.out.println(employeeid);
 			sInfo = getDZService.getServiceConnect(employeeid, Integer.toString(pages),
-					"GetDispatchInfo");
-			 System.out.println(sInfo);
+					"GetRouteNoteInfo");
+//			 System.out.println(sInfo);
 			if (sInfo == null)
 				return null;
 			listInfo = getDZService.getInfoValue(sInfo);

@@ -150,12 +150,14 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			extraMile.setText((totalMile - serviceMile)+"公里" );
 			price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
 			noteInfo.setFeeOverKMs(price_extraMile);
+			noteInfo.setOverKMs(totalMile-serviceMile);
 			extraMile_price.setText(price_extraMile+"元");
 		}
 		if(hours > serviceHour){
 			extraTime.setText((hours - serviceHour)+"小时");
 			price_extraTime = (hours - serviceHour)*(taskInfo.SalePricePerHour());
 			noteInfo.setFeeOverTime(price_extraTime);
+			noteInfo.setOverKMs(hours-serviceHour);
 			extraTime_price.setText(price_extraTime+"元");
 		}
 		if(feeChoice == 1){
