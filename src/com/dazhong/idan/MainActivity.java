@@ -111,8 +111,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// menu.showMenu();
-				refreshTasks();
+				 menu.showMenu();
+//				refreshTasks();
 			}
 		});
 		tv_addStart.setOnClickListener(new OnClickListener() {
