@@ -99,18 +99,25 @@ public class OrderDetail extends Activity {
 							if(input.equals("")){
 								Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
 							} else {
-								if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
-									Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
-									Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
+								String currentKMS = myStateInfo.getCurrentKMS();
+								if(currentKMS == null||currentKMS.equals("")){
+									Intent intent = new Intent();
+									intent.putExtra("input_start", input);
+									intent.putExtra(INPUT_KEY, position);
+									intent.setClass(OrderDetail.this, InService.class);
+									startActivity(intent);
 								} else {
-//								input_start = Integer.parseInt(input);
-//								Log.i("jxb", "起始路码 = "+input_start);
-								Intent intent = new Intent();
-								intent.putExtra("input_start", input);
-								intent.putExtra(INPUT_KEY, position);
-								intent.setClass(OrderDetail.this, InService.class);
-								startActivity(intent);
-							}
+									if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
+										Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
+										Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
+									} else {
+										Intent intent = new Intent();
+										intent.putExtra("input_start", input);
+										intent.putExtra(INPUT_KEY, position);
+										intent.setClass(OrderDetail.this, InService.class);
+										startActivity(intent);
+									}
+								}
 							}
 						}
 					}).show();

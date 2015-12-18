@@ -47,6 +47,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private TextView extraMile_price;
 	private TextView extraTime_price;
 	private TextView routeID;
+	private TextView tv_alter;
 	
 	private Bundle mBundle;
 	private int mileInt;
@@ -113,6 +114,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		extraMile_price = (TextView) findViewById(R.id.tv_extraMile);
 		extraTime_price = (TextView) findViewById(R.id.tv_extraTime);
 		routeID = (TextView) findViewById(R.id.route_titleID);
+		tv_alter = (TextView) findViewById(R.id.tv_alter);
 		
 	}
 	
@@ -184,8 +186,6 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.add_pay:
-			myStateInfo.setCurrentState(17);
-			myGetStateInfo.setStateinfo(myStateInfo);
 			Intent intent1 = new Intent();
 			intent1.setClass(getApplicationContext(), AddPay.class);
 			startActivityForResult(intent1, REQUEST_CODE);
@@ -239,6 +239,9 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					String parking = bundle.getString(AddPay.key_parking);
 					String other = bundle.getString(AddPay.key_other);
 					String hotel = bundle.getString(AddPay.key_hotel);
+					String alter = bundle.getString(AddPay.key_alter);
+					String routeOn = bundle.getString(AddPay.key_routeOn);
+					String routeOff = bundle.getString(AddPay.key_routeOff);
 					double all = noteInfo.getFeeTotal();
 					if (!road.equals("")) {
 						all += Double.valueOf(road);
@@ -265,7 +268,41 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						tv_hotel.setText(Double.valueOf(hotel) + "元");
 						noteInfo.setFeeHotel(Double.valueOf(hotel));
 					}
-					
+					if (!alter.equals("")) {
+						all -= Double.valueOf(alter);
+						tv_alter.setText("-"+Double.valueOf(alter) + "元");
+						noteInfo.setFeeBack(Double.valueOf(alter));
+					}
+					if (!routeOn.equals("") || !routeOff.equals("")) {
+						String routeBegin = noteInfo.getRouteBegin();
+						String routeEnd = noteInfo.getRouteEnd();
+						if(!routeOn.equals("")){
+							routeBegin = routeOn;
+							noteInfo.setRouteBegin(routeBegin);
+						}
+						if(!routeOff.equals("")){
+							routeEnd = routeOff;
+							noteInfo.setRouteEnd(routeEnd);
+						}
+						int totalMile = Integer.parseInt(routeEnd)-Integer.parseInt(routeBegin);
+						noteInfo.setDoServiceKms(totalMile);
+						mile.setText(totalMile+"公里");
+						int serviceMile = noteInfo.getServiceKMs();
+						double lastExtraMilePrice = noteInfo.getFeeOverKMs();
+						double price_extraMile = 0.0;
+						if(serviceMile<totalMile){
+							extraMile.setText((totalMile - serviceMile)+"公里" );
+							price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
+							noteInfo.setFeeOverKMs(price_extraMile);
+							noteInfo.setOverKMs(totalMile-serviceMile);
+							extraMile_price.setText(price_extraMile+"元");
+						} else {
+							noteInfo.setFeeOverKMs(0);
+							noteInfo.setOverKMs(0);
+							extraMile_price.setText("0元");
+						}
+						all = all-lastExtraMilePrice+price_extraMile;
+					}
 					tv_all.setText(all + "元");
 					noteInfo.setFeeTotal(all);
 					myStateInfo.setCurrentNote(noteInfo);
