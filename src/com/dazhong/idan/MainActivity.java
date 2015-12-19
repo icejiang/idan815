@@ -439,6 +439,7 @@ public class MainActivity extends Activity {
 			holder.location.setText(taskInfo.PickupAddress());
 			holder.name.setText(taskInfo.Customer());
 			holder.nubmer.setText(taskInfo.CustomerTel());
+			holder.nubmer.setVisibility(View.GONE);
 			holder.type.setText(taskInfo.ServiceTypeName());
 
 			return convertView;
