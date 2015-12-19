@@ -135,6 +135,20 @@ public class InService extends Activity {
 				// TODO Auto-generated method stub
 				callNum(number.getText().toString());
 			}});
+		dispatchNum.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callNum(dispatchNum.getText().toString());
+			}});
+		salesNum.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callNum(salesNum.getText().toString());
+			}});
 	}
 	
 
