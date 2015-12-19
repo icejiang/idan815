@@ -241,7 +241,6 @@ public class MainActivity extends Activity {
 									}
 								}
 							}).show();
-			System.out.println("do now");
 			if (stateinfo.getTimeOfTaskOneDay() > 0
 					&& stateinfo.getCurrentTask().CarID().length() > 2) {
 				int iR;
@@ -256,7 +255,7 @@ public class MainActivity extends Activity {
 				routecode = routecode + stateinfo.getBeginKMsOfToday() + ",";
 				routecode = routecode + stateinfo.getEndKMsOfToday();
 				routecode = routecode + "]";
-				System.out.println(routecode);
+//				System.out.println(routecode);
 				iR = getInfoValue.UploadRouteCode(routecode);
 				if (iR == 0)
 					Toast.makeText(getApplicationContext(), "路码上传成功！", 2000);
