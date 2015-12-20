@@ -8,6 +8,7 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="23" />
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -32,44 +33,44 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" 
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".OrderDetail"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".OrderDetailEnd"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".AddPay"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".PrintActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".PersonalInfo"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".OrderHistory"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".InService"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".BlueToothManage"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
+        <activity
             android:name=".PasswordAlter"
             android:screenOrientation="portrait" >
         </activity>

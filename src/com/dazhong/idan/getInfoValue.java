@@ -31,19 +31,20 @@ public abstract class getInfoValue {
 	/**
 	 * 插入路单
 	 * */
-	public static int InsertNote(String note){
-		int iInsertResult=0;
+	public static int InsertNote(String note) {
+		int iInsertResult = 0;
 		String sInfo;
 		try {
-			sInfo=getDZService.getServiceConnect(note, "InsertRouteNote");
+			sInfo = getDZService.getServiceConnect(note, "InsertRouteNote");
 			System.out.println(sInfo);
-			iInsertResult=Integer.parseInt(sInfo);
+			iInsertResult = Integer.parseInt(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return iInsertResult;
 	}
+
 	/**
 	 * 设置用户状态，等待接单
 	 * */
@@ -75,19 +76,42 @@ public abstract class getInfoValue {
 		}
 		return true;
 	}
-/**
- * 获取路单历史
- * */
-	public static List<NoteInfo> getNotes(String employeeid,int pages) throws Exception {
+
+	/**
+	 * 上下车路码上传
+	 * */
+	public static int UploadRouteCode(String routecode){
+		int iur=0;
+		String sInfo="";
+		if(routecode.length()==0)
+			return -1;
+		try {
+			sInfo=getDZService.getServiceConnect(routecode, "UpdateInOutMile");
+			if(sInfo=="")
+				return -1;
+			iur=Integer.parseInt(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		}
+		
+		return iur;
+	}
+	/**
+	 * 获取路单历史
+	 * */
+	public static List<NoteInfo> getNotes(String employeeid, int pages)
+			throws Exception {
 		List<NoteInfo> listNotes = null;
 		List<String> listInfo = null;
 		NoteInfo noteinfo = null;
 		String sInfo = null;
 		try {
-//			System.out.println(employeeid);
-			sInfo = getDZService.getServiceConnect(employeeid, Integer.toString(pages),
-					"GetRouteNoteInfo");
-//			 System.out.println(sInfo);
+			// System.out.println(employeeid);
+			sInfo = getDZService.getServiceConnect(employeeid,
+					Integer.toString(pages), "GetRouteNoteInfo");
+			// System.out.println(sInfo);
 			if (sInfo == null)
 				return null;
 			listInfo = getDZService.getInfoValue(sInfo);
@@ -97,59 +121,60 @@ public abstract class getInfoValue {
 			// System.out.println("info count:" + listInfo.size());
 			for (String sinf : listInfo) {
 				noteinfo = new NoteInfo();
-				noteinfo.setNoteID(getDZService.getInfoValue(sinf, "RouteNoteNo"));
-				noteinfo.setPlanID(getDZService.getInfoValue(sinf,
-						"DispatchID"));
+				noteinfo.setNoteID(getDZService.getInfoValue(sinf,
+						"RouteNoteNo"));
+				noteinfo.setPlanID(getDZService
+						.getInfoValue(sinf, "DispatchID"));
 				noteinfo.setCarID(getDZService.getInfoValue(sinf, "CarID"));
 				noteinfo.setCarNumber(getDZService.getInfoValue(sinf,
 						"LicenseTag"));
 				noteinfo.setDriverID(getDZService
 						.getInfoValue(sinf, "DriverID"));
-				noteinfo.setDriverName(getDZService.getInfoValue(sinf, "DriverName"));
-				noteinfo.setFeeBridge(Double.parseDouble(getDZService.getInfoValue(sinf,
-						"BridgeFee")));
+				noteinfo.setDriverName(getDZService.getInfoValue(sinf,
+						"DriverName"));
+				noteinfo.setFeeBridge(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "BridgeFee")));
 				noteinfo.setFeeHotel(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "OutFee")));
-				noteinfo.setFeeOther(Double.parseDouble(getDZService.getInfoValue(sinf,
-						"OtherFee")));
-				noteinfo.setFeeOverKMs(Double.parseDouble(getDZService.getInfoValue(sinf,
-						"ExceedMileFee")));
-				noteinfo.setFeeOverTime(Double.parseDouble(getDZService.getInfoValue(sinf,
-						"ExceedTimeFee")));
-				noteinfo.setFeePrice(Double.parseDouble(getDZService.getInfoValue(sinf,
-						"BaseFee")));
-				noteinfo.setFeeTotal(Double.parseDouble(getDZService.getInfoValue(sinf,
-						"ActualTotalFee")));
+				noteinfo.setFeeOther(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "OtherFee")));
+				noteinfo.setFeeOverKMs(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "ExceedMileFee")));
+				noteinfo.setFeeOverTime(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "ExceedTimeFee")));
+				noteinfo.setFeePrice(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "BaseFee")));
+				noteinfo.setFeeTotal(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "ActualTotalFee")));
 				noteinfo.setOnBoardAddress(getDZService.getInfoValue(sinf,
 						"UploadAddress"));
 				noteinfo.setLeaveAddress(getDZService.getInfoValue(sinf,
 						"LeaveAddress"));
 				noteinfo.setRouteBegin(getDZService.getInfoValue(sinf,
 						"StartMile"));
-				noteinfo.setRouteEnd(getDZService.getInfoValue(sinf,
-						"EndMile"));
+				noteinfo.setRouteEnd(getDZService.getInfoValue(sinf, "EndMile"));
 				noteinfo.setServiceBegin(getDZService.getInfoValue(sinf,
 						"StartTime"));
 				noteinfo.setServiceEnd(getDZService.getInfoValue(sinf,
 						"EndTime"));
-				noteinfo.setServiceKMs(Integer.parseInt(getDZService.getInfoValue(sinf,
-						"BusinessMile")));
-				noteinfo.setServiceTime(Integer.parseInt(getDZService.getInfoValue(sinf,
-						"BusinessTime")));
-				noteinfo.setOverKMs(Integer.parseInt(getDZService
-						.getInfoValue(sinf, "ExceedMile")));
-				noteinfo.setOverHours(Integer.parseInt(getDZService.getInfoValue(
-						sinf, "ExceedTime")));
+				noteinfo.setServiceKMs(Integer.parseInt(getDZService
+						.getInfoValue(sinf, "BusinessMile")));
+				noteinfo.setServiceTime(Integer.parseInt(getDZService
+						.getInfoValue(sinf, "BusinessTime")));
+				noteinfo.setOverKMs(Integer.parseInt(getDZService.getInfoValue(
+						sinf, "ExceedMile")));
+				noteinfo.setOverHours(Integer.parseInt(getDZService
+						.getInfoValue(sinf, "ExceedTime")));
 				noteinfo.setFeeOverCal(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "ExceedSettleType")));
 				noteinfo.setServiceRoute(getDZService.getInfoValue(sinf,
 						"BusinessRecord"));
 				noteinfo.setNoteDate(getDZService.getInfoValue(sinf,
 						"RouteNoteDate"));
-//				 System.out.println(noteinfo.toString());
+				// System.out.println(noteinfo.toString());
 				listNotes.add(noteinfo);
 			}
-			 System.out.println("task count:" + listNotes.size());
+			System.out.println("task count:" + listNotes.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,6 +182,7 @@ public abstract class getInfoValue {
 
 		return listNotes;
 	}
+
 	/**
 	 * 设置调度单已读，上传到服务器 成功 true，失败 false
 	 * */
@@ -328,7 +354,7 @@ public abstract class getInfoValue {
 			if (i < 0) {
 				return false;
 			}
-//			System.out.println(sInfo);
+			// System.out.println(sInfo);
 			// MainActivity.USERNAME = getDZService.getInfoValue(sInfo,
 			// "DriverName");
 			iDanApp.getInstance().setUSERNAME(
