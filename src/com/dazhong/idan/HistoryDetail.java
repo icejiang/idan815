@@ -33,8 +33,8 @@ public class HistoryDetail extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history_detail);
 		
-		
-		
+		NoteInfo noteInfo = (NoteInfo) getIntent().getSerializableExtra("NOTEINFO");
+
 		
 	}
 	
@@ -60,12 +60,29 @@ public class HistoryDetail extends Activity {
 		cost_other = (TextView) findViewById(R.id.history_other);
 		cost_alter = (TextView) findViewById(R.id.history_alter);
 		cost_all = (TextView) findViewById(R.id.history_all);
-		
-		
-		
-		
-		
-		
+	}
+	
+	private void setView(NoteInfo noteInfo){
+		titleID.setText(noteInfo.getNoteID());
+		date.setText(noteInfo.getNoteDate());
+		pickupTime.setText(noteInfo.getServiceBegin());
+		leaveTime.setText(noteInfo.getServiceEnd());
+//		type.setText(text);
+		mile.setText(noteInfo.getDoServiceKms()+"公里");
+		time.setText(noteInfo.getDoServiceTime()+"小时");
+		extraMile.setText(noteInfo.getOverKMs()+"公里");
+		extraTime.setText(noteInfo.getOverHours()+"小时");
+		record.setText(noteInfo.getServiceRoute());
+		cost_base.setText(noteInfo.getFeePrice()+"元");
+		cost_bridge.setText(noteInfo.getFeeBridge()+"元");
+		cost_parking.setText(noteInfo.getFeePark()+"元");
+		cost_meal.setText(noteInfo.getFeeLunch()+"元");
+		cost_hotel.setText(noteInfo.getFeeHotel()+"元");
+		cost_extraMile.setText(noteInfo.getFeeOverKMs()+"元");
+		cost_extraTime.setText(noteInfo.getFeeOverTime()+"元");
+		cost_other.setText(noteInfo.getFeeOther()+"元");
+		cost_alter.setText(noteInfo.getFeeBack()+"元");
+		cost_all.setText(noteInfo.getFeeTotal()+"元");
 		
 		
 	}
