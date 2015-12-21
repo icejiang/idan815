@@ -96,6 +96,8 @@ public class BlueToothManage extends Activity {
 		deviceList = (ListView) findViewById(R.id.lv_device);
 		vg = (ViewGroup) deviceList.getParent();
 		edit = (EditText) layout.findViewById(R.id.et_input);
+		iv_return = (ImageView) findViewById(R.id.return_bluetooth);
+		iv_home = (ImageView) findViewById(R.id.home_bluetooth);
 		edit.setFocusable(false);
 		layout.removeAllViews();
 		vg.addView(edit, new LinearLayout.LayoutParams(
