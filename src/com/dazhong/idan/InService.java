@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -120,9 +121,43 @@ public class InService extends Activity {
 				}).show();
 			}
 		});
+		placeNum.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callNum(placeNum.getText().toString());
+			}});
+		number.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callNum(number.getText().toString());
+			}});
+		dispatchNum.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callNum(dispatchNum.getText().toString());
+			}});
+		salesNum.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callNum(salesNum.getText().toString());
+			}});
 	}
 	
-	
+
+	private void callNum(String phoneno){
+		if(phoneno!=null && !"".equals(phoneno.trim())){
+			Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+phoneno));
+			startActivity(intent);
+		}
+	}
 	private void findView(){
 		
 		btn_end = (TextView) findViewById(R.id.btn_end);
