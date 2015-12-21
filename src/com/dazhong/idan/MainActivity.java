@@ -260,6 +260,7 @@ public class MainActivity extends Activity {
 				routecode = routecode
 						+ stateinfo.getCurrentNote().getNoteDate()
 								.replaceAll("-", "") + ",";
+//				routecode=routecode+"20010101"+",";
 				routecode = routecode + stateinfo.getBeginKMsOfToday() + ",";
 				routecode = routecode + stateinfo.getEndKMsOfToday();
 				routecode = routecode + "]";

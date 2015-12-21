@@ -43,7 +43,7 @@ public class OrderHistory extends Activity {
 			String id = getStateInfo.getInstance(getApplicationContext())
 					.getStateinfo().getCurrentPerson().getPersonID();
 			Log.i("jxb", "size = "+id);
-			noteList = getInfoValue.getNotes(id, 1);
+			noteList = getInfoValue.getNotes(id, 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

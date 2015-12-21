@@ -171,6 +171,8 @@ public abstract class getInfoValue {
 						"BusinessRecord"));
 				noteinfo.setNoteDate(getDZService.getInfoValue(sinf,
 						"RouteNoteDate"));
+				noteinfo.setServiceTypeName(getDZService.getInfoValue(sinf,
+						"JobTypeName"));
 				// System.out.println(noteinfo.toString());
 				listNotes.add(noteinfo);
 			}
