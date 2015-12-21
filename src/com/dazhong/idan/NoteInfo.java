@@ -151,8 +151,31 @@ public class NoteInfo implements Serializable {
 	 * 调度单序号
 	 * */
 	private String TaskID;
+	/**
+	 * 业务类型
+	 * */
+	private int ServiceType;
+	/**
+	 * 业务类型名称
+	 * */
+	private String ServiceTypeName;
 	
-	
+	public int getServiceType() {
+		return ServiceType;
+	}
+
+	public void setServiceType(int serviceType) {
+		ServiceType = serviceType;
+	}
+
+	public String getServiceTypeName() {
+		return ServiceTypeName;
+	}
+
+	public void setServiceTypeName(String serviceTypeName) {
+		ServiceTypeName = serviceTypeName;
+	}
+
 	public String getTaskID() {
 		return TaskID;
 	}
@@ -445,7 +468,7 @@ public class NoteInfo implements Serializable {
 			int serviceTime, int overKMs, int overHours, int feeChoice,
 			double feeOverCal, String serviceRoute, String customerCompany,
 			String customerName, double feePark,int doservicekms,int doservicetime,
-			String taskID,double feeback) {
+			String taskID,double feeback,int servicetype,String servicetypename) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -481,6 +504,8 @@ public class NoteInfo implements Serializable {
 		DoServiceTime=doservicetime;
 		FeeBack=feeback;
 		TaskID=taskID;
+		ServiceType=servicetype;
+		ServiceTypeName=servicetypename;
 	}
 
 	/**
@@ -513,7 +538,7 @@ public class NoteInfo implements Serializable {
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
 				+ ServiceRoute + "," + CustomerCompany + ","
 				+ CustomerName+","+FeePark+","+DoServiceKms+","+DoServiceTime+","
-				+NoteDate+","+FeeBack+","+TaskID
+				+NoteDate+","+FeeBack+","+TaskID+","+ServiceType+","+ServiceTypeName
 				+ "]";
 	}
 
