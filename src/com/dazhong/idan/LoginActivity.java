@@ -61,7 +61,6 @@ public class LoginActivity extends Activity {
 		btn_login = (Button) findViewById(R.id.login);
 		logname = (EditText) findViewById(R.id.editText1);
 		password = (EditText) findViewById(R.id.editText2);
-		logok = getStateRec();
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -80,15 +79,17 @@ public class LoginActivity extends Activity {
 					// 13918878436 1234abcd2
 					{
 						PersonInfo personinfo;
-						personinfo = stateinfo.getCurrentPerson();
+						if (stateinfo == null)
+							personinfo = new PersonInfo();
+						else
+							personinfo = stateinfo.getCurrentPerson();
 						try {
 							if (personinfo.getPersonID().equals(
 									idanapp.getEMPLOYEEID())) {
 								if (!getInfoValue.getNowDate().equals(
 										stateinfo.getToday())) {
 									setNewDayState();
-								}
-								else{
+								} else {
 									stateinfo.setCurrentLogin(true);
 									stateinfo.setCurrentState(1);
 								}
@@ -99,8 +100,9 @@ public class LoginActivity extends Activity {
 								FirstLog(personinfo);
 							}
 							// textView.setText(personinfo.toString());
-//							System.out.println(personinfo.toString());
-							idanapp.setTasklist(getInfoValue.getTasks(personinfo.getPersonID()));
+							// System.out.println(personinfo.toString());
+							idanapp.setTasklist(getInfoValue.getTasks(idanapp
+									.getEMPLOYEEID()));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -116,6 +118,7 @@ public class LoginActivity extends Activity {
 			}
 		});
 
+		logok = getStateRec();
 		if (logok)
 			PageJump();
 	}
@@ -236,7 +239,8 @@ public class LoginActivity extends Activity {
 		getStateInfo gs;
 		try {
 			gs = getStateInfo.getInstance(getApplicationContext());
-//			stateinfo = new StateInfo();
+			if (stateinfo == null)
+				stateinfo = new StateInfo();
 			stateinfo.setToday(getInfoValue.getNowDate());
 			stateinfo.setPageOfNoteHistory(0);
 			stateinfo.setPageOfTask(1);
