@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
 	private TaskInfo curTask = null;
 	private ListView mListView;
 	private ImageView iv_return;
+	private ImageView iv_refresh;
 	private TextView tv_addStart;
 	private TextView tv_addEnd;
 	private StateInfo stateinfo;
@@ -113,6 +114,13 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				menu.showMenu();
 				// refreshTasks();
+			}
+		});
+		iv_refresh.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				refreshTasks();
 			}
 		});
 		tv_addStart.setOnClickListener(new OnClickListener() {
@@ -350,6 +358,7 @@ public class MainActivity extends Activity {
 	private void findView() {
 		mListView = (ListView) findViewById(R.id.listView_main);
 		iv_return = (ImageView) findViewById(R.id.return_main);
+		iv_refresh = (ImageView) findViewById(R.id.main_refresh);
 		tv_addStart = (TextView) findViewById(R.id.main_addStart);
 		tv_addEnd = (TextView) findViewById(R.id.main_addEnd);
 	}

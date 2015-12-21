@@ -2,6 +2,9 @@ package com.dazhong.idan;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class HistoryDetail extends Activity {
@@ -26,6 +29,7 @@ public class HistoryDetail extends Activity {
 	private TextView cost_other;
 	private TextView cost_alter;
 	private TextView cost_all;
+	private ImageView iv_return;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +38,22 @@ public class HistoryDetail extends Activity {
 		setContentView(R.layout.history_detail);
 		
 		NoteInfo noteInfo = (NoteInfo) getIntent().getSerializableExtra("NOTEINFO");
-
+		findView();
+		setView(noteInfo);
 		
+		iv_return.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				HistoryDetail.this.finish();
+			}
+		});
 	}
 	
 	
 	private void findView(){
-		titleID = (TextView) findViewById(R.id.history_id);
-		date = (TextView) findViewById(R.id.history_date);
+		titleID = (TextView) findViewById(R.id.history_titleID);
+		date = (TextView) findViewById(R.id.history_date_detail);
 		pickupTime = (TextView) findViewById(R.id.history_startTime);
 		leaveTime = (TextView) findViewById(R.id.history_endTime);
 		type = (TextView) findViewById(R.id.history_type);
@@ -60,6 +72,7 @@ public class HistoryDetail extends Activity {
 		cost_other = (TextView) findViewById(R.id.history_other);
 		cost_alter = (TextView) findViewById(R.id.history_alter);
 		cost_all = (TextView) findViewById(R.id.history_all);
+		iv_return = (ImageView) findViewById(R.id.return_historydetail);
 	}
 	
 	private void setView(NoteInfo noteInfo){
@@ -67,7 +80,7 @@ public class HistoryDetail extends Activity {
 		date.setText(noteInfo.getNoteDate());
 		pickupTime.setText(noteInfo.getServiceBegin());
 		leaveTime.setText(noteInfo.getServiceEnd());
-//		type.setText(text);
+		type.setText(noteInfo.getServiceTypeName());
 		mile.setText(noteInfo.getDoServiceKms()+"公里");
 		time.setText(noteInfo.getDoServiceTime()+"小时");
 		extraMile.setText(noteInfo.getOverKMs()+"公里");
