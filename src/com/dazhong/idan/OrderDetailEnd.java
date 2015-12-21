@@ -134,7 +134,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		try {
 			Date d1 = df.parse(noteInfo.getServiceBegin());
 			Date d2 = df.parse(noteInfo.getServiceEnd());
-			long diff = d1.getTime() - d2.getTime();
+			long diff = d2.getTime() - d1.getTime();
 			long hour = diff/(1000* 60 * 60);
 			hours = Integer.parseInt(Long.toString(hour));
 			time.setText(Long.toString(hour)+"Сʱ");
