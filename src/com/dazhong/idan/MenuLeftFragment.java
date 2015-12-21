@@ -75,6 +75,7 @@ public class MenuLeftFragment extends LinearLayout{
 						e1.printStackTrace();
 					}
 					ActivityControler.finishAll();
+					System.exit(0);
 					break;
 				default:
 					break;

@@ -2,6 +2,9 @@ package com.dazhong.idan;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class HistoryDetail extends Activity {
@@ -26,6 +29,7 @@ public class HistoryDetail extends Activity {
 	private TextView cost_other;
 	private TextView cost_alter;
 	private TextView cost_all;
+	private ImageView iv_return;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +37,23 @@ public class HistoryDetail extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history_detail);
 		
+		NoteInfo noteInfo = (NoteInfo) getIntent().getSerializableExtra("NOTEINFO");
+		findView();
+		setView(noteInfo);
 		
-		
-		
+		iv_return.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				HistoryDetail.this.finish();
+			}
+		});
 	}
 	
 	
 	private void findView(){
-		titleID = (TextView) findViewById(R.id.history_id);
-		date = (TextView) findViewById(R.id.history_date);
+		titleID = (TextView) findViewById(R.id.history_titleID);
+		date = (TextView) findViewById(R.id.history_date_detail);
 		pickupTime = (TextView) findViewById(R.id.history_startTime);
 		leaveTime = (TextView) findViewById(R.id.history_endTime);
 		type = (TextView) findViewById(R.id.history_type);
@@ -60,12 +72,30 @@ public class HistoryDetail extends Activity {
 		cost_other = (TextView) findViewById(R.id.history_other);
 		cost_alter = (TextView) findViewById(R.id.history_alter);
 		cost_all = (TextView) findViewById(R.id.history_all);
-		
-		
-		
-		
-		
-		
+		iv_return = (ImageView) findViewById(R.id.return_historydetail);
+	}
+	
+	private void setView(NoteInfo noteInfo){
+		titleID.setText(noteInfo.getNoteID());
+		date.setText(noteInfo.getNoteDate());
+		pickupTime.setText(noteInfo.getServiceBegin());
+		leaveTime.setText(noteInfo.getServiceEnd());
+		type.setText(noteInfo.getServiceTypeName());
+		mile.setText(noteInfo.getDoServiceKms()+"公里");
+		time.setText(noteInfo.getDoServiceTime()+"小时");
+		extraMile.setText(noteInfo.getOverKMs()+"公里");
+		extraTime.setText(noteInfo.getOverHours()+"小时");
+		record.setText(noteInfo.getServiceRoute());
+		cost_base.setText(noteInfo.getFeePrice()+"元");
+		cost_bridge.setText(noteInfo.getFeeBridge()+"元");
+		cost_parking.setText(noteInfo.getFeePark()+"元");
+		cost_meal.setText(noteInfo.getFeeLunch()+"元");
+		cost_hotel.setText(noteInfo.getFeeHotel()+"元");
+		cost_extraMile.setText(noteInfo.getFeeOverKMs()+"元");
+		cost_extraTime.setText(noteInfo.getFeeOverTime()+"元");
+		cost_other.setText(noteInfo.getFeeOther()+"元");
+		cost_alter.setText(noteInfo.getFeeBack()+"元");
+		cost_all.setText(noteInfo.getFeeTotal()+"元");
 		
 		
 	}

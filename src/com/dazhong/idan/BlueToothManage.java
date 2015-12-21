@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Set;
 
 import com.dazhong.idan.BlueToothService.OnReceiveDataHandleEvent;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -76,6 +77,8 @@ public class BlueToothManage extends Activity {
 	private boolean updateflag = true;
 //	private Button nbt_img;
 	private int verson = 72;
+	private ImageView iv_return;
+	private ImageView iv_home;
 
 	public BlueToothManage() {
 		super();
@@ -408,8 +411,41 @@ public class BlueToothManage extends Activity {
 			}
 		};
 		tv_update.start();
+		
+		final SlidingMenu menu = new SlidingMenu(this);
+		showLeftMenu(menu);
+		iv_return.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				menu.showMenu();
+			}
+		});
+		iv_home.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 Intent intent = new Intent();
+				 intent.setClass(getApplicationContext(), MainActivity.class);
+				 startActivity(intent);
+
+			}
+		});
 	}
 
+	private void showLeftMenu(SlidingMenu menu){
+		MenuLeftFragment menuLayout = new MenuLeftFragment(
+				getApplicationContext());
+		menu.setMode(SlidingMenu.LEFT);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setFadeDegree(0.35f);
+		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		menu.setMenu(R.layout.left_menu);
+	}
+	
 	private static byte charToByte(char c) {
 		return (byte) "0123456789ABCDEF".indexOf(c);
 	}

@@ -63,7 +63,7 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/route_titleID"
+                android:id="@+id/history_titleID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -87,7 +87,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/history_date"
+                android:id="@+id/history_date_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"

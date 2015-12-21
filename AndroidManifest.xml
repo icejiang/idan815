@@ -74,6 +74,10 @@
             android:name=".PasswordAlter"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".HistoryDetail"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

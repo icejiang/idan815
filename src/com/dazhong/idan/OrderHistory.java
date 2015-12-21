@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,7 +39,6 @@ public class OrderHistory extends Activity {
 		mListView = (ListView) findViewById(R.id.listview_history);
 		iv_return = (ImageView) findViewById(R.id.return_history);
 		iv_home = (ImageView) findViewById(R.id.home_history);
-//		addData();
 		try {
 			String id = getStateInfo.getInstance(getApplicationContext())
 					.getStateinfo().getCurrentPerson().getPersonID();
@@ -69,14 +70,23 @@ public class OrderHistory extends Activity {
 
 			}
 		});
+		
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				NoteInfo noteInfo = noteList.get(position);
+				Intent intent = new Intent();
+				intent.putExtra("NOTEINFO", noteInfo);
+				intent.setClass(getApplicationContext(), HistoryDetail.class);
+				startActivity(intent);
+			}
+		});
+		
+		
 	}
-	
-	
-//	private void addData(){
-//		mList = new ArrayList<Order>();
-//		mList.add(new Order("2015/11/11 11:11", "SR20151111000001", "机场接机", "王先生", "13838385438", "虹桥机场T1航站楼"));
-//		mList.add(new Order("2015/11/11 22:22", "SR20151111000002", "市用", "李先生", "13838385438", "人民广场"));
-//	}
 	
 	
 	private void showLeftMenu(SlidingMenu menu){
