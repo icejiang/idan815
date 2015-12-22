@@ -188,6 +188,9 @@ public class MainActivity extends Activity {
 			}
 		});
 		tv_addEnd.setOnClickListener(myClickListener);
+		stateinfo.setCurrentState(1);
+		getStateInfo.getInstance(getApplicationContext()).setStateinfo(stateinfo);
+
 	}
 
 	private OnClickListener myClickListener = new OnClickListener() {

@@ -79,13 +79,13 @@ public class PrintActivity extends Activity {
 			blueinit = true;
 			int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
 			// System.out.println("inser note return is "+k);
+
+		} catch (Exception e1) {
+			e1.printStackTrace();
 			if (mBTService != null) {
 				mBTService.DisConnected();
 				mBTService = null;
 			}
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
 			blueinit = false;
 			Toast.makeText(getApplicationContext(), "上传路单错误！", 2000).show();
 			myStateInfo.setCurrentState(1);
@@ -99,6 +99,10 @@ public class PrintActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				if (mBTService != null) {
+					mBTService.DisConnected();
+					mBTService = null;
+				}
 				PrintActivity.this.finish();
 			}
 		});
@@ -106,6 +110,10 @@ public class PrintActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				if (mBTService != null) {
+					mBTService.DisConnected();
+					mBTService = null;
+				}
 				Intent intent = new Intent();
 				intent.setClass(getApplicationContext(), MainActivity.class);
 				startActivity(intent);
@@ -221,11 +229,12 @@ public class PrintActivity extends Activity {
 					if (devices.size() > 0) {
 						for (BluetoothDevice device : devices) {
 							if (device.getName().equals(
-									iDanApp.getInstance().getStateInfo()
+									getStateInfo.getInstance(getApplicationContext()).getStateinfo()
 											.getPrinterName()))
 								connAddress = device.getAddress();
 						}
 						mBTService.DisConnected();
+						Thread.sleep(200);
 						mBTService.ConnectToDevice(connAddress);
 					}
 
