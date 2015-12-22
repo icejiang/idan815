@@ -25,6 +25,7 @@ public class LoginActivity extends Activity {
 	private StateInfo stateinfo;
 	private iDanApp idanapp = null;
 	private String today;
+	private boolean logok = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,19 +79,35 @@ public class LoginActivity extends Activity {
 					// 13918878436 1234abcd2
 					{
 						PersonInfo personinfo;
+						if (stateinfo == null)
+							personinfo = new PersonInfo();
+						else
+							personinfo = stateinfo.getCurrentPerson();
 						try {
-							personinfo = getInfoValue.getPersonInfo(idanapp
-									.getEMPLOYEEID());
-							personinfo.setPersonID(idanapp.getEMPLOYEEID());
+							if (personinfo.getPersonID().equals(
+									idanapp.getEMPLOYEEID())) {
+								if (!getInfoValue.getNowDate().equals(
+										stateinfo.getToday())) {
+									setNewDayState();
+								} else {
+									stateinfo.setCurrentLogin(true);
+									stateinfo.setCurrentState(1);
+								}
+							} else {
+								personinfo = getInfoValue.getPersonInfo(idanapp
+										.getEMPLOYEEID());
+								personinfo.setPersonID(idanapp.getEMPLOYEEID());
+								FirstLog(personinfo);
+							}
 							// textView.setText(personinfo.toString());
-							System.out.println(personinfo.toString());
-							FirstLog(personinfo);
+							// System.out.println(personinfo.toString());
+							idanapp.setTasklist(getInfoValue.getTasks(idanapp
+									.getEMPLOYEEID()));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						if (getStateRec())
-							PageJump();
+						PageJump();
 					} else {
 						Toast.makeText(getApplicationContext(), "µÇÂ¼Ê§°Ü",
 								Toast.LENGTH_SHORT).show();
@@ -101,7 +118,8 @@ public class LoginActivity extends Activity {
 			}
 		});
 
-		if (getStateRec())
+		logok = getStateRec();
+		if (logok)
 			PageJump();
 	}
 
@@ -122,8 +140,6 @@ public class LoginActivity extends Activity {
 			if (stateinfo == null)
 				return false;
 			idanapp.setStateInfo(stateinfo);
-			if (!today.equals(stateinfo.getToday()))
-				setNewDayState();
 			try {
 				// System.out.println(stateinfo.getCurrentPerson().getPersonID());
 				idanapp.setUSERNAME(stateinfo.getCurrentPerson().getName());
@@ -205,15 +221,16 @@ public class LoginActivity extends Activity {
 
 	private void setNewDayState() {
 		stateinfo.setToday(today);
-		stateinfo.setCurrentKMS("");
+		// stateinfo.setCurrentKMS("");
 		stateinfo.setTimeOfTaskOneDay(0);
-		stateinfo.setBeginKMsOfToday("");
+		stateinfo.setBeginKMsOfToday("0");
 		stateinfo.setCurrentState(1);
-		stateinfo.setEndKMsOfToday("");
-		stateinfo.setPageOfNoteHistory(1);
+		stateinfo.setEndKMsOfToday("0");
+		stateinfo.setPageOfNoteHistory(0);
 		stateinfo.setPageOfTask(1);
 		stateinfo.setTimeInCar(getInfoValue.getNowTime());
-		stateinfo.setTimeOffCar("");
+		stateinfo.setCurrentLogin(true);
+		stateinfo.setTimeOffCar("0");
 		getStateInfo gs = getStateInfo.getInstance(getApplicationContext());
 		gs.setStateinfo(stateinfo);
 	}
@@ -222,13 +239,17 @@ public class LoginActivity extends Activity {
 		getStateInfo gs;
 		try {
 			gs = getStateInfo.getInstance(getApplicationContext());
-			stateinfo = new StateInfo();
+			if (stateinfo == null)
+				stateinfo = new StateInfo();
 			stateinfo.setToday(getInfoValue.getNowDate());
-			stateinfo.setPageOfNoteHistory(1);
+			stateinfo.setPageOfNoteHistory(0);
 			stateinfo.setPageOfTask(1);
 			stateinfo.setCurrentPerson(person);
 			stateinfo.setCurrentState(1);
 			stateinfo.setCurrentLogin(true);
+			stateinfo.setCurrentKMS("0");
+			stateinfo.setBeginKMsOfToday("0");
+			stateinfo.setEndKMsOfToday("0");
 			stateinfo.setTimeOfTaskOneDay(0);
 			// System.out.println(stateinfo.toString());
 			gs.setStateinfo(stateinfo);

@@ -9,7 +9,7 @@ public class PersonInfo implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 /**用户代码*/
-private String PersonID;//用户代码
+private String PersonID="0";//用户代码
 private String WorkNum;//工号
 private String PhoneNum;//手机号码
 private String Name;//姓名
