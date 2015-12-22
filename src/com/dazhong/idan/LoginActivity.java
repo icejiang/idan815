@@ -170,33 +170,18 @@ public class LoginActivity extends Activity {
 	private void PageJump() {
 		Intent intent;
 		// 登陆后，选择显示页面
-		// switch (88) {
-		// System.out.println(stateinfo.getCurrentState());
 		switch (stateinfo.getCurrentState()) {
 		case 101:
-			// intent = new Intent();
-			// intent.setClass(getApplicationContext(), LoginActivity.class);
-			// startActivity(intent);
-			break;
 		case 0:
-			// intent = new Intent();
-			// intent.setClass(getApplicationContext(), LoginActivity.class);
-			// startActivity(intent);
 			break;
 		case 1:
+		case 2:
+		case 3:
 			intent = new Intent();
 			intent.setClass(getApplicationContext(), MainActivity.class);
 			startActivity(intent);
 			break;
-		case 2:
-		case 3:
-		case 4:
-		case 5:
 		case 11:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), OrderDetail.class);
-			startActivity(intent);
-			break;
 		case 12:
 			intent = new Intent();
 			intent.setClass(getApplicationContext(), OrderDetail.class);
@@ -205,11 +190,38 @@ public class LoginActivity extends Activity {
 		case 13:
 		case 14:
 		case 15:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), InService.class);
+			startActivity(intent);
+			break;
 		case 16:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), OrderDetailEnd.class);
+			startActivity(intent);
+			break;
 		case 17:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), AddPay.class);
+			startActivity(intent);
+			break;
 		case 18:
 			intent = new Intent();
 			intent.setClass(getApplicationContext(), PrintActivity.class);
+			startActivity(intent);
+			break;
+		case 51:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), OrderHistory.class);
+			startActivity(intent);
+			break;
+		case 55:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), PersonalInfo.class);
+			startActivity(intent);
+			break;
+		case 56:
+			intent = new Intent();
+			intent.setClass(getApplicationContext(), PasswordAlter.class);
 			startActivity(intent);
 			break;
 		default:

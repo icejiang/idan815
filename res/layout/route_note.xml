@@ -256,6 +256,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="14dp"
                 android:text="添加记录"
+                android:textColor="#a40035"
                 android:textSize="14dp" />
 
         </RelativeLayout>
@@ -499,6 +500,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="14dp"
                 android:text="添加费用"
+                android:textColor="#a40035"
                 android:textSize="14dp" />
 
         </RelativeLayout>

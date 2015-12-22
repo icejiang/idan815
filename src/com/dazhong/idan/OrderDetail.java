@@ -129,7 +129,9 @@ public class OrderDetail extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				OrderDetail.this.finish();
+				Intent intent = new Intent();
+				intent.setClass(getApplicationContext(), MainActivity.class);
+				startActivity(intent);
 			}
 		});
 		placeNum.setOnClickListener(new OnClickListener(){
@@ -229,6 +231,17 @@ public class OrderDetail extends Activity {
 		plateNum.setText(taskInfo.CarNumber());
 		carType.setText(taskInfo.CarType());
 		payments.setText(taskInfo.getBalancetypename());
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), MainActivity.class);
+			startActivity(intent);
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 	
 	
