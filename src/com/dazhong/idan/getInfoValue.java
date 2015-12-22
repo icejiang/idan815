@@ -80,24 +80,50 @@ public abstract class getInfoValue {
 	/**
 	 * 上下车路码上传
 	 * */
-	public static int UploadRouteCode(String routecode){
-		int iur=0;
-		String sInfo="";
-		if(routecode.length()==0)
+	public static int UploadRouteCode(String routecode) {
+		int iur = 0;
+		String sInfo = "";
+		if (routecode.length() == 0)
 			return -1;
 		try {
-			sInfo=getDZService.getServiceConnect(routecode, "UpdateInOutMile");
-			if(sInfo=="")
+			sInfo = getDZService
+					.getServiceConnect(routecode, "UpdateInOutMile");
+			if (sInfo == "")
 				return -1;
-			iur=Integer.parseInt(sInfo);
+			iur = Integer.parseInt(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
 		}
-		
+
 		return iur;
 	}
+
+	/**
+	 * 更新密码
+	 * */
+	public static int updatePassWord(String account, String passwd,
+			String newpasswd) {
+		int iur = 0;
+		String sInfo = "";
+		if (account.length() == 0 || passwd.length() == 0
+				|| newpasswd.length() == 0)
+			return -2;
+		try {
+			sInfo = getDZService.getServiceConnect(account, passwd, newpasswd,
+					"SetNewPW");
+			if (sInfo.equals(""))
+				return -2;
+			iur = Integer.parseInt(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -2;
+		}
+		return iur;
+	}
+
 	/**
 	 * 获取路单历史
 	 * */
@@ -369,6 +395,8 @@ public abstract class getInfoValue {
 			// "WorkCardNo");
 			iDanApp.getInstance().setWORKNUMBER(
 					getDZService.getInfoValue(sInfo, "WorkCardNo"));
+			iDanApp.getInstance().setUSERACCOUNT(sAccount);
+			iDanApp.getInstance().setUSERPSW(sPassword);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

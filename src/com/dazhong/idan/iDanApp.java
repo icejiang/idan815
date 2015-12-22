@@ -7,7 +7,8 @@ import android.app.Activity;
 import android.app.Application;
 
 public class iDanApp {
-//	private String SERVICEADRRESS = "http://192.168.75.200:8084/DriverService.asmx";
+	// private String SERVICEADRRESS =
+	// "http://192.168.75.200:8084/DriverService.asmx";
 	private String SERVICEADRRESS = "http://www.dzzcgs.com:8099/DriverAppwebServiceRelease/DriverService.asmx";
 	private String USERNAME = "";// 用户名称
 	private String WORKNUMBER = "";// 工号
@@ -15,6 +16,8 @@ public class iDanApp {
 	private StateInfo stateInfo = null;// 状态管理
 	private List<TaskInfo> tasklist = null;
 	private static iDanApp instance = null;
+	private String USERACCOUNT = "";// 用户账号
+	private String USERPSW = "";// 用户密码
 
 	// public static List<Activity> activities = new ArrayList<Activity>();
 	//
@@ -40,6 +43,22 @@ public class iDanApp {
 	 * */
 	public String getSERVICEADRRESS() {
 		return SERVICEADRRESS;
+	}
+
+	public String getUSERACCOUNT() {
+		return USERACCOUNT;
+	}
+
+	public void setUSERACCOUNT(String uSERACCOUNT) {
+		USERACCOUNT = uSERACCOUNT;
+	}
+
+	public String getUSERPSW() {
+		return USERPSW;
+	}
+
+	public void setUSERPSW(String uSERPSW) {
+		USERPSW = uSERPSW;
 	}
 
 	/**
@@ -119,16 +138,16 @@ public class iDanApp {
 		this.tasklist = tasklist;
 	}
 
-//	@Override
-//	public void onCreate() {
-//		// TODO Auto-generated method stub
-//		this.setSERVICEADRRESS("http://192.168.75.200:8084/DriverService.asmx");
-//		super.onCreate();
-//	}
+	// @Override
+	// public void onCreate() {
+	// // TODO Auto-generated method stub
+	// this.setSERVICEADRRESS("http://192.168.75.200:8084/DriverService.asmx");
+	// super.onCreate();
+	// }
 
 	protected iDanApp() {
 		super();
-//		instance=this;
+		// instance=this;
 		// TODO Auto-generated constructor stub
 	}
 
