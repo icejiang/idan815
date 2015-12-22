@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
 	private StateInfo stateinfo;
 	private List<TaskInfo> tasklist = null;
 	private SlidingMenu menu;
+	private MyAdapter mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class MainActivity extends Activity {
 		// System.out.println(idanapp.getSERVICEADRRESS());
 
 		findView();
-		MyAdapter mAdapter = new MyAdapter(this);
+		mAdapter = new MyAdapter(this);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -369,10 +370,7 @@ public class MainActivity extends Activity {
 			idanapp.setTasklist(getInfoValue.getTasks(stateinfo
 					.getCurrentPerson().getPersonID()));
 			tasklist = idanapp.getTasklist();
-			// System.out.println("refresh ok");
-			MyAdapter mAdapter = new MyAdapter(this);
-			mListView.setAdapter(mAdapter);
-			// System.out.println("rebind data");
+			mAdapter.notifyDataSetChanged();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
