@@ -29,7 +29,7 @@ public class PrintActivity extends Activity {
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
 
-	public Handler mhandler=null;
+	public Handler mhandler ;
 	private BlueToothService mBTService = null;
 	private Set<BluetoothDevice> devices;
 
@@ -58,7 +58,7 @@ public class PrintActivity extends Activity {
 	private TextView record;
 	private ImageView iv_return;
 	private ImageView iv_home;
-
+	private boolean blueinit;
 	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
 	private getStateInfo myGetStateInfo;
@@ -76,7 +76,7 @@ public class PrintActivity extends Activity {
 			myStateInfo.setCurrentState(18);
 			noteInfo = myStateInfo.getCurrentNote();
 			taskInfo = myStateInfo.getCurrentTask();
-
+			blueinit = true;
 			int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
 			// System.out.println("inser note return is "+k);
 			if (mBTService != null) {
@@ -86,6 +86,7 @@ public class PrintActivity extends Activity {
 
 		} catch (Exception e1) {
 			e1.printStackTrace();
+			blueinit = false;
 			Toast.makeText(getApplicationContext(), "上传路单错误！", 2000).show();
 			myStateInfo.setCurrentState(1);
 			myGetStateInfo.setStateinfo(myStateInfo);
@@ -115,28 +116,34 @@ public class PrintActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (mBTService.getState() == mBTService.STATE_CONNECTED) {
-					String message = printFile();
-					if (message == null) {
+				if (blueinit) {
+					if (mBTService.getState() == mBTService.STATE_CONNECTED) {
+						String message = printFile();
+						if (message == null) {
+							Toast.makeText(
+									PrintActivity.this,
+									PrintActivity.this.getResources()
+											.getString(R.string.str_printfail),
+									2000).show();
+							return;
+						}
+						mBTService.PrintCharacters(message);
+						Toast.makeText(
+								PrintActivity.this,
+								PrintActivity.this.getResources().getString(
+										R.string.str_printok), 2000).show();
+					} else {
 						Toast.makeText(
 								PrintActivity.this,
 								PrintActivity.this.getResources().getString(
 										R.string.str_printfail), 2000).show();
-						return;
 					}
-					mBTService.PrintCharacters(message);
-					Toast.makeText(
-							PrintActivity.this,
-							PrintActivity.this.getResources().getString(
-									R.string.str_printok), 2000).show();
-				} else {
-					Toast.makeText(
-							PrintActivity.this,
-							PrintActivity.this.getResources().getString(
-									R.string.str_printfail), 2000).show();
+					iv_return.setVisibility(View.GONE);
+					iv_home.setVisibility(View.VISIBLE);
 				}
-				iv_return.setVisibility(View.GONE);
-				iv_home.setVisibility(View.VISIBLE);
+				else
+					Toast.makeText(getApplicationContext(), "打印机连接错误，请重新配置蓝牙！", 2000)
+					.show();
 			}
 		});
 
@@ -236,6 +243,7 @@ public class PrintActivity extends Activity {
 				mBTService.DisConnected();
 				mBTService = null;
 			}
+			blueinit=false;
 			myStateInfo.setCurrentState(1);
 			myGetStateInfo.setStateinfo(myStateInfo);
 			Toast.makeText(getApplicationContext(), "打印机连接错误，请重新配置蓝牙！", 2000)
