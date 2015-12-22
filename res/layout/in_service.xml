@@ -325,6 +325,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="人民广场"
+            android:textColor="#0000ff"
             android:textSize="16dp" />
 
     </LinearLayout>
@@ -371,6 +372,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="人民广场"
+            android:textColor="#0000ff"
             android:textSize="16dp" />
 
     </LinearLayout>

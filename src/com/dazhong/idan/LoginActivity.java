@@ -211,7 +211,7 @@ public class LoginActivity extends Activity {
 			break;
 		case 18:
 			intent = new Intent();
-			intent.setClass(getApplicationContext(), PrintActivity.class);
+			intent.setClass(getApplicationContext(),MainActivity.class);// PrintActivity.class);
 			startActivity(intent);
 			break;
 		case 51:
