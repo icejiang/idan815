@@ -101,8 +101,11 @@ public class LoginActivity extends Activity {
 							}
 							// textView.setText(personinfo.toString());
 							// System.out.println(personinfo.toString());
+							stateinfo.setUserAccount(account);
+							stateinfo.setUserPSW(psw);
 							idanapp.setTasklist(getInfoValue.getTasks(idanapp
 									.getEMPLOYEEID()));
+							getStateInfo.getInstance(getApplicationContext()).setStateinfo(stateinfo);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -146,6 +149,8 @@ public class LoginActivity extends Activity {
 				idanapp.setWORKNUMBER(stateinfo.getCurrentPerson().getWorkNum());
 				idanapp.setEMPLOYEEID(stateinfo.getCurrentPerson()
 						.getPersonID());
+				idanapp.setUSERACCOUNT(stateinfo.getUserAccount());
+				idanapp.setUSERPSW(stateinfo.getUserPSW());
 				idanapp.setTasklist(getInfoValue.getTasks(stateinfo
 						.getCurrentPerson().getPersonID()));
 				// if (idanapp.getTasklist() == null)
@@ -206,7 +211,7 @@ public class LoginActivity extends Activity {
 			break;
 		case 18:
 			intent = new Intent();
-			intent.setClass(getApplicationContext(), PrintActivity.class);
+			intent.setClass(getApplicationContext(),MainActivity.class);// PrintActivity.class);
 			startActivity(intent);
 			break;
 		case 51:
@@ -243,14 +248,14 @@ public class LoginActivity extends Activity {
 		stateinfo.setTimeInCar(getInfoValue.getNowTime());
 		stateinfo.setCurrentLogin(true);
 		stateinfo.setTimeOffCar("0");
-		getStateInfo gs = getStateInfo.getInstance(getApplicationContext());
-		gs.setStateinfo(stateinfo);
+//		getStateInfo gs = getStateInfo.getInstance(getApplicationContext());
+//		gs.setStateinfo(stateinfo);
 	}
 
 	private void FirstLog(PersonInfo person) {
-		getStateInfo gs;
+//		getStateInfo gs;
 		try {
-			gs = getStateInfo.getInstance(getApplicationContext());
+//			gs = getStateInfo.getInstance(getApplicationContext());
 			if (stateinfo == null)
 				stateinfo = new StateInfo();
 			stateinfo.setToday(getInfoValue.getNowDate());
@@ -263,8 +268,10 @@ public class LoginActivity extends Activity {
 			stateinfo.setBeginKMsOfToday("0");
 			stateinfo.setEndKMsOfToday("0");
 			stateinfo.setTimeOfTaskOneDay(0);
+			stateinfo.setUserAccount(idanapp.getUSERACCOUNT());
+			stateinfo.setUserPSW(idanapp.getUSERPSW());
 			// System.out.println(stateinfo.toString());
-			gs.setStateinfo(stateinfo);
+//			gs.setStateinfo(stateinfo);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
