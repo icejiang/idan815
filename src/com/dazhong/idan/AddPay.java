@@ -2,10 +2,13 @@ package com.dazhong.idan;
 
 import android.R.integer;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -109,15 +112,14 @@ public class AddPay extends Activity {
 				Intent intent = new Intent();
 				intent.putExtras(bundle);
 	            setResult(RESULT_CODE, intent);  
-	            finish(); 
-				
+	            finish();
 			}
 		});
 		iv_return.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				AddPay.this.finish();
+				finish();
 			}
 		});
 	}
@@ -136,4 +138,17 @@ public class AddPay extends Activity {
 		et_routeOn = (EditText) findViewById(R.id.route_on);
 		et_routeOff = (EditText) findViewById(R.id.route_off);
 	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if(event.getAction() == MotionEvent.ACTION_DOWN){  
+		     if(getCurrentFocus()!=null && getCurrentFocus().getWindowToken()!=null){  
+		       manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);  
+		     }  
+		  }  
+		return super.onTouchEvent(event);
+	}
+	
+	
 }

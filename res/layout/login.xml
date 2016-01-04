@@ -5,21 +5,8 @@
     android:background="#f6f6f6"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="220dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/editText2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/edittext"
-        android:ems="10"
-        android:hint="请输入手机号"
-        android:paddingLeft="10dp"
-        android:maxLines="1" />
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/forgetPsw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/login"
@@ -27,19 +14,6 @@
         android:layout_marginBottom="19dp"
         android:textColor="#a40035"
         android:text="忘记密码？" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="220dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/textView2"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/edittext"
-        android:ems="10"
-        android:hint="请输入密码"
-        android:paddingLeft="10dp"
-        android:maxLines="1" />
 
     <Button
         android:id="@+id/login"
@@ -63,5 +37,34 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="69dp"
         android:src="@drawable/logo1" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editText2"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/edittext"
+        android:ems="10"
+        android:hint="请输入手机号"
+        android:maxLines="1"
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/forgetPsw"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/edittext"
+        android:ems="10"
+        android:hint="请输入密码"
+        android:maxLines="1"
+        android:paddingLeft="10dp" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

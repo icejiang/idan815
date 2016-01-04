@@ -53,118 +53,148 @@
             android:textSize="20dp"/>
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp"
         android:layout_marginTop="20dp" >
 
-        <TextView
-            
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textScaleX="0.9"
-            android:text="路桥费:" />
-
         <EditText
             android:id="@+id/pay_road"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
             android:gravity="right"
-            android:inputType="number"
+            android:inputType="numberDecimal"
+            android:textSize="20dp" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="路桥费:"
+            android:textScaleX="0.9"
             android:textSize="20dp" />
 
-    </LinearLayout>
-     <LinearLayout
+    </RelativeLayout>
+     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp" >
-
-        <TextView
-            
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textScaleX="0.9"
-            android:text="停车费:" />
 
         <EditText
             android:id="@+id/pay_parking"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="numberDecimal"
             android:textSize="20dp" />
 
-    </LinearLayout>
-     <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/pay_parking"
+            android:layout_alignBottom="@+id/pay_parking"
+            android:layout_alignParentLeft="true"
+            android:text="停车费:"
+            android:textScaleX="0.9"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp" >
-
-        <TextView
-            
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="餐费: "
-            android:textScaleX="0.9"
-            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/pay_eat"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="numberDecimal"
             android:textSize="20dp" />
 
-    </LinearLayout>
-    <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/pay_eat"
+            android:layout_alignBottom="@+id/pay_eat"
+            android:layout_alignParentLeft="true"
+            android:text="餐    费:"
+            android:textScaleX="0.9"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp" >
-
-        <TextView
-            
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textScaleX="0.9"
-            android:text="住宿费:" />
 
         <EditText
             android:id="@+id/pay_hotel"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="numberDecimal"
             android:textSize="20dp" />
 
-    </LinearLayout>
-    <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/pay_hotel"
+            android:layout_alignBottom="@+id/pay_hotel"
+            android:layout_alignParentLeft="true"
+            android:text="住宿费:"
+            android:textScaleX="0.9"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp" >
 
+        <EditText
+            android:id="@+id/pay_other"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="numberDecimal"
+            android:textSize="20dp" />
+
         <TextView
-            
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="其他: "
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="其    他:"
             android:textScaleX="0.9"
             android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/pay_other"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="20dp" />
-
-    </LinearLayout>
+    </RelativeLayout>
     <ImageView android:id="@+id/imageView4" android:layout_width="match_parent" android:layout_height="1dp" 
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -172,72 +202,88 @@
         android:layout_marginBottom="10dp"
         android:visibility="visible"
          android:background="#000000"/>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp" >
 
+        <EditText
+            android:id="@+id/price_alter"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="numberDecimal"
+            android:textSize="20dp" />
+
         <TextView
-            
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:text="费用修正:"
             android:textScaleX="0.9"
             android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/price_alter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="20dp" />
-
-    </LinearLayout>
-    <LinearLayout
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp" >
 
+        <EditText
+            android:id="@+id/route_on"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="number"
+            android:textSize="20dp" />
+
         <TextView
-            
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:text="上车路码: "
             android:textScaleX="0.9"
             android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/route_on"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="20dp" />
-
-    </LinearLayout>
-    <LinearLayout
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp" >
 
+        <EditText
+            android:id="@+id/route_off"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="number"
+            android:textSize="20dp" />
+
         <TextView
-            
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/route_off"
+            android:layout_alignBottom="@+id/route_off"
+            android:layout_alignParentLeft="true"
             android:text="下车路码: "
             android:textScaleX="0.9"
             android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/route_off"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="20dp" />
-
-    </LinearLayout>
+    </RelativeLayout>
     </LinearLayout>
 	<RelativeLayout
         android:layout_width="match_parent"

@@ -3,14 +3,20 @@ package com.dazhong.idan;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,7 +25,7 @@ import android.widget.Toast;
 public class LoginActivity extends Activity {
 
 	private Button btn_login;
-	private TextView textView;
+	private TextView forgetPSW;
 	private EditText logname;
 	private EditText password;
 	private StateInfo stateinfo;
@@ -32,26 +38,14 @@ public class LoginActivity extends Activity {
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 				.detectDiskReads().detectDiskWrites().detectNetwork()
 				.penaltyLog().build());
-
 		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
 				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
 				.build());
-		// ApplicationInfo appInfo = LoginActivity.this.getApplicationInfo();
-		// int appFlags = appInfo.flags;
-		// if ((appFlags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
-		// // Do StrictMode setup here
-		// // StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-		// // .detectLeakedSqlLiteObjects()
-		// // .penaltyLog()
-		// // .penaltyDeath()
-		// // .build());
-		// StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-		// .detectDiskReads().detectDiskWrites().detectNetwork()
-		// .penaltyLog().build());
-		//
-		// }
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		
+		
 		idanapp = iDanApp.getInstance();
 		ActivityControler.addActivity(this);
 		today = getInfoValue.getNowDate();
@@ -61,6 +55,7 @@ public class LoginActivity extends Activity {
 		btn_login = (Button) findViewById(R.id.login);
 		logname = (EditText) findViewById(R.id.editText1);
 		password = (EditText) findViewById(R.id.editText2);
+		forgetPSW = (TextView) findViewById(R.id.forgetPsw);
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -74,9 +69,6 @@ public class LoginActivity extends Activity {
 					;
 				} else {
 					if (getInfoValue.getLogin(account, psw))
-					// if (getInfoValue.getLogin("15821151093", "1234abcd"))
-					// 13061613032 1234abcd1
-					// 13918878436 1234abcd2
 					{
 						PersonInfo personinfo;
 						if (stateinfo == null)
@@ -99,8 +91,6 @@ public class LoginActivity extends Activity {
 								personinfo.setPersonID(idanapp.getEMPLOYEEID());
 								FirstLog(personinfo);
 							}
-							// textView.setText(personinfo.toString());
-							// System.out.println(personinfo.toString());
 							stateinfo.setUserAccount(account);
 							stateinfo.setUserPSW(psw);
 							idanapp.setTasklist(getInfoValue.getTasks(idanapp
@@ -124,19 +114,47 @@ public class LoginActivity extends Activity {
 		logok = getStateRec();
 		if (logok)
 			PageJump();
+		
+		forgetPSW.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				new AlertDialog.Builder(LoginActivity.this).setTitle("请拨打客服电话查询，是否立即拨打？").
+				setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+"18918896822"));
+						startActivity(intent);
+						
+					}
+				}).setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+				}).show();
+				
+			}
+		});
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if(event.getAction() == MotionEvent.ACTION_DOWN){  
+		     if(getCurrentFocus()!=null && getCurrentFocus().getWindowToken()!=null){  
+		       manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);  
+		     }  
+		  }  
+		return super.onTouchEvent(event);
 	}
 
 	private boolean getStateRec() {
 		try {
-			// get state sample
-			// getStateInfo gs = new getStateInfo(getApplicationContext());
 			stateinfo = getStateInfo.getInstance(getApplicationContext())
 					.getStateinfo();
 			System.out.println(stateinfo.toString());
@@ -144,7 +162,6 @@ public class LoginActivity extends Activity {
 				return false;
 			idanapp.setStateInfo(stateinfo);
 			try {
-				// System.out.println(stateinfo.getCurrentPerson().getPersonID());
 				idanapp.setUSERNAME(stateinfo.getCurrentPerson().getName());
 				idanapp.setWORKNUMBER(stateinfo.getCurrentPerson().getWorkNum());
 				idanapp.setEMPLOYEEID(stateinfo.getCurrentPerson()
@@ -153,11 +170,6 @@ public class LoginActivity extends Activity {
 				idanapp.setUSERPSW(stateinfo.getUserPSW());
 				idanapp.setTasklist(getInfoValue.getTasks(stateinfo
 						.getCurrentPerson().getPersonID()));
-				// if (idanapp.getTasklist() == null)
-				// System.out.println("davis say tasklist is null");
-				// else
-				// System.out.println("davis say "
-				// + idanapp.getTasklist().size());
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -238,7 +250,6 @@ public class LoginActivity extends Activity {
 
 	private void setNewDayState() {
 		stateinfo.setToday(today);
-		// stateinfo.setCurrentKMS("");
 		stateinfo.setTimeOfTaskOneDay(0);
 		stateinfo.setBeginKMsOfToday("0");
 		stateinfo.setCurrentState(1);
@@ -278,54 +289,5 @@ public class LoginActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-
-	// show test
-	// public void showTest(View v) {
-	// try {
-	// // init state,user first login
-	// // if (getInfoValue.getLogin("15821151093", "1234abcd"))
-	// // // textView.setText(MainActivity.USERNAME);
-	// // {
-	// // PersonInfo personinfo = new PersonInfo(MainActivity.EMPLOYEEID,
-	// // MainActivity.WORKNUMBER, MainActivity.USERNAME);
-	// // textView.setText(personinfo.toString());
-	// // stateinfo = new StateInfo();
-	// // stateinfo.setToday("2015-12-05");
-	// // stateinfo.setPageOfNoteHistory(1);
-	// // stateinfo.setPageOfTask(1);
-	// // stateinfo.setTimeInCar("08:12");
-	// // stateinfo.setTimeOffCar("19:25");
-	// // stateinfo.setBeginKMsOfToday("2135");
-	// // stateinfo.setEndKMsOfToday("2236");
-	// // stateinfo.setCurrentKMS("2236");
-	// // stateinfo.setCurrentPerson(personinfo);
-	// // stateinfo.setCurrentState(1);
-	// // stateinfo.setCurrentNote(null);
-	// // stateinfo.setCurrentLogin(true);
-	// // // update state sample
-	// // // getStateInfo gs = new getStateInfo(getApplicationContext());
-	// // getStateInfo gs = getStateInfo
-	// // .getInstance(getApplicationContext());
-	// // gs.setStateinfo(stateinfo);
-	// // } else
-	// // textView.setText("no info");
-	// // if(getInfoValue.ServiceDoing("147889", "2"))
-	// // textView.setText("service doing remark");
-	// // if(getInfoValue.setTaskRead("147889", "2")){
-	// // textView.setText("lock now");
-	// // }
-	// // if(getInfoValue.ServiceStandby("147889", "2"))
-	// // textView.setText("service standby remark");
-	//
-	// Intent intent = new Intent();
-	// // intent.setClass(getApplicationContext(), PrintActivity.class);
-	// intent.setClass(getApplicationContext(), BlueToothManage.class);
-	// startActivity(intent);
-	// } catch (Exception e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// Toast.makeText(getApplicationContext(), R.string.error, 1).show();
-	// }
-	// }
 
 }

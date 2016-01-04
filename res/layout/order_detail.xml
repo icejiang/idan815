@@ -521,6 +521,49 @@
             android:textSize="16dp" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="住宿费不计入总费用:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_outfeetype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="路桥费不计入总费用:"
+            android:textScaleX="0.9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/detail_bridgefeetype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="16dp" />
+    </LinearLayout>
     <ImageView android:id="@+id/imageView4" android:layout_width="match_parent" android:layout_height="1dp" 
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -614,6 +657,17 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="开始本次业务"
+            android:visibility="visible"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:text="订单已完成"
             android:textColor="#ffffff"
             android:textSize="20dp" />
 

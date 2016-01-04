@@ -539,6 +539,31 @@
                     android:text="0元"
                     android:textSize="16dp" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/alter_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/beyond_time"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="费用修正:"
+                    android:textScaleX="0.9"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_alter_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:inputType="number"
+                    android:text="0元"
+                    android:textSize="16dp" />
+            </LinearLayout>
 
             
 

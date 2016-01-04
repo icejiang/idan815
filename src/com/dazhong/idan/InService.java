@@ -241,6 +241,12 @@ public class InService extends Activity {
 		noteInfo.setCustomerName(taskInfo.Customer());
 		noteInfo.setTaskID(taskInfo.TaskID());
 		noteInfo.setServiceTypeName(taskInfo.ServiceTypeName());
+		noteInfo.setOutfeetype(taskInfo.getOutfeetype());
+		noteInfo.setBridgefeetype(taskInfo.getBridgefeetype());
+		noteInfo.setInvoiceTaxRate(taskInfo.getInvoiceTaxRate());
+		noteInfo.setFeeBridge(taskInfo.getFeeBridge());
+		noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
+		noteInfo.setInvoiceType(taskInfo.InvoiceType());
 	}
 	
 	

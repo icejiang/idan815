@@ -25,6 +25,7 @@ import android.widget.Toast;
 public class OrderDetail extends Activity {
 	
 	private TextView tv_start;
+	private TextView tv_finish;
 //	private int input_start;
 //	private int input_end;
 	private int position;
@@ -58,6 +59,8 @@ public class OrderDetail extends Activity {
 	private StateInfo myStateInfo;
 	private getStateInfo myGetStateInfo;
 	private TextView titleid;
+	private TextView outFeeType;
+	private TextView bridgeFeetype;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +77,19 @@ public class OrderDetail extends Activity {
 			myStateInfo = myGetStateInfo.getStateinfo();
 			myStateInfo.setCurrentState(11);
 			myStateInfo.setCurrentTask(taskInfo);
+			myStateInfo.setPosition(position);
 			myGetStateInfo.setStateinfo(myStateInfo);
-			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		tv_start = (TextView) findViewById(R.id.tv_start);
+		if (taskInfo.isDone()){
+			tv_start.setVisibility(View.GONE);
+			tv_finish.setVisibility(View.VISIBLE);
+		} else {
+			tv_start.setVisibility(View.VISIBLE);
+			tv_finish.setVisibility(View.GONE);
+		}
 		tv_start.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -198,6 +207,10 @@ public class OrderDetail extends Activity {
 		payments = (TextView) findViewById(R.id.payments);
 		titleid = (TextView) findViewById(R.id.detail_titleid);
 		iv_return = (ImageView) findViewById(R.id.return_detail);
+		outFeeType = (TextView) findViewById(R.id.detail_outfeetype);
+		bridgeFeetype = (TextView) findViewById(R.id.detail_bridgefeetype);
+		tv_start = (TextView) findViewById(R.id.tv_start);
+		tv_finish = (TextView) findViewById(R.id.tv_finish);
 	}
 	
 	private void setData(){
@@ -231,6 +244,16 @@ public class OrderDetail extends Activity {
 		plateNum.setText(taskInfo.CarNumber());
 		carType.setText(taskInfo.CarType());
 		payments.setText(taskInfo.getBalancetypename());
+		if(taskInfo.getBridgefeetype() == 1){
+			bridgeFeetype.setText("ÊÇ");
+		} else {
+			bridgeFeetype.setText("·ñ");
+		}
+		if(taskInfo.getOutfeetype() == 1){
+			outFeeType.setText("ÊÇ");
+		} else {
+			outFeeType.setText("·ñ");
+		}
 	}
 	
 	@Override

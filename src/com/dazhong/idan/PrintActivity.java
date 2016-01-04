@@ -63,35 +63,31 @@ public class PrintActivity extends Activity {
 	private TaskInfo taskInfo;
 	private getStateInfo myGetStateInfo;
 	private StateInfo myStateInfo;
+	private int position;
+	private TextView tv_alterPrice;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.printf);
-
+		ActivityControler.addActivity(this);
 		try {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
 			myStateInfo.setCurrentState(18);
 			noteInfo = myStateInfo.getCurrentNote();
 			taskInfo = myStateInfo.getCurrentTask();
-			blueinit = true;
-			int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
-			// System.out.println("inser note return is "+k);
-
+			position = myStateInfo.getPosition();
 		} catch (Exception e1) {
 			e1.printStackTrace();
-			if (mBTService != null) {
-				mBTService.DisConnected();
-				mBTService = null;
-			}
-			blueinit = false;
-			Toast.makeText(getApplicationContext(), "上传路单错误！", 2000).show();
-			myStateInfo.setCurrentState(1);
-			myGetStateInfo.setStateinfo(myStateInfo);
 		}
 
+//		if (mBTService != null) {
+//			mBTService.DisConnected();
+//			mBTService = null;
+//		}
+		blueinit = true;
 		findView();
 		setData();
 
@@ -125,6 +121,7 @@ public class PrintActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (blueinit) {
+					Log.i("jxb", "蓝牙状态："+mBTService.getState());
 					if (mBTService.getState() == mBTService.STATE_CONNECTED) {
 						String message = printFile();
 						if (message == null) {
@@ -136,6 +133,9 @@ public class PrintActivity extends Activity {
 							return;
 						}
 						mBTService.PrintCharacters(message);
+						int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
+						TaskInfo myTask = iDanApp.getInstance().getTasklist().get(position);
+						myTask.setDone(true);
 						Toast.makeText(
 								PrintActivity.this,
 								PrintActivity.this.getResources().getString(
@@ -303,19 +303,7 @@ public class PrintActivity extends Activity {
 		String messages = null;
 		try {
 			String mes = "\r\n\r\n";
-			// NoteInfo note =
-			// iDanApp.getInstance().getStateInfo().getCurrentNote();
 			NoteInfo note = myStateInfo.getCurrentNote();
-			// 在此调整数据格式，将实际的路单信息传入
-			// NoteInfo note = new NoteInfo();
-			// note.setCarNumber("沪BZ8911");
-			// note.setNoteDate("20151213");
-			// note.setNoteID("dz16820320151213001");
-			// note.setCustomerCompany("大众物流");
-			// note.setCustomerName("Ms lee");
-			// note.setOnBoardAddress("renmin square");
-			// note.setLeaveAddress("如果团队很小，把每个人的公钥收集起来放到服务器的/home/git/.ssh/authorized_keys这里我们不介绍怎么玩Gitosis了，几百号人的团队基本都在500强了，相信找个高水平的Linux管理员问题不大。");
-			// note.setServiceBegin("09:35");
 			if (note == null) {
 				Toast.makeText(
 						PrintActivity.this,
@@ -323,6 +311,9 @@ public class PrintActivity extends Activity {
 								R.string.error), 2000).show();
 				return messages;
 			}
+			double taxRate = 1 + note.getInvoiceTaxRate();
+			int bridgeFeeType = noteInfo.getBridgefeetype();
+			int outFeeType = noteInfo.getOutfeetype();
 			messages = "";// "--------------------------" + mes;
 			messages = messages + "路单号码：" + note.getNoteID() + mes;
 			messages = messages + "服务日期：" + note.getNoteDate() + mes;
@@ -343,8 +334,61 @@ public class PrintActivity extends Activity {
 			if (note.getOverKMs() > 0)
 				messages = messages + "超出里程："
 						+ Integer.toString(note.getOverKMs()) + mes;
-			messages = messages + "服务费用：" + Double.toString(note.getFeeTotal())
-					+ mes;
+			if (note.getFeeOverTime() > 0)
+				messages = messages + "超小时费："
+						+ note.getFeeOverTime() + mes;
+			if (note.getFeeOverKMs() > 0)
+				messages = messages + "超公里费："
+						+ note.getFeeOverKMs() + mes;
+			if (note.getFeeBridge() > 0)
+				if (bridgeFeeType == 0) {
+					messages = messages + "路桥费："
+						+ reserve2(note.getFeeBridge()*taxRate) + mes;
+				} else {
+					messages = messages + "路桥费："
+							+ note.getFeeBridge() + mes;
+				}
+			if (note.getFeePark() > 0)
+				if (bridgeFeeType == 0) {
+					messages = messages + "停车费："
+						+ reserve2(note.getFeePark()*taxRate) + mes;
+				} else {
+					messages = messages + "停车费："
+							+ note.getFeePark() + mes;
+				}
+			if (note.getFeeHotel() > 0)
+				if (outFeeType == 0) {
+					messages = messages + "住宿费："
+						+ reserve2(note.getFeeHotel()*taxRate) + mes;
+				} else {
+					messages = messages + "住宿费："
+							+ note.getFeeHotel() + mes;
+				}
+			if (note.getFeeLunch() > 0)
+				if (outFeeType == 0) {
+					messages = messages + "餐费："
+						+ reserve2(note.getFeeLunch()*taxRate) + mes;
+				} else {
+					messages = messages + "餐费："
+							+ note.getFeeLunch() + mes;
+				}
+			if (note.getFeeOther() > 0)
+				messages = messages + "其他费："
+						+ reserve2(note.getFeeOther()*taxRate) + mes;
+			if (note.getFeeBack() > 0)
+				messages = messages + "修正费："
+						+ -note.getFeeBack() + mes;
+			if(noteInfo.getInvoiceType().equals("SD")){
+				int int_all = (int)noteInfo.getFeeTotal();
+				noteInfo.setFeeTotal(int_all);
+				messages = messages + "总费用：" + Double.toString(int_all)
+						+ mes;
+			} else {
+				double all = reserve2(noteInfo.getFeeTotal());
+				noteInfo.setFeeTotal(all);
+				messages = messages + "总费用：" + Double.toString(all)
+						+ mes;
+			}
 			messages = messages + "客户签名" + mes + mes + mes;
 			messages = messages + "___________________________" + mes + mes
 					+ mes;
@@ -386,14 +430,32 @@ public class PrintActivity extends Activity {
 			double price_extraTime = noteInfo.getFeeOverTime();
 			tv_beyondTime.setText(price_extraTime + "元");
 		}
-
+		double taxRate = 1 + noteInfo.getInvoiceTaxRate();
 		tv_base.setText(noteInfo.getFeePrice() + "元");
-		tv_road.setText(noteInfo.getFeeBridge() + "元");
-		tv_parking.setText(noteInfo.getFeePark() + "元");
-		tv_meals.setText(noteInfo.getFeeLunch() + "元");
-		tv_hotel.setText(noteInfo.getFeeHotel() + "元");
-		tv_other.setText(noteInfo.getFeeOther() + "元");
+		if(noteInfo.getBridgefeetype() == 0){
+			tv_road.setText(reserve2(noteInfo.getFeeBridge()*taxRate) + "元");
+			tv_parking.setText(reserve2(noteInfo.getFeePark()*taxRate) + "元");
+		} else {
+			tv_road.setText(noteInfo.getFeeBridge() + "元");
+			tv_parking.setText(noteInfo.getFeePark() + "元");
+		}
+		if(noteInfo.getOutfeetype() == 0 ){
+			tv_meals.setText(reserve2(noteInfo.getFeeLunch()*taxRate) + "元");
+			tv_hotel.setText(reserve2(noteInfo.getFeeHotel()*taxRate) + "元");
+		} else {
+			tv_meals.setText(noteInfo.getFeeLunch() + "元");
+			tv_hotel.setText(noteInfo.getFeeHotel() + "元");
+		}
+		tv_other.setText(reserve2(noteInfo.getFeeOther()*taxRate) + "元");
+		tv_alterPrice.setText(-noteInfo.getFeeBack()+"元");
 		tv_all.setText(noteInfo.getFeeTotal() + "元");
+		if(noteInfo.getInvoiceType().equals("SD")){
+			int int_all = (int)noteInfo.getFeeTotal();
+			tv_all.setText(int_all+"元");
+		} else {
+			double all = reserve2(noteInfo.getFeeTotal());
+			tv_all.setText(all+"元");
+		}
 		tv_dateLast.setText(curDate);
 		route_id.setText(noteInfo.getNoteID());
 		record.setText(noteInfo.getServiceRoute());
@@ -425,5 +487,11 @@ public class PrintActivity extends Activity {
 		iv_return = (ImageView) findViewById(R.id.return_print);
 		iv_home = (ImageView) findViewById(R.id.home_print);
 		record = (TextView) findViewById(R.id.print_record);
+		tv_alterPrice = (TextView) findViewById(R.id.tv_alter_price);
+	}
+	
+	private Double reserve2(Double x){
+		Double result = (double)(Math.round(x*100)/100.0);
+		return result;
 	}
 }

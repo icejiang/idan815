@@ -211,6 +211,21 @@ public abstract class getInfoValue {
 		return listNotes;
 	}
 
+	
+	public static String getVersion(String str) {
+		String sInfo = "";
+		try {
+			sInfo = getDZService.getServiceConnect(str, 
+					"GetVersion");
+			// System.out.println(sInfo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+//			return false;
+		}
+		return sInfo;
+	}
+	
 	/**
 	 * 设置调度单已读，上传到服务器 成功 true，失败 false
 	 * */
@@ -295,6 +310,8 @@ public abstract class getInfoValue {
 						"DispatchManPhone"));
 				taskinfo.setSalehotelfee(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "OutFee")));
+				taskinfo.setFeeBridge(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "BridgeFee")));
 				taskinfo.setSalekms(Integer.parseInt(getDZService.getInfoValue(
 						sinf, "AvailableMile")));
 				taskinfo.setSaleprice(Double.parseDouble(getDZService
@@ -335,6 +352,9 @@ public abstract class getInfoValue {
 						"BalanceTypeName"));
 				taskinfo.setBalancetypename(getDZService.getInfoValue(sinf,
 						"BalanceTypeName"));
+				taskinfo.setInvoiceTaxRate(Double.parseDouble(getDZService.getInfoValue(sinf, "InvoiceTaxRate")));
+				taskinfo.setOutfeetype(Integer.parseInt(getDZService.getInfoValue(sinf,"OutFeeType")));
+				taskinfo.setBridgefeetype(Integer.parseInt(getDZService.getInfoValue(sinf,"BridgeFeeType")));
 				// System.out.println(taskinfo.toString());
 				listTasks.add(taskinfo);
 			}

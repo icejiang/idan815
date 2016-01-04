@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.InputType;
@@ -52,14 +53,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		// StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-		// .detectDiskReads().detectDiskWrites().detectNetwork()
-		// .penaltyLog().build());
-		//
-		// StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-		// .detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
-		// .build());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.business_list);
 		idanapp = iDanApp.getInstance();
@@ -71,9 +64,8 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Toast.makeText(this.getApplicationContext(), R.string.error, 2000);
-		}// idanapp.getStateInfo();
+		}
 		ActivityControler.addActivity(this);
-		// System.out.println(idanapp.getSERVICEADRRESS());
 
 		findView();
 		mAdapter = new MyAdapter(this);
@@ -108,6 +100,9 @@ public class MainActivity extends Activity {
 		 */
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.left_menu);
+		
+		checkVersion(this);
+		
 		iv_return.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -280,73 +275,60 @@ public class MainActivity extends Activity {
 
 	};
 
-	// };
-
-	// @Override
-	// protected void onResume() {
-	// // TODO Auto-generated method stub
-	// super.onResume();
-	// if (menu.isShown()){
-	// menu.showMenu();
-	// }
-	// }
+	private void checkVersion(Context context){
+		String serviceVer = getInfoValue.getVersion("123");
+		String curVersion = FileUtil.getInstance().getVersion(context);
+		Log.i("jxb", "serviceVersion = "+serviceVer+"   curVersion = "+curVersion);
+		if(!serviceVer.equals(curVersion)){
+			new AlertDialog.Builder(MainActivity.this).setTitle("程序有更新,是否立即更新？").
+				setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dz-zc.com/dzapp.apk"));   
+						it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");   
+						MainActivity.this.startActivity(it);
+						
+					}
+				}).setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+				}).show();
+		}
+	}
 
 	public void onBackPressed() {
 		ActivityControler.finishAll();
 	}
 
-	private void PageJump() {
-		Intent intent;
-		// 登陆后，选择显示页面
-		switch (1) {
-		// switch (stateinfo.getCurrentState()) {
-		case 101:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
-			break;
-		case 0:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
-			break;
-		case 1:
-			break;
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 11:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), OrderDetail.class);
-			startActivity(intent);
-			break;
-		case 12:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), OrderDetail.class);
-			startActivity(intent);
-			break;
-		case 13:
-		case 14:
-		case 15:
-		case 16:
-		case 17:
-		case 18:
-			intent = new Intent();
-			intent.setClass(getApplicationContext(), PrintActivity.class);
-			startActivity(intent);
-			break;
-		default:
-			Toast.makeText(getApplicationContext(), R.string.error, 6000)
-					.show();
-			break;
+	private void setStatus(){
+		try {
+			getStateInfo myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
+			StateInfo myStateInfo = myGetStateInfo.getStateinfo();
+			myStateInfo.setCurrentState(1);
+			myGetStateInfo.setStateinfo(myStateInfo);
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+//		menu.toggle();
+		setStatus();
 	}
 
 	private boolean getStateRec() {
 		try {
-			// get state sample
-			// getStateInfo gs = new getStateInfo(getApplicationContext());
 			stateinfo = getStateInfo.getInstance(getApplicationContext())
 					.getStateinfo();
 			// System.out.println(stateinfo.toString());
@@ -425,8 +407,6 @@ public class MainActivity extends Activity {
 						.findViewById(R.id.item_location);
 				holder.name = (TextView) convertView
 						.findViewById(R.id.item_name);
-				holder.nubmer = (TextView) convertView
-						.findViewById(R.id.item_number);
 				holder.time = (TextView) convertView
 						.findViewById(R.id.item_time);
 				holder.type = (TextView) convertView
@@ -449,8 +429,8 @@ public class MainActivity extends Activity {
 			holder.date.setText(ServiceDate);
 			holder.location.setText(taskInfo.PickupAddress());
 			holder.name.setText(taskInfo.Customer());
-			holder.nubmer.setText(taskInfo.CustomerTel());
-			holder.nubmer.setVisibility(View.GONE);
+//			holder.nubmer.setText(taskInfo.CustomerTel());
+//			holder.nubmer.setVisibility(View.GONE);
 			holder.type.setText(taskInfo.ServiceTypeName());
 
 			return convertView;
@@ -463,7 +443,6 @@ public class MainActivity extends Activity {
 		public TextView date;
 		public TextView type;
 		public TextView name;
-		public TextView nubmer;
 		public TextView location;
 	}
 }

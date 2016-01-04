@@ -160,6 +160,72 @@ public class NoteInfo implements Serializable {
 	 * */
 	private String ServiceTypeName;
 	
+	private int outfeetype;
+	private int bridgefeetype;
+	private double invoiceTaxRate;
+	private String balanceType;
+	private String balanceTypeName;
+	private String invoiceType;
+	
+	/**
+	 * 结算方式
+	 * */
+	public String getInvoiceType() {
+		return invoiceType;
+	}
+	public void setInvoiceType(String invoiceType) {
+		this.invoiceType = invoiceType;
+	}
+	
+	/**
+	 * 结算方式
+	 * */
+	public String getBalanceType() {
+		return balanceType;
+	}
+	public void setBalanceType(String balanceType) {
+		this.balanceType = balanceType;
+	}
+	
+	/**
+	 * 结算方式名称
+	 * */
+	public String getBalanceTypeName() {
+		return balanceTypeName;
+	}
+	public void setBalanceTypeName(String balanceTypeName) {
+		this.balanceTypeName = balanceTypeName;
+	}
+	
+	/**
+	 * 税率
+	 * */
+	public double getInvoiceTaxRate() {
+		return invoiceTaxRate;
+	}
+	public void setInvoiceTaxRate(double invoiceTaxRate) {
+		this.invoiceTaxRate = invoiceTaxRate;
+	}
+	
+	/**
+	 * 住宿费是否计入总费用 0-计入 1-不计
+	 * */
+	public int getOutfeetype() {
+		return outfeetype;
+	}
+	public void setOutfeetype(int outfeetype) {
+		this.outfeetype = outfeetype;
+	}
+	/**
+	 * 路桥费是否计入总费用 0-计入 1-不计
+	 * */
+	public int getBridgefeetype() {
+		return bridgefeetype;
+	}
+	public void setBridgefeetype(int bridgefeetype) {
+		this.bridgefeetype = bridgefeetype;
+	}
+	
 	public int getServiceType() {
 		return ServiceType;
 	}

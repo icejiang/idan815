@@ -3,9 +3,13 @@ package com.dazhong.idan;
 import java.util.Arrays;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +24,7 @@ public class MenuLeftFragment extends LinearLayout{
 	private Context mContext;
 	private ListView mListView;
 	private List<String> mDatas = Arrays
-            .asList("个人信息", "打印设置","历史订单","修改密码","退出");
+            .asList("个人信息", "打印设置","历史订单","修改密码","检查版本","退出");
     private ListAdapter mAdapter;
 	
 	
@@ -64,6 +68,40 @@ public class MenuLeftFragment extends LinearLayout{
 					mContext.startActivity(intent3);
 					break;
 				case 4:
+					String serviceVer = getInfoValue.getVersion("123");
+					String curVersion = FileUtil.getInstance().getVersion(mContext);
+					Log.i("jxb", "serviceVersion = "+serviceVer+"   curVersion = "+curVersion);
+					if(!serviceVer.equals(curVersion)){
+						new AlertDialog.Builder(mContext).setTitle("程序有更新,是否立即更新？").
+							setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dz-zc.com/dzapp.apk"));   
+									it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");   
+									mContext.startActivity(it);
+									
+								}
+							}).setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// TODO Auto-generated method stub
+									
+								}
+							}).show();
+					} else {
+						new AlertDialog.Builder(mContext).setTitle("程序已是最新版本").
+							setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// TODO Auto-generated method stub
+								}
+							}).show();
+					}
+					break;
+				case 5:
 					try {
 						getStateInfo myGetStateInfo = getStateInfo.getInstance(mContext);
 						StateInfo myStateInfo = myGetStateInfo.getStateinfo();

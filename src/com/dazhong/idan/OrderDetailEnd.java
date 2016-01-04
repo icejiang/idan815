@@ -1,5 +1,6 @@
 package com.dazhong.idan;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -175,9 +176,62 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 				price_all+=price_extraTime;
 			}
 		}
+		Double taxRate = 1 + noteInfo.getInvoiceTaxRate();
+		Double price_bridge = noteInfo.getFeeBridge();
+		if (price_bridge > 0){
+			if(noteInfo.getBridgefeetype() == 0){
+				price_all += price_bridge*taxRate;
+				tv_road.setText(reserve2(price_bridge*taxRate)+"元");
+			} else {
+				tv_road.setText(price_bridge+"元");
+			}
+		}
+		Log.i("jxb", "price_all(bridge) = "+price_all);
+		Double price_park = noteInfo.getFeePark();
+		if (price_park > 0){
+			if(noteInfo.getBridgefeetype() == 0){
+				price_all += price_park*taxRate;
+				tv_parking.setText(reserve2(price_park*taxRate)+"元");
+			} else {
+				tv_parking.setText(price_park+"元");
+			}
+		}
+		Double price_hotel = noteInfo.getFeeHotel();
+		if (price_hotel > 0){
+			if (noteInfo.getOutfeetype() == 0){
+				price_all += price_hotel*taxRate;
+				tv_hotel.setText(reserve2(price_hotel*taxRate)+"元");
+			} else {
+				tv_hotel.setText(price_hotel+"元");
+			}
+		}
+		Double price_meals = noteInfo.getFeeLunch();
+		if (price_meals > 0){
+			if (noteInfo.getOutfeetype() == 0){
+				price_all += price_meals*taxRate;
+				tv_meals.setText(reserve2(price_meals*taxRate)+"元");
+			} else {
+				tv_meals.setText(price_meals+"元");
+			}
+		}
+		if (noteInfo.getFeeOther() > 0){
+			price_all += noteInfo.getFeeOther()*taxRate;
+			tv_other.setText(reserve2(noteInfo.getFeeOther()*taxRate) + "元");
+		}
+		if (noteInfo.getFeeBack() > 0) {
+			price_all -= noteInfo.getFeeBack();
+			tv_alter.setText(-noteInfo.getFeeBack() + "元");
+		}
 		noteInfo.setFeeTotal(price_all);
+		if(noteInfo.getInvoiceType().equals("SD")){
+			int all = 0;
+			all = price_all.intValue();
+			tv_all.setText(all+"元");
+		} else {
+			price_all = reserve2(price_all);
+			tv_all.setText(price_all+"元");
+		}
 		tv_base.setText(noteInfo.getFeePrice()+"元");
-		tv_all.setText(price_all+"元");
 	}
 	
 	
@@ -243,33 +297,60 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					String routeOn = bundle.getString(AddPay.key_routeOn);
 					String routeOff = bundle.getString(AddPay.key_routeOff);
 					double all = noteInfo.getFeeTotal();
+//					double all = 0;
+					double taxRate = 1 + noteInfo.getInvoiceTaxRate();
+					int bridgeFeeType = noteInfo.getBridgefeetype();
+					int outFeeType = noteInfo.getOutfeetype();
+					Log.i("jxb", "taxRate = "+taxRate+";  bridgeFeetype = "+bridgeFeeType+";   outFeetype = "+outFeeType);
 					if (!road.equals("")) {
-						all += Double.valueOf(road);
-						tv_road.setText(Double.valueOf(road) + "元");
+						if (bridgeFeeType == 0){
+							Double fee = reserve2(Double.valueOf(road)*taxRate);
+							all  = all - noteInfo.getFeeBridge()*taxRate + fee;
+							tv_road.setText(fee + "元");
+						} else {
+							tv_road.setText(Double.valueOf(road) + "元");
+						}
 						noteInfo.setFeeBridge(Double.valueOf(road));
 					}
-					if (!meals.equals("")) {
-						all += Double.valueOf(meals);
-						tv_meals.setText(Double.valueOf(meals) + "元");
-						noteInfo.setFeeLunch(Double.valueOf(meals));
-					}
 					if (!parking.equals("")) {
-						all += Double.valueOf(parking);
-						tv_parking.setText(Double.valueOf(parking) + "元");
+						if (bridgeFeeType == 0){
+							Double fee = reserve2(Double.valueOf(parking)*taxRate);
+							all  = all - noteInfo.getFeePark()*taxRate + fee;
+							tv_parking.setText(fee + "元");
+						} else {
+							tv_parking.setText(Double.valueOf(parking) + "元");
+						}
 						noteInfo.setFeePark(Double.valueOf(parking));
 					}
-					if (!other.equals("")) {
-						all += Double.valueOf(other);
-						tv_other.setText(Double.valueOf(other) + "元");
-						noteInfo.setFeeOther(Double.valueOf(other));
+					if (!meals.equals("")) {
+						if (outFeeType == 0){
+							Double fee = reserve2(Double.valueOf(meals)*taxRate);
+							all  = all - noteInfo.getFeeLunch()*taxRate + fee;
+							tv_meals.setText(fee + "元");
+						} else {
+							tv_meals.setText(Double.valueOf(meals) + "元");
+						}
+						noteInfo.setFeeLunch(Double.valueOf(meals));
 					}
 					if (!hotel.equals("")) {
-						all += Double.valueOf(hotel);
-						tv_hotel.setText(Double.valueOf(hotel) + "元");
+						if (outFeeType == 0){
+							Double fee = reserve2(Double.valueOf(hotel)*taxRate);
+							all  = all - noteInfo.getFeeHotel()*taxRate + fee;
+							tv_hotel.setText(fee + "元");
+						} else {
+							tv_hotel.setText(Double.valueOf(hotel) + "元");
+						}
 						noteInfo.setFeeHotel(Double.valueOf(hotel));
 					}
+					if (!other.equals("")) {
+						Double fee = reserve2(Double.valueOf(other)*taxRate);
+						all  = all - noteInfo.getFeeOther()*taxRate + fee;
+						tv_other.setText(fee + "元");
+						noteInfo.setFeeOther(Double.valueOf(other));
+					}
 					if (!alter.equals("")) {
-						all -= Double.valueOf(alter);
+//						all -= Double.valueOf(alter);
+						all = all + noteInfo.getFeeBack() - Double.valueOf(alter);
 						tv_alter.setText("-"+Double.valueOf(alter) + "元");
 						noteInfo.setFeeBack(Double.valueOf(alter));
 					}
@@ -289,7 +370,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						mile.setText(totalMile+"公里");
 						int serviceMile = noteInfo.getServiceKMs();
 						double lastExtraMilePrice = noteInfo.getFeeOverKMs();
-						double price_extraMile = 0.0;
+						double price_extraMile = 0;
 						if(serviceMile<totalMile){
 							extraMile.setText((totalMile - serviceMile)+"公里" );
 							price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
@@ -303,16 +384,28 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						}
 						all = all-lastExtraMilePrice+price_extraMile;
 					}
-					tv_all.setText(all + "元");
 					noteInfo.setFeeTotal(all);
+					if(noteInfo.getInvoiceType().equals("SD")){
+						int int_all = (int)all;
+						tv_all.setText(int_all+"元");
+					} else {
+						all = reserve2(all);
+						tv_all.setText(all+"元");
+					}
+					tv_base.setText(noteInfo.getFeePrice()+"元");
 					myStateInfo.setCurrentNote(noteInfo);
 					myGetStateInfo.setStateinfo(myStateInfo);
+				} else {
+					
 				}
 			}
 		}
 	}
 
-	
+	private Double reserve2(Double x){
+		Double result = (double)(Math.round(x*100)/100.0);
+		return result;
+	}
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

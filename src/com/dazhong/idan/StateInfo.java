@@ -2,6 +2,8 @@ package com.dazhong.idan;
 
 import java.io.Serializable;
 
+import android.R.integer;
+
 /**
  * @author davis
  * 
@@ -50,7 +52,17 @@ public class StateInfo implements Serializable {
 	private String UserAccount;
 	// 用户密码
 	private String UserPSW;
+	//列表位置
+	private int position;
 
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+	
 	public String getUserPSW() {
 		return UserPSW;
 	}

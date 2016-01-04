@@ -53,6 +53,50 @@ public class TaskInfo  implements Serializable {
 	private String balancetype;
 	private String balancetypename;
 	private boolean done=false;
+	private int outfeetype;
+	private int bridgefeetype;
+	private double invoiceTaxRate;
+	private double bridgeFee;
+	
+	
+	/**
+	 * 路桥费
+	 * */
+	public double getFeeBridge() {
+		return bridgeFee;
+	}
+	public void setFeeBridge(double bridgeFee) {
+		this.bridgeFee = bridgeFee;
+	}
+	
+	/**
+	 * 税率
+	 * */
+	public double getInvoiceTaxRate() {
+		return invoiceTaxRate;
+	}
+	public void setInvoiceTaxRate(double invoiceTaxRate) {
+		this.invoiceTaxRate = invoiceTaxRate;
+	}
+	
+	/**
+	 * 住宿费是否计入总费用 0-不计 1-计入
+	 * */
+	public int getOutfeetype() {
+		return outfeetype;
+	}
+	public void setOutfeetype(int outfeetype) {
+		this.outfeetype = outfeetype;
+	}
+	/**
+	 * 路桥费是否计入总费用 0-不计 1-计入
+	 * */
+	public int getBridgefeetype() {
+		return bridgefeetype;
+	}
+	public void setBridgefeetype(int bridgefeetype) {
+		this.bridgefeetype = bridgefeetype;
+	}
 	/**
 	 * 是否已完成
 	 * */
