@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
 	private ImageView iv_refresh;
 	private TextView tv_addStart;
 	private TextView tv_addEnd;
+	private TextView tv_title;
 	private StateInfo stateinfo;
 	private List<TaskInfo> tasklist = null;
 	private SlidingMenu menu;
@@ -68,6 +69,7 @@ public class MainActivity extends Activity {
 		ActivityControler.addActivity(this);
 
 		findView();
+		tv_title.setText(iDanApp.getInstance().getUSERNAME());
 		mAdapter = new MyAdapter(this);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -84,6 +86,14 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		if(stateinfo.getIsOutDoor()){
+			tv_addStart.setVisibility(View.VISIBLE);
+			tv_addEnd.setVisibility(View.GONE);
+		} else {
+			tv_addStart.setVisibility(View.GONE);
+			tv_addEnd.setVisibility(View.VISIBLE);
+		}
+		
 		// configure the SlidingMenu
 		MenuLeftFragment menuLayout = new MenuLeftFragment(
 				getApplicationContext());
@@ -127,7 +137,7 @@ public class MainActivity extends Activity {
 				final EditText editText = new EditText(MainActivity.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(MainActivity.this)
-						.setTitle("请填写上班路码")
+						.setTitle("请填写出场路码")
 						.setView(editText)
 						.setPositiveButton(
 								"确定",
@@ -150,27 +160,15 @@ public class MainActivity extends Activity {
 														.getInstance(getApplicationContext());
 												StateInfo myStateInfo = myGetStateInfo
 														.getStateinfo();
-												if (Integer.parseInt(input) < Integer.parseInt(myStateInfo
-														.getCurrentKMS())) {
-													Toast.makeText(
-															getApplicationContext(),
-															"输入路码小于历史路码,请确认输入",
-															Toast.LENGTH_SHORT)
-															.show();
-													Log.i("jxb",
-															"历史路码 = "
-																	+ myStateInfo
-																			.getCurrentKMS());
-												} else {
-													myStateInfo
-															.setCurrentKMS(input);
-													myGetStateInfo
-															.setStateinfo(myStateInfo);
-													tv_addStart
-															.setVisibility(View.GONE);
-													tv_addEnd
-															.setVisibility(View.VISIBLE);
-												}
+												myStateInfo
+														.setBeginKMsOfToday(input);
+												myStateInfo.setIsOutDoor(false);
+												myGetStateInfo
+														.setStateinfo(myStateInfo);
+												tv_addStart
+														.setVisibility(View.GONE);
+												tv_addEnd
+														.setVisibility(View.VISIBLE);
 											} catch (Exception e1) {
 												// TODO Auto-generated catch
 												// block
@@ -195,7 +193,7 @@ public class MainActivity extends Activity {
 			final EditText editText = new EditText(MainActivity.this);
 			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 			new AlertDialog.Builder(MainActivity.this)
-					.setTitle("请填写下班路码")
+					.setTitle("请填写进场路码")
 					.setView(editText)
 					.setPositiveButton(
 							"确定",
@@ -217,60 +215,43 @@ public class MainActivity extends Activity {
 													.getInstance(getApplicationContext());
 											StateInfo myStateInfo = myGetStateInfo
 													.getStateinfo();
-											if (Integer.parseInt(input) < Integer
-													.parseInt(myStateInfo
-															.getCurrentKMS())) {
-												Toast.makeText(
-														getApplicationContext(),
-														"输入路码小于历史路码,请确认输入",
-														Toast.LENGTH_SHORT)
-														.show();
-												Log.i("jxb",
-														"历史路码 = "
-																+ myStateInfo
-																		.getCurrentKMS());
-											} else {
-												myStateInfo
-														.setCurrentKMS(input);
-												myStateInfo
-														.setEndKMsOfToday(input);
-												myGetStateInfo
-														.setStateinfo(myStateInfo);
-												tv_addEnd
-														.setVisibility(View.GONE);
-												tv_addStart
-														.setVisibility(View.VISIBLE);
-											}
+											myStateInfo.setEndKMsOfToday(input);
+											myStateInfo.setIsOutDoor(true);
+											myGetStateInfo
+													.setStateinfo(myStateInfo);
+											tv_addEnd.setVisibility(View.GONE);
+											tv_addStart
+													.setVisibility(View.VISIBLE);
 										} catch (Exception e1) {
 											// TODO Auto-generated catch block
 											e1.printStackTrace();
 										}
 									}
+									Log.i("jxb", "TimeOfTaskOneDay = "+stateinfo.getTimeOfTaskOneDay());
+//									CarID().length() = "+stateinfo.getCurrentTask().CarID().length());
+									if (stateinfo.getCurrentNote()!=null) {
+										int iR;
+										String routecode = "[";
+										routecode = routecode
+												+ stateinfo.getCurrentPerson().getPersonID() + ",";
+										routecode = routecode + stateinfo.getCurrentTask().CarID()
+												+ ",";
+										routecode = routecode
+												+ stateinfo.getCurrentNote().getNoteDate()
+												.replaceAll("-", "") + ",";
+										routecode = routecode + stateinfo.getBeginKMsOfToday() + ",";
+										routecode = routecode + stateinfo.getEndKMsOfToday();
+										routecode = routecode + "]";
+										Log.i("jxb", "routecode = "+routecode);
+										iR = getInfoValue.UploadRouteCode(routecode);
+										if (iR == 0)
+											Toast.makeText(getApplicationContext(), "路码上传成功！", 2000).show();
+										else
+											Toast.makeText(getApplicationContext(), "上传路码出错！", 2000).show();
+										
+									}
 								}
 							}).show();
-			if (stateinfo.getTimeOfTaskOneDay() > 0
-					&& stateinfo.getCurrentTask().CarID().length() > 2) {
-				int iR;
-				String routecode = "[";
-				routecode = routecode
-						+ stateinfo.getCurrentPerson().getPersonID() + ",";
-				routecode = routecode + stateinfo.getCurrentTask().CarID()
-						+ ",";
-				routecode = routecode
-						+ stateinfo.getCurrentNote().getNoteDate()
-								.replaceAll("-", "") + ",";
-//				routecode=routecode+"20010101"+",";
-				routecode = routecode + stateinfo.getBeginKMsOfToday() + ",";
-				routecode = routecode + stateinfo.getEndKMsOfToday();
-				routecode = routecode + "]";
-//				System.out.println(routecode);
-				iR = getInfoValue.UploadRouteCode(routecode);
-				if (iR == 0)
-					Toast.makeText(getApplicationContext(), "路码上传成功！", 2000);
-				else
-					Toast.makeText(getApplicationContext(), "上传路码出错！", 2000);
-
-			}
 		}
 
 	};
@@ -279,7 +260,7 @@ public class MainActivity extends Activity {
 		String serviceVer = getInfoValue.getVersion("123");
 		String curVersion = FileUtil.getInstance().getVersion(context);
 		Log.i("jxb", "serviceVersion = "+serviceVer+"   curVersion = "+curVersion);
-		if(!serviceVer.equals(curVersion)){
+		if(!serviceVer.equals(curVersion) && !serviceVer.equals("")){
 			new AlertDialog.Builder(MainActivity.this).setTitle("程序有更新,是否立即更新？").
 				setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 					
@@ -325,6 +306,14 @@ public class MainActivity extends Activity {
 		super.onResume();
 //		menu.toggle();
 		setStatus();
+		try {
+			stateinfo = getStateInfo.getInstance(getApplicationContext())
+					.getStateinfo();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		refreshTasks();
 	}
 
 	private boolean getStateRec() {
@@ -348,6 +337,7 @@ public class MainActivity extends Activity {
 		iv_refresh = (ImageView) findViewById(R.id.main_refresh);
 		tv_addStart = (TextView) findViewById(R.id.main_addStart);
 		tv_addEnd = (TextView) findViewById(R.id.main_addEnd);
+		tv_title = (TextView) findViewById(R.id.tv_titleMain);
 	}
 
 	private void refreshTasks() {
@@ -411,12 +401,13 @@ public class MainActivity extends Activity {
 						.findViewById(R.id.item_time);
 				holder.type = (TextView) convertView
 						.findViewById(R.id.item_type);
+				holder.company = (TextView) convertView.findViewById(R.id.item_company);
+				holder.isDone = (TextView) convertView.findViewById(R.id.item_isDone);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			TaskInfo taskInfo = tasklist.get(position);
-			Log.i("jxb", "readMark = " + taskInfo.getReadmark());
 			String ServiceDate = null;
 			String serviceBegin = taskInfo.ServiceBegin();
 			String serviceEnd = taskInfo.ServiceEnd();
@@ -429,10 +420,13 @@ public class MainActivity extends Activity {
 			holder.date.setText(ServiceDate);
 			holder.location.setText(taskInfo.PickupAddress());
 			holder.name.setText(taskInfo.Customer());
-//			holder.nubmer.setText(taskInfo.CustomerTel());
-//			holder.nubmer.setVisibility(View.GONE);
 			holder.type.setText(taskInfo.ServiceTypeName());
-
+			holder.company.setText(taskInfo.getCustomerCompany());
+			if (taskInfo.getRouteNoteCount() > 0){
+				holder.isDone.setVisibility(View.VISIBLE);
+			} else {
+				holder.isDone.setVisibility(View.GONE);
+			}
 			return convertView;
 		}
 
@@ -444,5 +438,7 @@ public class MainActivity extends Activity {
 		public TextView type;
 		public TextView name;
 		public TextView location;
+		public TextView company;
+		public TextView isDone;
 	}
 }

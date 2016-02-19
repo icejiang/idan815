@@ -57,7 +57,30 @@ public class TaskInfo  implements Serializable {
 	private int bridgefeetype;
 	private double invoiceTaxRate;
 	private double bridgeFee;
+	private String customerName;
+	private int routeNoteCount;
 	
+	/**
+	 * 上传次数： >0表示订单已完成
+	 * */
+	public void setRouteNoteCount(int routeNoteCount){
+		this.routeNoteCount = routeNoteCount;
+	}
+	
+	public int getRouteNoteCount(){
+		return routeNoteCount;
+	}
+	
+	/**
+	 * 客户公司名称
+	 * */
+	public void setCustomerCompany(String customerName){
+		this.customerName = customerName;
+	}
+	
+	public String getCustomerCompany(){
+		return customerName;
+	}
 	
 	/**
 	 * 路桥费

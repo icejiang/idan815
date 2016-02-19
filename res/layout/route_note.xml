@@ -248,7 +248,7 @@
                 android:textScaleX="0.9"
                 android:textSize="16dp" />
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/tv_add_record"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
                 android:layout_marginRight="14dp"
                 android:text="添加记录"
                 android:textColor="#a40035"
-                android:textSize="14dp" />
+                android:textSize="14dp" /> -->
 
         </RelativeLayout>
 
@@ -499,7 +499,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="14dp"
-                android:text="添加费用"
+                android:text="添加费用与营运记录"
                 android:textColor="#a40035"
                 android:textSize="14dp" />
 
@@ -555,7 +555,8 @@
         <TextView
             android:id="@+id/tv_print"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="打印路单"

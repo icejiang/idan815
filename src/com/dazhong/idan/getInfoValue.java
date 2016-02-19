@@ -32,7 +32,7 @@ public abstract class getInfoValue {
 	 * ≤Â»Î¬∑µ•
 	 * */
 	public static int InsertNote(String note) {
-		int iInsertResult = 0;
+		int iInsertResult = 100;
 		String sInfo;
 		try {
 			sInfo = getDZService.getServiceConnect(note, "InsertRouteNote");
@@ -267,12 +267,15 @@ public abstract class getInfoValue {
 			// System.out.println("info count:" + listInfo.size());
 			for (String sinf : listInfo) {
 				taskinfo = new TaskInfo();
+				taskinfo.setRouteNoteCount(Integer.parseInt(getDZService.getInfoValue(sinf,"RouteNoteCount")));
+				Log.i("jxb", "count = "+Integer.parseInt(getDZService.getInfoValue(sinf,"RouteNoteCount")));
 				taskinfo.setBookman(getDZService.getInfoValue(sinf, "Order"));
 				taskinfo.setBooktel(getDZService.getInfoValue(sinf,
 						"OrderPhone"));
 				taskinfo.setCarid(getDZService.getInfoValue(sinf, "CarID"));
 				taskinfo.setCarnumber(getDZService.getInfoValue(sinf,
 						"LicenseTag"));
+				taskinfo.setCustomerCompany(getDZService.getInfoValue(sinf, "CustomerName"));
 				taskinfo.setCartype(getDZService
 						.getInfoValue(sinf, "CarSRName"));
 				taskinfo.setCustomer(getDZService.getInfoValue(sinf, "CarUser"));

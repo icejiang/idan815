@@ -36,7 +36,7 @@
         android:layout_above="@+id/editText1"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="69dp"
-        android:src="@drawable/logo1" />
+        android:src="@drawable/logo111" />
 
     <EditText
         android:id="@+id/editText1"
@@ -49,6 +49,7 @@
         android:ems="10"
         android:hint="请输入手机号"
         android:maxLines="1"
+        android:singleLine="true" 
         android:paddingLeft="10dp" />
 
     <EditText
@@ -56,15 +57,13 @@
         android:layout_width="220dp"
         android:layout_height="40dp"
         android:layout_above="@+id/forgetPsw"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_marginBottom="7dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
         android:background="@drawable/edittext"
         android:ems="10"
         android:hint="请输入密码"
         android:maxLines="1"
-        android:paddingLeft="10dp" >
-
-        <requestFocus />
-    </EditText>
+        android:singleLine="true" 
+        android:paddingLeft="10dp" />
 
 </RelativeLayout>

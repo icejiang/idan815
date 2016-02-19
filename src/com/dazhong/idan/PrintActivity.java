@@ -9,9 +9,15 @@ import java.util.Set;
 import com.dazhong.idan.R.id;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources.NotFoundException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -65,6 +71,7 @@ public class PrintActivity extends Activity {
 	private StateInfo myStateInfo;
 	private int position;
 	private TextView tv_alterPrice;
+	private TextView company;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +90,11 @@ public class PrintActivity extends Activity {
 			e1.printStackTrace();
 		}
 
-//		if (mBTService != null) {
-//			mBTService.DisConnected();
-//			mBTService = null;
-//		}
 		blueinit = true;
 		findView();
 		setData();
-
+		registerBoradcastReceiver();;
+		
 		iv_return.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -120,22 +124,26 @@ public class PrintActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (blueinit) {
-					Log.i("jxb", "蓝牙状态："+mBTService.getState());
-					if (mBTService.getState() == mBTService.STATE_CONNECTED) {
-						String message = printFile();
-						if (message == null) {
-							Toast.makeText(
-									PrintActivity.this,
-									PrintActivity.this.getResources()
-											.getString(R.string.str_printfail),
-									2000).show();
-							return;
+				Log.i("jxb", "蓝牙状态：" + mBTService.getState());
+				if (mBTService.getState() == mBTService.STATE_CONNECTED) {
+					String message = printFile();
+					if (message == null) {
+						Toast.makeText(
+								PrintActivity.this,
+								PrintActivity.this.getResources().getString(
+										R.string.str_printfail), 2000).show();
+						return;
+					}
+					mBTService.PrintCharacters(message);
+					int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
+					Log.i("jxb", "k = " + k);
+					if (k == 0 || k == 1) {
+						// do nothing
+					} else {
+							getStateInfo.getInstance(PrintActivity.this).saveNoteInfo(noteInfo);
+							Log.i("jxb", "保存成功");
+							
 						}
-						mBTService.PrintCharacters(message);
-						int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
-						TaskInfo myTask = iDanApp.getInstance().getTasklist().get(position);
-						myTask.setDone(true);
 						Toast.makeText(
 								PrintActivity.this,
 								PrintActivity.this.getResources().getString(
@@ -148,10 +156,6 @@ public class PrintActivity extends Activity {
 					}
 					iv_return.setVisibility(View.GONE);
 					iv_home.setVisibility(View.VISIBLE);
-				}
-				else
-					Toast.makeText(getApplicationContext(), "打印机连接错误，请重新配置蓝牙！", 2000)
-					.show();
 			}
 		});
 
@@ -211,20 +215,11 @@ public class PrintActivity extends Activity {
 			};
 			mBTService = new BlueToothService(this, mhandler);
 			if (mBTService.HasDevice()) {
-				Toast.makeText(
-						PrintActivity.this,
-						PrintActivity.this.getResources().getString(
-								R.string.str_devecehasblue), 2000).show();
 				if (!mBTService.IsOpen()) {// 判断蓝牙是否打开
-					Toast.makeText(
-							PrintActivity.this,
-							PrintActivity.this.getResources().getString(
-									R.string.str_closed), 2000).show();
-
+					Intent mIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);  
+		            startActivityForResult(mIntent, 1); 
 				} else {
 					String connAddress = null;
-					// mBTService.ScanDevice();
-					// Thread.sleep(200);
 					devices = mBTService.GetBondedDevice();
 					if (devices.size() > 0) {
 						for (BluetoothDevice device : devices) {
@@ -232,9 +227,11 @@ public class PrintActivity extends Activity {
 									getStateInfo.getInstance(getApplicationContext()).getStateinfo()
 											.getPrinterName()))
 								connAddress = device.getAddress();
+							Log.i("jxb", "address1 = "+connAddress);
 						}
 						mBTService.DisConnected();
 						Thread.sleep(200);
+						Log.i("jxb", "address2 = "+connAddress);
 						mBTService.ConnectToDevice(connAddress);
 					}
 
@@ -252,7 +249,6 @@ public class PrintActivity extends Activity {
 				mBTService.DisConnected();
 				mBTService = null;
 			}
-			blueinit=false;
 			myStateInfo.setCurrentState(1);
 			myGetStateInfo.setStateinfo(myStateInfo);
 			Toast.makeText(getApplicationContext(), "打印机连接错误，请重新配置蓝牙！", 2000)
@@ -260,11 +256,55 @@ public class PrintActivity extends Activity {
 		}
 	}
 
+	private void registerBoradcastReceiver() {
+	    IntentFilter stateChangeFilter = new IntentFilter(
+	            BluetoothAdapter.ACTION_STATE_CHANGED);
+	    registerReceiver(blueToothStateReceiver, stateChangeFilter);
+	}
+	
+	private BroadcastReceiver blueToothStateReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
+				int state = intent
+						.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
+				if (state == BluetoothAdapter.STATE_ON) {
+					if(mBTService != null){
+					if (mBTService.HasDevice()) {
+						String connAddress = null;
+						devices = mBTService.GetBondedDevice();
+						if (devices.size() > 0) {
+							for (BluetoothDevice device : devices) {
+								try {
+									if (device.getName().equals(getStateInfo.getInstance
+											(getApplicationContext()).getStateinfo().getPrinterName()))
+										connAddress = device.getAddress();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+							mBTService.DisConnected();
+							try {
+								Thread.sleep(200);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							mBTService.ConnectToDevice(connAddress);
+						}
+					}
+				}
+				}
+			}
+
+		}
+	};
+	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-
+		unregisterReceiver(blueToothStateReceiver);
 	}
 
 	@Override
@@ -302,7 +342,9 @@ public class PrintActivity extends Activity {
 
 		String messages = null;
 		try {
-			String mes = "\r\n\r\n";
+			String mes1 = "\r\n";
+			String mes2 = "\r\n\r\n";
+			String non = "\t";
 			NoteInfo note = myStateInfo.getCurrentNote();
 			if (note == null) {
 				Toast.makeText(
@@ -315,83 +357,77 @@ public class PrintActivity extends Activity {
 			int bridgeFeeType = noteInfo.getBridgefeetype();
 			int outFeeType = noteInfo.getOutfeetype();
 			messages = "";// "--------------------------" + mes;
-			messages = messages + "路单号码：" + note.getNoteID() + mes;
-			messages = messages + "服务日期：" + note.getNoteDate() + mes;
-			messages = messages + "营运车辆：" + note.getCarNumber() + mes;
-			messages = messages + "用车客人：" + note.getCustomerName() + mes;
-			messages = messages + "上车时间：" + note.getServiceBegin() + mes;
-			messages = messages + "下车时间：" + note.getServiceEnd() + mes;
-			messages = messages + "上车地址：" + note.getOnBoardAddress() + mes;
-			messages = messages + "下车地址：" + note.getLeaveAddress() + mes;
-			messages = messages + "途径地点：" + note.getServiceRoute() + mes;
-			messages = messages + "服务里程："
-					+ Double.toString(note.getDoServiceKms()) + mes;
-			messages = messages + "服务时长："
-					+ Double.toString(note.getDoServiceTime()) + mes;
-			if (note.getOverHours() > 0)
-				messages = messages + "超时服务"
-						+ Integer.toString(note.getOverHours()) + mes;
-			if (note.getOverKMs() > 0)
-				messages = messages + "超出里程："
-						+ Integer.toString(note.getOverKMs()) + mes;
-			if (note.getFeeOverTime() > 0)
-				messages = messages + "超小时费："
-						+ note.getFeeOverTime() + mes;
-			if (note.getFeeOverKMs() > 0)
-				messages = messages + "超公里费："
-						+ note.getFeeOverKMs() + mes;
+			messages = messages + "路单号/No.：" + note.getNoteID() + mes2;
+			messages = messages + "服务日期/Date：" + note.getNoteDate() + mes2;
+			messages = messages + "营运车辆/Vehicle No.：" + note.getCarNumber() + mes2;
+			messages = messages + "客户信息/Client：" + mes1;
+			messages = messages + note.getCustomerCompany() + mes2;
+			messages = messages + "用车客人/Guest Name：" + note.getCustomerName() + mes2;
+			messages = messages + "上车时间/Boarding Time：" + note.getServiceBegin() + mes2;
+			messages = messages + "下车时间/Alighting Time："  + note.getServiceEnd() + mes2;
+			messages = messages + "上车地址/Boarding Location：" + mes1;
+			messages = messages + note.getOnBoardAddress() + mes2;
+			messages = messages + "下车地址/Alighting Location：" + mes1;
+			messages = messages + note.getLeaveAddress() + mes2;
+			messages = messages + "途径地点/Running Record：" + mes1;
+			messages = messages + note.getServiceRoute() + mes2;
+			messages = messages + "服务里程/Service Km：" + Double.toString(note.getDoServiceKms())+"公里" + mes2;
+			if (note.getOverKMs() > 0) {
+				messages = messages + "超出里程/Extra Km：" + Integer.toString(note.getOverKMs())+"公里"  + mes2;
+			}
+			if (note.getFeeOverKMs() > 0) {
+				messages = messages + "超里程费/Extra Km Fee：" + note.getFeeOverKMs() +"元" + mes2;
+			}
+			messages = messages + "服务时长/Service Time：" + Double.toString(note.getDoServiceTime())+"小时" + mes2;
+			if (note.getOverHours() > 0) {
+				messages = messages + "超出时长/Extra Time：" + Integer.toString(note.getOverHours())+"小时" + mes2;
+			}
+			if (note.getFeeOverTime() > 0) {
+				messages = messages + "超时间费/Extra Time Fee：" + note.getFeeOverTime() +"元" + mes2;
+			}
+			messages = messages + "基本费/Basic Fee:       " + note.getFeePrice() +"元"+ mes2;
 			if (note.getFeeBridge() > 0)
 				if (bridgeFeeType == 0) {
-					messages = messages + "路桥费："
-						+ reserve2(note.getFeeBridge()*taxRate) + mes;
+					messages = messages + "路桥费/Toll Fee:        " + reserve2(note.getFeeBridge()*taxRate)+"元" + mes2;
 				} else {
-					messages = messages + "路桥费："
-							+ note.getFeeBridge() + mes;
+					messages = messages + "路桥费/Toll Fee:        " + note.getFeeBridge()+"元" + mes2;
 				}
 			if (note.getFeePark() > 0)
 				if (bridgeFeeType == 0) {
-					messages = messages + "停车费："
-						+ reserve2(note.getFeePark()*taxRate) + mes;
+					messages = messages + "停车费/Parking Fee:     " + reserve2(note.getFeePark()*taxRate)+"元" + mes2;
 				} else {
-					messages = messages + "停车费："
-							+ note.getFeePark() + mes;
+					messages = messages + "停车费/Parking Fee:     " + note.getFeePark()+"元" + mes2;
 				}
 			if (note.getFeeHotel() > 0)
 				if (outFeeType == 0) {
-					messages = messages + "住宿费："
-						+ reserve2(note.getFeeHotel()*taxRate) + mes;
+					messages = messages + "住宿费/Hotel Expense:   " + reserve2(note.getFeeHotel()*taxRate)+"元" + mes2;
 				} else {
-					messages = messages + "住宿费："
-							+ note.getFeeHotel() + mes;
+					messages = messages + "住宿费/Hotel Expense:   " + note.getFeeHotel()+"元" + mes2;
 				}
 			if (note.getFeeLunch() > 0)
 				if (outFeeType == 0) {
-					messages = messages + "餐费："
-						+ reserve2(note.getFeeLunch()*taxRate) + mes;
+					messages = messages + "餐费/Meal Fee:          " + reserve2(note.getFeeLunch()*taxRate)+"元" + mes2;
 				} else {
-					messages = messages + "餐费："
-							+ note.getFeeLunch() + mes;
+					messages = messages + "餐费/Meal Fee:          " + note.getFeeLunch()+"元" + mes2;
 				}
-			if (note.getFeeOther() > 0)
-				messages = messages + "其他费："
-						+ reserve2(note.getFeeOther()*taxRate) + mes;
-			if (note.getFeeBack() > 0)
-				messages = messages + "修正费："
-						+ -note.getFeeBack() + mes;
+			if (note.getFeeOther() > 0) {
+				messages = messages + "其他费/Other Charges:   " + reserve2(note.getFeeOther()*taxRate)+"元" + mes2;
+			}
+			if (note.getFeeBack() > 0) {
+				messages = messages + "修正费/Adjuested Price: " + -note.getFeeBack()+"元" + mes2;
+			}
 			if(noteInfo.getInvoiceType().equals("SD")){
 				int int_all = (int)noteInfo.getFeeTotal();
 				noteInfo.setFeeTotal(int_all);
-				messages = messages + "总费用：" + Double.toString(int_all)
-						+ mes;
+				messages = messages + "总费用/Total Price：" 	+ Double.toString(int_all)+"元" + mes2;
 			} else {
 				double all = reserve2(noteInfo.getFeeTotal());
 				noteInfo.setFeeTotal(all);
-				messages = messages + "总费用：" + Double.toString(all)
-						+ mes;
+				messages = messages + "总费用/Total Price：" 	+ Double.toString(all)+"元" + mes2;
 			}
-			messages = messages + "客户签名" + mes + mes + mes;
-			messages = messages + "___________________________" + mes + mes
-					+ mes;
+			messages = messages + "客户签名/Customer Signature：" + mes2 + mes2 + mes2;
+			messages = messages + "___________________________" + mes2 + mes2
+					+ mes2;
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -459,6 +495,7 @@ public class PrintActivity extends Activity {
 		tv_dateLast.setText(curDate);
 		route_id.setText(noteInfo.getNoteID());
 		record.setText(noteInfo.getServiceRoute());
+		company.setText(noteInfo.getCustomerCompany());
 	}
 
 	private void findView() {
@@ -488,10 +525,46 @@ public class PrintActivity extends Activity {
 		iv_home = (ImageView) findViewById(R.id.home_print);
 		record = (TextView) findViewById(R.id.print_record);
 		tv_alterPrice = (TextView) findViewById(R.id.tv_alter_price);
+		company = (TextView) findViewById(R.id.print_company);
 	}
 	
 	private Double reserve2(Double x){
 		Double result = (double)(Math.round(x*100)/100.0);
 		return result;
 	}
+	
+	public boolean isNetworkAvailable(Activity activity)
+    {
+        Context context = activity.getApplicationContext();
+        // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        
+        if (connectivityManager == null)
+        {
+            return false;
+        }
+        else
+        {
+            // 获取NetworkInfo对象
+            NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
+            
+            if (networkInfo != null && networkInfo.length > 0)
+            {
+                for (int i = 0; i < networkInfo.length; i++)
+                {
+                    System.out.println(i + "===状态===" + networkInfo[i].getState());
+                    System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
+                    // 判断当前网络状态是否为连接状态
+                    if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+	
+	
 }

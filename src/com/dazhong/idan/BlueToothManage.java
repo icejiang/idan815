@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -510,6 +511,31 @@ public class BlueToothManage extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		Log.i("jxb", "111destroy");
+		if (bt_update != null) {
+			updateflag = false;
+			bt_update = null;
+		}
+		if (tv_update != null) {
+			tvFlag = false;
+			tv_update = null;
+		}
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (mBTService != null) {
+			mBTService.DisConnected();
+			mBTService = null;
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

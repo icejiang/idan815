@@ -86,7 +86,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		myGetStateInfo.setStateinfo(myStateInfo);
 		tv_addPay.setOnClickListener(this);
 		tv_print.setOnClickListener(this);
-		tv_addRecord.setOnClickListener(this);
+//		tv_addRecord.setOnClickListener(this);
 
 		
 	}
@@ -101,7 +101,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		tv_hotel = (TextView) findViewById(R.id.tv_hotel1);
 		tv_all = (TextView) findViewById(R.id.tv_all);
 		tv_print = (TextView) findViewById(R.id.tv_print);
-		tv_addRecord = (TextView) findViewById(R.id.tv_add_record);
+//		tv_addRecord = (TextView) findViewById(R.id.tv_add_record);
 		tv_record = (TextView) findViewById(R.id.tv_record);
 //		btn_confirmEnd = (Button) findViewById(R.id.confirm_end);
 		date = (TextView) findViewById(R.id.route_date);
@@ -131,15 +131,23 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		mile.setText(totalMile+"公里");
 		noteInfo.setDoServiceKms(totalMile);
 		DateFormat df = new SimpleDateFormat("HH:mm");
-		int hours = 0;
+		int hour = 0;
 		try {
 			Date d1 = df.parse(noteInfo.getServiceBegin());
 			Date d2 = df.parse(noteInfo.getServiceEnd());
 			long diff = d2.getTime() - d1.getTime();
-			long hour = diff/(1000* 60 * 60);
-			hours = Integer.parseInt(Long.toString(hour));
-			time.setText(Long.toString(hour)+"小时");
-			noteInfo.setDoServiceTime(hours);
+			if (diff<0){
+				diff = diff +24*60*60*1000;
+			}
+			long min = diff/(1000 * 60);
+			hour = (int) (min/60);
+			int remainder = (int) (min%60);
+			if(remainder>15){
+				hour+=1;
+			}
+			time.setText(hour+"小时");
+			noteInfo.setDoServiceTime(hour);
+
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -156,24 +164,20 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			noteInfo.setOverKMs(totalMile-serviceMile);
 			extraMile_price.setText(price_extraMile+"元");
 		}
-		if(hours > serviceHour){
-			extraTime.setText((hours - serviceHour)+"小时");
-			price_extraTime = (hours - serviceHour)*(taskInfo.SalePricePerHour());
+		if(hour > serviceHour){
+			extraTime.setText((hour - serviceHour)+"小时");
+			price_extraTime = (hour - serviceHour)*(taskInfo.SalePricePerHour());
 			noteInfo.setFeeOverTime(price_extraTime);
-			noteInfo.setOverKMs(hours-serviceHour);
+			noteInfo.setOverKMs(hour-serviceHour);
 			extraTime_price.setText(price_extraTime+"元");
 		}
 		if(feeChoice == 1){
 			price_all += price_extraMile+price_extraTime;
 		} else {
-			if(price_extraMile>price_extraTime && price_extraTime!=0){
-				price_all+=price_extraTime;
-			} else if(price_extraMile>price_extraTime){
-				price_all+=price_extraMile;
-			} else if(price_extraTime>price_extraMile && price_extraMile!=0){
-				price_all+=price_extraMile;
+			if (price_extraMile >= price_extraTime){
+				price_all += price_extraMile;
 			} else {
-				price_all+=price_extraTime;
+				price_all += price_extraTime;
 			}
 		}
 		Double taxRate = 1 + noteInfo.getInvoiceTaxRate();
@@ -232,6 +236,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			tv_all.setText(price_all+"元");
 		}
 		tv_base.setText(noteInfo.getFeePrice()+"元");
+		tv_record.setText(noteInfo.getServiceRoute());
 	}
 	
 	
@@ -249,29 +254,29 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			intent3.setClass(getApplicationContext(), PrintActivity.class);
 			startActivity(intent3);
 			break;
-		case R.id.tv_add_record:
-			final EditText editText = new EditText(OrderDetailEnd.this);
-			new AlertDialog.Builder(OrderDetailEnd.this)
-					.setTitle("请填写营运记录")
-					.setView(editText)
-					.setPositiveButton(
-							"确定",
-							new android.content.DialogInterface.OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-
-									String input = editText.getText()
-											.toString();
-									tv_record.setText(input);
-									noteInfo.setServiceRoute(input);
-									myStateInfo.setCurrentNote(noteInfo);
-									myGetStateInfo.setStateinfo(myStateInfo);
-								}
-
-							}).show();
-			break;
+//		case R.id.tv_add_record:
+//			final EditText editText = new EditText(OrderDetailEnd.this);
+//			new AlertDialog.Builder(OrderDetailEnd.this)
+//					.setTitle("请填写营运记录")
+//					.setView(editText)
+//					.setPositiveButton(
+//							"确定",
+//							new android.content.DialogInterface.OnClickListener() {
+//
+//								@Override
+//								public void onClick(DialogInterface dialog,
+//										int which) {
+//
+//									String input = editText.getText()
+//											.toString();
+//									tv_record.setText(input);
+//									noteInfo.setServiceRoute(input);
+//									myStateInfo.setCurrentNote(noteInfo);
+//									myGetStateInfo.setStateinfo(myStateInfo);
+//								}
+//
+//							}).show();
+//			break;
 		default:
 			break;
 		}
@@ -296,12 +301,17 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					String alter = bundle.getString(AddPay.key_alter);
 					String routeOn = bundle.getString(AddPay.key_routeOn);
 					String routeOff = bundle.getString(AddPay.key_routeOff);
+					String record = bundle.getString(AddPay.key_record);
 					double all = noteInfo.getFeeTotal();
 //					double all = 0;
 					double taxRate = 1 + noteInfo.getInvoiceTaxRate();
 					int bridgeFeeType = noteInfo.getBridgefeetype();
 					int outFeeType = noteInfo.getOutfeetype();
 					Log.i("jxb", "taxRate = "+taxRate+";  bridgeFeetype = "+bridgeFeeType+";   outFeetype = "+outFeeType);
+					if (!record.equals("")){
+						tv_record.setText(record);
+						noteInfo.setServiceRoute(record);
+					}
 					if (!road.equals("")) {
 						if (bridgeFeeType == 0){
 							Double fee = reserve2(Double.valueOf(road)*taxRate);
@@ -370,6 +380,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						mile.setText(totalMile+"公里");
 						int serviceMile = noteInfo.getServiceKMs();
 						double lastExtraMilePrice = noteInfo.getFeeOverKMs();
+						double extraTimePrice = noteInfo.getFeeOverTime();
+						int feeChoice = noteInfo.getFeeChoice();
 						double price_extraMile = 0;
 						if(serviceMile<totalMile){
 							extraMile.setText((totalMile - serviceMile)+"公里" );
@@ -380,9 +392,26 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						} else {
 							noteInfo.setFeeOverKMs(0);
 							noteInfo.setOverKMs(0);
+							extraMile.setText("0公里");
 							extraMile_price.setText("0元");
 						}
-						all = all-lastExtraMilePrice+price_extraMile;
+						if (feeChoice == 1){
+							all = all-lastExtraMilePrice+price_extraMile;
+						} else {
+							if (lastExtraMilePrice >= extraTimePrice){
+								if (price_extraMile >= extraTimePrice){
+									all = all - lastExtraMilePrice + price_extraMile;
+								} else {
+									all = all - lastExtraMilePrice + extraTimePrice;
+								}
+							} else {
+								if (price_extraMile >= extraTimePrice){
+									all = all - extraTimePrice + price_extraMile;
+								} else {
+									//do nothing
+								}
+							}
+						}
 					}
 					noteInfo.setFeeTotal(all);
 					if(noteInfo.getInvoiceType().equals("SD")){

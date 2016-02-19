@@ -25,6 +25,7 @@ public class AddPay extends Activity {
 	private EditText et_alter;
 	private EditText et_routeOn;
 	private EditText et_routeOff;
+	private EditText et_record;
 	private TextView bt_save;
 	private ImageView iv_return;
 	public final static String key_road = "ROAD";
@@ -35,6 +36,7 @@ public class AddPay extends Activity {
 	public final static String key_alter = "ALTER";
 	public final static String key_routeOn = "ROUTEON";
 	public final static String key_routeOff = "ROUTEOFF";
+	public final static String key_record = "RECORD";
 	public final static int RESULT_CODE=1;
 	private getStateInfo myGetStateInfo;
 	private StateInfo myStateInfo;
@@ -50,9 +52,7 @@ public class AddPay extends Activity {
 		try {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
-			myStateInfo.setCurrentState(17);
 			noteInfo = myStateInfo.getCurrentNote();
-			myGetStateInfo.setStateinfo(myStateInfo);
 			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -60,6 +60,13 @@ public class AddPay extends Activity {
 		}
 		et_routeOn.setText(noteInfo.getRouteBegin());
 		et_routeOff.setText(noteInfo.getRouteEnd());
+		et_road.setText(noteInfo.getFeeBridge()+"");
+		et_eat.setText(noteInfo.getFeeLunch()+"");
+		et_parking.setText(noteInfo.getFeePark()+"");
+		et_hotel.setText(noteInfo.getFeeHotel()+"");
+		et_other.setText(noteInfo.getFeeOther()+"");
+//		et_alter.setText(noteInfo.getFeeBack()+"");
+		et_record.setText(noteInfo.getServiceRoute());
 		
 		bt_save.setOnClickListener(new OnClickListener() {
 			
@@ -68,32 +75,16 @@ public class AddPay extends Activity {
 
 				String alter = et_alter.getText().toString();
 				if (!alter.equals("")&&!(alter == null)){
-					double price_all = noteInfo.getFeePrice();
+					double price_all = noteInfo.getFeeTotal();
 					if(Double.valueOf(alter)>price_all){
-						Toast.makeText(getApplicationContext(), "修正金额路单总价,请确认输入", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "修正金额大于路单总价,请确认输入", Toast.LENGTH_SHORT).show();
 						return;
 					}
 				}
 				String routeOn = et_routeOn.getText().toString();
 				String routeOff = et_routeOff.getText().toString();
-				String previousOn = noteInfo.getRouteBegin();
-				if(!routeOn.equals("")&&!(routeOn == null)){
-					String beginKMSofDay = myStateInfo.getBeginKMsOfToday();
-					int kmsDay = 0;
-					if(beginKMSofDay.equals("")||beginKMSofDay == null){
-						
-					} else {
-						kmsDay = Integer.parseInt(beginKMSofDay);
-					}
-					if(Integer.parseInt(routeOn)<kmsDay){
-						Toast.makeText(getApplicationContext(), "输入路码小于今日上车路码,请确认输入", Toast.LENGTH_SHORT).show();
-						return;
-					}
-				} else {
-					previousOn = routeOn;
-				}
 				if(!routeOff.equals("")&&!(routeOff == null)){
-					if(Integer.parseInt(routeOff)<Integer.parseInt(previousOn)){
+					if(Integer.parseInt(routeOff)<Integer.parseInt(routeOn)){
 						Toast.makeText(getApplicationContext(), "输入路码小于上车路码,请确认输入", Toast.LENGTH_SHORT).show();
 						return;
 					} 
@@ -109,6 +100,7 @@ public class AddPay extends Activity {
 				bundle.putString(key_alter, alter);
 				bundle.putString(key_routeOn, routeOn);
 				bundle.putString(key_routeOff, routeOff);
+				bundle.putString(key_record, et_record.getText().toString());
 				Intent intent = new Intent();
 				intent.putExtras(bundle);
 	            setResult(RESULT_CODE, intent);  
@@ -137,6 +129,7 @@ public class AddPay extends Activity {
 		et_alter = (EditText) findViewById(R.id.price_alter);
 		et_routeOn = (EditText) findViewById(R.id.route_on);
 		et_routeOff = (EditText) findViewById(R.id.route_off);
+		et_record = (EditText) findViewById(R.id.record);
 	}
 	
 	@Override

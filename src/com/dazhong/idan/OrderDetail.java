@@ -30,7 +30,6 @@ public class OrderDetail extends Activity {
 //	private int input_end;
 	private int position;
 	public static String INPUT_KEY = "INPUT";
-	private TaskInfo taskInfo;
 	private TextView service_start;
 	private TextView service_end;
 	private TextView onboardTime;
@@ -58,9 +57,12 @@ public class OrderDetail extends Activity {
 	private LinearLayout flightLayout;
 	private StateInfo myStateInfo;
 	private getStateInfo myGetStateInfo;
+	private NoteInfo noteInfo;
+	private TaskInfo taskInfo;
 	private TextView titleid;
 	private TextView outFeeType;
 	private TextView bridgeFeetype;
+	private TextView company;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class OrderDetail extends Activity {
 		ActivityControler.addActivity(this);
 		position = getIntent().getIntExtra(MainActivity.POSITION, 0);
 		taskInfo = iDanApp.getInstance().getTasklist().get(position);
+		getInfoValue.setTaskRead(iDanApp.getInstance().getEMPLOYEEID(), taskInfo.TaskID());
 		findview();
 		setData();
 		try {
@@ -83,7 +86,7 @@ public class OrderDetail extends Activity {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		if (taskInfo.isDone()){
+		if (taskInfo.getRouteNoteCount()>0){
 			tv_start.setVisibility(View.GONE);
 			tv_finish.setVisibility(View.VISIBLE);
 		} else {
@@ -96,42 +99,40 @@ public class OrderDetail extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				final EditText editText = new EditText(OrderDetail.this);
-				myStateInfo.setCurrentState(12);
-				myGetStateInfo.setStateinfo(myStateInfo);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-				new AlertDialog.Builder(OrderDetail.this).setTitle("请填写起始路码").
-					setView(editText).setPositiveButton("确定并开始业务", new android.content.DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-							String input = editText.getText().toString();
-							if(input.equals("")){
-								Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
-							} else {
-								String currentKMS = myStateInfo.getCurrentKMS();
-								if(currentKMS == null||currentKMS.equals("")){
-									Intent intent = new Intent();
-									intent.putExtra("input_start", input);
-									intent.putExtra(INPUT_KEY, position);
-									intent.setClass(OrderDetail.this, InService.class);
-									startActivity(intent);
-								} else {
-									if(Integer.parseInt(input)<Integer.parseInt(myStateInfo.getCurrentKMS())){
-										Toast.makeText(getApplicationContext(), "输入路码小于历史路码,请确认输入", Toast.LENGTH_SHORT).show();
-										Log.i("jxb", "历史路码 = "+myStateInfo.getCurrentKMS());
-									} else {
-										Intent intent = new Intent();
-										intent.putExtra("input_start", input);
-										intent.putExtra(INPUT_KEY, position);
-										intent.setClass(OrderDetail.this, InService.class);
-										startActivity(intent);
+				new AlertDialog.Builder(OrderDetail.this)
+						.setTitle("请填写起始路码")
+						.setView(editText)
+						.setPositiveButton(
+								"确认并开始业务",
+								new android.content.DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+										String input = editText.getText()
+												.toString();
+										if (input.equals("")) {
+											Toast.makeText(
+													getApplicationContext(),
+													"路码不能为空",
+													Toast.LENGTH_SHORT).show();
+										} else {
+											myStateInfo.setCurrentKMS(input);
+											noteInfo = new NoteInfo();
+											noteInfo.setRouteBegin(input);
+											putDataIntoNote();
+											myStateInfo.setCurrentNote(noteInfo);
+											myGetStateInfo.setStateinfo(myStateInfo);
+											Intent intent = new Intent();
+											intent.setClass(OrderDetail.this,
+													InService.class);
+											startActivity(intent);
+										}
 									}
-								}
-							}
-						}
-					}).show();
-				
+								}).show();
+
 			}
 		});
 		iv_return.setOnClickListener(new OnClickListener() {
@@ -211,6 +212,7 @@ public class OrderDetail extends Activity {
 		bridgeFeetype = (TextView) findViewById(R.id.detail_bridgefeetype);
 		tv_start = (TextView) findViewById(R.id.tv_start);
 		tv_finish = (TextView) findViewById(R.id.tv_finish);
+		company = (TextView) findViewById(R.id.detail_company);
 	}
 	
 	private void setData(){
@@ -219,6 +221,7 @@ public class OrderDetail extends Activity {
 		service_end.setText(taskInfo.ServiceEnd());
 		onboardTime.setText(taskInfo.OnboardTime());
 		type.setText(taskInfo.ServiceTypeName());
+		company.setText(taskInfo.getCustomerCompany());
 		placeName.setText(taskInfo.Bookman());
 		placeNum.setText(taskInfo.BookTel());
 		name.setText(taskInfo.Customer());
@@ -255,6 +258,55 @@ public class OrderDetail extends Activity {
 			outFeeType.setText("否");
 		}
 	}
+	
+	private void putDataIntoNote(){
+		int taskAccount = myStateInfo.getTimeOfTaskOneDay()+1;
+		myStateInfo.setTimeOfTaskOneDay(taskAccount);
+		String account = "";
+		if(taskAccount<10){
+			account = "00"+taskAccount;
+		} else if (taskAccount<100) {
+			account = "0"+taskAccount;
+		} else {
+			account = taskAccount+"";
+		}
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd");
+		String today = sDateFormat.format(new Date(System.currentTimeMillis()));
+		String noteId = "DZ"+today+taskInfo.DriverID()+account;
+		noteInfo.setNoteID(noteId);
+		noteInfo.setNoteDate(today);
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+		Date curDate = new Date(System.currentTimeMillis());
+		String str = formatter.format(curDate);
+		noteInfo.setServiceBegin(str);
+		noteInfo.setCarID(taskInfo.CarID());
+		noteInfo.setCarNumber(taskInfo.CarNumber());
+		noteInfo.setDriverID(taskInfo.DriverID());
+		noteInfo.setDriverName(taskInfo.DriverName());
+//		noteInfo.setFeeBridge(taskInfo.);
+		noteInfo.setFeePrice(taskInfo.SalePrice());
+		// id/code
+		noteInfo.setPlanID(taskInfo.TaskCode());
+		noteInfo.setOnBoardAddress(taskInfo.PickupAddress());
+		noteInfo.setLeaveAddress(taskInfo.LeaveAddress());
+//		noteInfo.setRouteEnd(routeEnd);
+		noteInfo.setFeeChoice(taskInfo.SalePriceCal());
+		noteInfo.setServiceKMs(taskInfo.SaleKMs());
+		noteInfo.setServiceTime(taskInfo.SaleTime());
+		noteInfo.setServiceKMs(taskInfo.SaleKMs());
+		noteInfo.setServiceTime(taskInfo.SaleTime());
+		noteInfo.setCustomerName(taskInfo.Customer());
+		noteInfo.setTaskID(taskInfo.TaskID());
+		noteInfo.setServiceTypeName(taskInfo.ServiceTypeName());
+		noteInfo.setOutfeetype(taskInfo.getOutfeetype());
+		noteInfo.setBridgefeetype(taskInfo.getBridgefeetype());
+		noteInfo.setInvoiceTaxRate(taskInfo.getInvoiceTaxRate());
+		noteInfo.setFeeBridge(taskInfo.getFeeBridge());
+		noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
+		noteInfo.setInvoiceType(taskInfo.InvoiceType());
+		noteInfo.setCustomerCompany(taskInfo.getCustomerCompany());
+	}
+	
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

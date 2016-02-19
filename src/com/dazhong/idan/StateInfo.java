@@ -54,7 +54,17 @@ public class StateInfo implements Serializable {
 	private String UserPSW;
 	//列表位置
 	private int position;
+	//是否是出场路码  true-出场  false-进场
+	private boolean isOutDoor = true;
 
+	public boolean getIsOutDoor(){
+		return isOutDoor;
+	}
+	
+	public void setIsOutDoor(boolean isOutDoor){
+		this.isOutDoor = isOutDoor;
+	}
+	
 	public int getPosition() {
 		return position;
 	}

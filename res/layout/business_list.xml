@@ -17,18 +17,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@drawable/menu" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="派单信息"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
         <ImageView
             android:id="@+id/main_refresh"
             android:layout_width="30dp"
@@ -37,6 +25,35 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/refresh" />
+
+		<LinearLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="match_parent"
+		    android:layout_alignParentTop="true"
+		    android:layout_centerHorizontal="true" >
+
+		    <TextView
+		        android:id="@+id/tv_titleMain"
+		        android:layout_width="wrap_content"
+		        android:layout_height="match_parent"
+		        android:layout_weight="1"
+		        android:gravity="center_vertical"
+		        android:text="仁是"
+		        android:textColor="#ffffff"
+		        android:textSize="20dp" />
+
+		    <TextView
+		        android:id="@+id/textView1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="match_parent"
+		        android:layout_alignParentTop="true"
+		        android:layout_toLeftOf="@+id/main_refresh"
+		        android:layout_weight="1"
+		        android:gravity="center_vertical"
+		        android:text="师傅,你好"
+		        android:textColor="#ffffff"
+		        android:textSize="20dp" />
+		</LinearLayout>
 
     </RelativeLayout>
 
@@ -80,10 +97,11 @@
         <TextView
             android:id="@+id/main_addStart"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="上班填写路码"
+            android:text="今日出场路码"
             android:textColor="#ffffff"
             android:textSize="20dp" />
 		<TextView
@@ -92,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="下班填写路码"
+            android:text="今日进场路码"
             android:visibility="gone"
             android:textColor="#ffffff"
             android:textSize="20dp" />

@@ -19,53 +19,58 @@
             android:textColor="#ffffff"
             android:text="服务中" />
     </RelativeLayout>
-    <LinearLayout 
+    <ScrollView 
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1">
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginRight="20dp"
-        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
         android:orientation="vertical"
         >
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="44dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
-        <ImageView android:id="@+id/imageView3" android:layout_width="match_parent" android:layout_height="1dp" android:layout_alignParentBottom="true" android:background="#000000"/>
-        <TextView android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content" 
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginRight="20dp" >
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000000" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imageView3"
+            android:layout_alignParentLeft="true"
             android:background="#808080"
+            android:text="路单号"
             android:textColor="#ffffff"
-            android:layout_above="@+id/imageView3" android:layout_alignParentLeft="true" android:text="路单号" android:textSize="20dp"/>
-        <TextView android:id="@+id/service_noteid" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView3" android:text="SR20151025000001" 
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/service_noteid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
-            android:textSize="20dp"/>
+            android:layout_toRightOf="@+id/textView3"
+            android:text="SR20151025000001"
+            android:textSize="20dp" />
     </RelativeLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp" >
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:textScaleX="0.9"
-            android:text="开始日期:" />
-
-        <TextView
-            android:id="@+id/service_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="2015/10/25"
-            android:textSize="16dp" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp" >
 
         <TextView
             android:id="@+id/textView19"
@@ -85,33 +90,8 @@
 
     </LinearLayout>
      <LinearLayout
-         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-         >
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:textScaleX="0.9"
-            android:text="业务类型:" />
-
-        <TextView
-            android:id="@+id/service_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="机场接机"
-            android:textSize="16dp" />
-
-    </LinearLayout>
-     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -135,7 +115,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -160,7 +139,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -184,7 +162,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -209,7 +186,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -233,7 +209,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -253,8 +228,6 @@
 
     </LinearLayout>
     <ImageView android:id="@+id/imageView4" android:layout_width="match_parent" android:layout_height="1dp" 
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:visibility="visible"
@@ -263,7 +236,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -286,7 +258,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -309,7 +280,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -333,7 +303,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -356,7 +325,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -376,8 +344,158 @@
             android:textSize="16dp" />
 
     </LinearLayout>
-    </LinearLayout>
+	<ImageView android:id="@+id/imageView5" android:layout_width="match_parent" android:layout_height="1dp" 
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="visible"
+         android:background="#000000"/>
 
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <TextView
+	        android:id="@+id/sv_bridge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="路桥费:"
+	        android:textScaleX="0.9"
+	        android:textSize="16dp" />
+
+	    <TextView
+	        android:id="@+id/service_bridge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="8dp"
+	        android:layout_toRightOf="@+id/sv_bridge"
+	        android:text="0元"
+	        android:textSize="16dp" />
+
+	    <TextView
+	        android:id="@+id/service_addRecord"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:gravity="right"
+	        android:textColor="#a40035"
+	        android:text="添加费用与营运记录" />
+
+	</RelativeLayout>
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <TextView
+	        android:id="@+id/sv_parking"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="停车费:"
+	        android:textScaleX="0.9"
+	        android:textSize="16dp" />
+
+	    <TextView
+	        android:id="@+id/service_parking"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="8dp"
+	        android:layout_toRightOf="@+id/sv_parking"
+	        android:text="0元"
+	        android:textSize="16dp" />
+
+	</RelativeLayout>
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <TextView
+	        android:id="@+id/sv_meals"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="餐费:"
+	        android:textScaleX="0.9"
+	        android:textSize="16dp" />
+
+	    <TextView
+	        android:id="@+id/service_meals"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="8dp"
+	        android:layout_toRightOf="@+id/sv_meals"
+	        android:text="0元"
+	        android:textSize="16dp" />
+
+	</RelativeLayout>
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <TextView
+	        android:id="@+id/sv_hotel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="住宿费:"
+	        android:textScaleX="0.9"
+	        android:textSize="16dp" />
+
+	    <TextView
+	        android:id="@+id/service_hotel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="8dp"
+	        android:layout_toRightOf="@+id/sv_hotel"
+	        android:text="0元"
+	        android:textSize="16dp" />
+
+	</RelativeLayout>
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <TextView
+	        android:id="@+id/sv_other"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="其他:"
+	        android:textScaleX="0.9"
+	        android:textSize="16dp" />
+
+	    <TextView
+	        android:id="@+id/service_other"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="8dp"
+	        android:layout_toRightOf="@+id/sv_other"
+	        android:text="0元"
+	        android:textSize="16dp" />
+
+	</RelativeLayout>
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+	    <TextView
+	        android:id="@+id/sv_record"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="营运记录:"
+	        android:textScaleX="0.9"
+	        android:textSize="16dp" />
+
+	</RelativeLayout>
+	<TextView
+            android:id="@+id/service_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:textSize="16dp" />
+    </LinearLayout>
+	</ScrollView>
      <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -386,7 +504,8 @@
         <TextView
             android:id="@+id/btn_end"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="结束本次业务"
