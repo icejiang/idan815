@@ -97,14 +97,9 @@ public class InService extends Activity {
 						} else {
 							input_end = Integer.parseInt(input);
 							Log.i("jxb", "结束路码 = "+input_end);
-							String lastKMS = "";
-							try {
-								lastKMS = myStateInfo.getCurrentKMS();
-								Log.i("jxb", "lastKms = "+lastKMS);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-							if (input_end < Integer.parseInt(lastKMS)){
+							String startKms = noteInfo.getRouteBegin();
+							Log.i("jxb", "startKms = "+startKms);
+							if (input_end < Integer.parseInt(startKms)){
 								Toast.makeText(getApplicationContext(), "结束路码小于起始路码，请确认输入", Toast.LENGTH_SHORT).show();
 							} else {
 								SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");

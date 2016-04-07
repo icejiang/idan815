@@ -40,24 +40,85 @@
         android:layout_height="match_parent"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
         android:orientation="vertical"
         >
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="44dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
-        <ImageView android:id="@+id/imageView3" android:layout_width="match_parent" android:layout_height="1dp" android:layout_alignParentBottom="true" android:background="#000000"/>
-        <TextView android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content" 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginRight="20dp" >
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000000" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imageView3"
+            android:layout_alignParentLeft="true"
             android:background="#808080"
+            android:text="调度单号"
             android:textColor="#ffffff"
-            android:layout_above="@+id/imageView3" android:layout_alignParentLeft="true" android:text="调度单号" android:textSize="20dp"/>
-        <TextView android:id="@+id/detail_titleid" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView3" android:text="SR20151025000001" 
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/detail_titleid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
-            android:textSize="20dp"/>
+            android:layout_toRightOf="@+id/textView3"
+            android:text="SR20151025000001"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/detail_addLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始路码:"
+            android:textScaleX="0.9"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/detail_addStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="30dp"
+            android:textColor="#a40035"
+            android:text="添加路码"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/detail_startRoute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/textView2"
+            android:text=""
+            android:textSize="18dp" />
+
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp" >
+        android:layout_marginTop="6dp" >
 
         <TextView
             android:id="@+id/textView4"
@@ -79,7 +140,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -101,7 +161,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -123,7 +182,6 @@
      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -145,7 +203,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -167,7 +224,6 @@
      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -191,7 +247,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -216,7 +271,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -240,7 +294,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -265,7 +318,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -289,7 +341,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -314,7 +365,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -338,7 +388,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -361,7 +410,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -384,7 +432,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -407,7 +454,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -431,7 +477,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -454,7 +499,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -478,7 +522,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
          >
 
         <TextView
@@ -501,7 +544,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -524,7 +566,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -547,7 +588,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -569,7 +609,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -587,7 +626,6 @@
             android:textSize="16dp" />
     </LinearLayout>
     <ImageView android:id="@+id/imageView4" android:layout_width="match_parent" android:layout_height="1dp" 
-        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -596,7 +634,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -620,7 +657,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView
@@ -644,7 +680,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         >
 
         <TextView

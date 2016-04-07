@@ -168,7 +168,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			extraTime.setText((hour - serviceHour)+"Сʱ");
 			price_extraTime = (hour - serviceHour)*(taskInfo.SalePricePerHour());
 			noteInfo.setFeeOverTime(price_extraTime);
-			noteInfo.setOverKMs(hour-serviceHour);
+			noteInfo.setOverHours(hour-serviceHour);
 			extraTime_price.setText(price_extraTime+"Ԫ");
 		}
 		if(feeChoice == 1){
@@ -190,7 +190,6 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 				tv_road.setText(price_bridge+"Ԫ");
 			}
 		}
-		Log.i("jxb", "price_all(bridge) = "+price_all);
 		Double price_park = noteInfo.getFeePark();
 		if (price_park > 0){
 			if(noteInfo.getBridgefeetype() == 0){
@@ -229,7 +228,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		noteInfo.setFeeTotal(price_all);
 		if(noteInfo.getInvoiceType().equals("SD")){
 			int all = 0;
-			all = price_all.intValue();
+			all = ((int)(price_all/10))*10;
 			tv_all.setText(all+"Ԫ");
 		} else {
 			price_all = reserve2(price_all);
@@ -415,7 +414,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					}
 					noteInfo.setFeeTotal(all);
 					if(noteInfo.getInvoiceType().equals("SD")){
-						int int_all = (int)all;
+						int int_all = ((int)(all/10))*10;
 						tv_all.setText(int_all+"Ԫ");
 					} else {
 						all = reserve2(all);

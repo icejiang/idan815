@@ -91,7 +91,7 @@ public class MenuLeftFragment extends LinearLayout{
 								}
 							}).show();
 					} else {
-						new AlertDialog.Builder(mContext).setTitle("程序已是最新版本").
+						new AlertDialog.Builder(mContext).setTitle("当前版本"+curVersion+",程序已是最新版本").
 							setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 								
 								@Override

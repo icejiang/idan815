@@ -299,8 +299,10 @@ public abstract class getInfoValue {
 						"InvoiceTypeName"));
 				taskinfo.setLeaveaddress(getDZService.getInfoValue(sinf,
 						"Destination"));
-				taskinfo.setMaxload(Integer.parseInt(getDZService.getInfoValue(
-						sinf, "SeatNumber")));
+				taskinfo.setMaxload(getDZService.getInfoValue(
+						sinf, "SeatNumber"));
+//				taskinfo.setMaxload(Integer.parseInt(getDZService.getInfoValue(
+//						sinf, "SeatNumber")));
 				taskinfo.setOnboardtime(getDZService.getInfoValue(sinf,
 						"UpLoadTime"));
 				taskinfo.setPickupaddress(getDZService.getInfoValue(sinf,
@@ -319,7 +321,7 @@ public abstract class getInfoValue {
 						sinf, "AvailableMile")));
 				taskinfo.setSaleprice(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "ActualRent")));
-				taskinfo.setSalepriceperkm(Integer.parseInt(getDZService
+				taskinfo.setSalepriceperkm(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "ExceedMileFee")));
 				taskinfo.setSalepriceperhour(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "ExceedTimeFee")));
@@ -352,7 +354,7 @@ public abstract class getInfoValue {
 				taskinfo.setSalepricecalname(getDZService.getInfoValue(sinf,
 						"ExceedSettleTypeName"));
 				taskinfo.setBalancetype(getDZService.getInfoValue(sinf,
-						"BalanceTypeName"));
+						"BalanceType"));
 				taskinfo.setBalancetypename(getDZService.getInfoValue(sinf,
 						"BalanceTypeName"));
 				taskinfo.setInvoiceTaxRate(Double.parseDouble(getDZService.getInfoValue(sinf, "InvoiceTaxRate")));

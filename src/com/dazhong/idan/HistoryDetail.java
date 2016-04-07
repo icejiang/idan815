@@ -29,6 +29,8 @@ public class HistoryDetail extends Activity {
 	private TextView cost_other;
 	private TextView cost_alter;
 	private TextView cost_all;
+	private TextView startRoute;
+	private TextView endRoute;
 	private ImageView iv_return;
 	
 	@Override
@@ -73,6 +75,8 @@ public class HistoryDetail extends Activity {
 		cost_alter = (TextView) findViewById(R.id.history_alter);
 		cost_all = (TextView) findViewById(R.id.history_all);
 		iv_return = (ImageView) findViewById(R.id.return_historydetail);
+		startRoute = (TextView) findViewById(R.id.history_startRoute);
+		endRoute = (TextView) findViewById(R.id.history_endRoute);
 	}
 	
 	private void setView(NoteInfo noteInfo){
@@ -96,8 +100,8 @@ public class HistoryDetail extends Activity {
 		cost_other.setText(noteInfo.getFeeOther()+"Ԫ");
 		cost_alter.setText(noteInfo.getFeeBack()+"Ԫ");
 		cost_all.setText(noteInfo.getFeeTotal()+"Ԫ");
-		
-		
+		startRoute.setText(noteInfo.getRouteBegin());
+		endRoute.setText(noteInfo.getRouteEnd());
 	}
 	
 }

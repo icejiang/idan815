@@ -23,7 +23,7 @@ public class TaskInfo  implements Serializable {
 	private String invoicetype;
 	private String invoicetypename;
 	private String leaveaddress;
-	private int maxload;
+	private String maxload;
 	private String onboardtime;
 	private String pickupaddress;
 	private String planner;
@@ -293,7 +293,7 @@ public class TaskInfo  implements Serializable {
 	/**
 	 * 最大载客数
 	 */
-	public int MaxLoad()
+	public String MaxLoad()
 	{
 		return maxload;
 	}
@@ -513,7 +513,7 @@ public class TaskInfo  implements Serializable {
 	public void setLeaveaddress(String leaveaddress) {
 		this.leaveaddress = leaveaddress;
 	}
-	public void setMaxload(int maxload) {
+	public void setMaxload(String maxload) {
 		this.maxload = maxload;
 	}
 	public void setOnboardtime(String onboardtime) {
@@ -546,7 +546,7 @@ public class TaskInfo  implements Serializable {
 	public void setSaleprice(double saleprice) {
 		this.saleprice = saleprice;
 	}
-	public void setSalepriceperkm(int salepriceperkm) {
+	public void setSalepriceperkm(double salepriceperkm) {
 		this.salepriceperkm = salepriceperkm;
 	}
 	public void setSalepriceperhour(int salepriceperhour) {
@@ -595,7 +595,7 @@ public class TaskInfo  implements Serializable {
 			String customertel, String driverid, String drivername,
 			String driverphone, String frightin, String frightnum,
 			String frightout, String invoicetype, String invoicetypename,
-			String leaveaddress, int maxload, String onboardtime,
+			String leaveaddress, String maxload, String onboardtime,
 			String pickupaddress, String planner, String plannerremark,
 			String plannertel, double salehotelfee, int salekms,
 			double salelunchfee, double saleotherfee, double saleprice,

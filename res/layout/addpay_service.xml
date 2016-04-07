@@ -20,7 +20,7 @@
             android:text="添加费用" />
 
         <ImageView
-            android:id="@+id/return_addPay"
+            android:id="@+id/return_service"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
@@ -34,42 +34,16 @@
         android:layout_weight="1"
         android:orientation="vertical"
         >
-	<RelativeLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="60dp"
         android:layout_marginTop="20dp" >
 
-         <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="合计费用:"
-            android:textScaleX="0.9"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/pay_tv_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="8dp"
-            android:text="100"
-            android:textScaleX="0.9"
-            android:textSize="16dp" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="10dp" >
-
         <EditText
-            android:id="@+id/pay_road"
+            android:id="@+id/paysv_road"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -98,7 +72,7 @@
         android:layout_marginRight="60dp" >
 
         <EditText
-            android:id="@+id/pay_parking"
+            android:id="@+id/paysv_parking"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -126,7 +100,7 @@
         android:layout_marginRight="60dp" >
 
         <EditText
-            android:id="@+id/pay_eat"
+            android:id="@+id/paysv_eat"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -154,7 +128,7 @@
         android:layout_marginRight="60dp" >
 
         <EditText
-            android:id="@+id/pay_hotel"
+            android:id="@+id/paysv_hotel"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -182,7 +156,7 @@
         android:layout_marginRight="60dp" >
 
         <EditText
-            android:id="@+id/pay_other"
+            android:id="@+id/paysv_other"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -217,34 +191,7 @@
         android:layout_marginRight="60dp" >
 
         <EditText
-            android:id="@+id/price_alter"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:ems="10"
-            android:gravity="right"
-            android:inputType="numberDecimal"
-            android:textSize="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="费用修正:"
-            android:textScaleX="0.9"
-            android:textSize="16dp" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="60dp" >
-
-        <EditText
-            android:id="@+id/route_on"
+            android:id="@+id/paysv_route_on"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -272,39 +219,12 @@
         android:layout_marginRight="60dp" >
 
         <EditText
-            android:id="@+id/route_off"
+            android:id="@+id/paysv_record"
             android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:ems="10"
-            android:gravity="right"
-            android:inputType="number"
-            android:selectAllOnFocus="true"
-            android:textSize="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="下车路码: "
-            android:textScaleX="0.9"
-            android:textSize="16dp" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="60dp" >
-
-        <EditText
-            android:id="@+id/record"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:gravity="left"
             android:textSize="16dp" />
 
@@ -325,7 +245,7 @@
         android:background="@drawable/bg_red" >
 
         <TextView
-            android:id="@+id/bt_save"
+            android:id="@+id/bt_save_service"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"

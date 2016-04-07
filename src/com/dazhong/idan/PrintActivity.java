@@ -340,6 +340,8 @@ public class PrintActivity extends Activity {
 	 * */
 	private String printFile() {
 
+		double feeIncludeTax = 0;
+		double feeTax = 0;
 		String messages = null;
 		try {
 			String mes1 = "\r\n";
@@ -353,79 +355,104 @@ public class PrintActivity extends Activity {
 								R.string.error), 2000).show();
 				return messages;
 			}
-			double taxRate = 1 + note.getInvoiceTaxRate();
-			int bridgeFeeType = noteInfo.getBridgefeetype();
-			int outFeeType = noteInfo.getOutfeetype();
+			String balanceType = note.getBalanceType();
+			double taxOnly = note.getInvoiceTaxRate();
+			double taxRate = 1 + taxOnly;
+			int bridgeFeeType = note.getBridgefeetype();
+			int outFeeType = note.getOutfeetype();
 			messages = "";// "--------------------------" + mes;
-			messages = messages + "路单号/No.：" + note.getNoteID() + mes2;
-			messages = messages + "服务日期/Date：" + note.getNoteDate() + mes2;
-			messages = messages + "营运车辆/Vehicle No.：" + note.getCarNumber() + mes2;
-			messages = messages + "客户信息/Client：" + mes1;
+			messages = messages + non+"  大众汽车租赁有限公司" + mes2;
+			messages = messages + "路单号/No.:" + note.getNoteID() + mes2;
+			messages = messages + "定单号/OrdNo.:" + note.getPlanID() + mes2;
+			messages = messages + "服务日期/Date:" + note.getNoteDate() + mes2;
+			messages = messages + "营运车辆/Vehicle No.:" + note.getCarNumber() + mes2;
+			messages = messages + "司机/Driver:" + note.getDriverName() + mes2;
+			messages = messages + "业务员/Salesman:" + note.getSaleName() + mes2;
+			messages = messages + "客户信息/Client:" + mes1;
 			messages = messages + note.getCustomerCompany() + mes2;
-			messages = messages + "用车客人/Guest Name：" + note.getCustomerName() + mes2;
-			messages = messages + "上车时间/Boarding Time：" + note.getServiceBegin() + mes2;
-			messages = messages + "下车时间/Alighting Time："  + note.getServiceEnd() + mes2;
-			messages = messages + "上车地址/Boarding Location：" + mes1;
+			messages = messages + "用车客人/Guest Name:" + note.getCustomerName() + mes2;
+			messages = messages + "上车时间/Boarding Time:" + note.getServiceBegin() + mes2;
+			messages = messages + "下车时间/Alighting Time:"  + note.getServiceEnd() + mes2;
+			messages = messages + "上车地址/Boarding Location:" + mes1;
 			messages = messages + note.getOnBoardAddress() + mes2;
-			messages = messages + "下车地址/Alighting Location：" + mes1;
+			messages = messages + "下车地址/Alighting Location:" + mes1;
 			messages = messages + note.getLeaveAddress() + mes2;
-			messages = messages + "途径地点/Running Record：" + mes1;
+			messages = messages + "途径地点/Running Record:" + mes1;
 			messages = messages + note.getServiceRoute() + mes2;
-			messages = messages + "服务里程/Service Km：" + Double.toString(note.getDoServiceKms())+"公里" + mes2;
+			messages = messages + "服务里程/Service Km:" + Double.toString(note.getDoServiceKms())+"公里" + mes2;
 			if (note.getOverKMs() > 0) {
-				messages = messages + "超出里程/Extra Km：" + Integer.toString(note.getOverKMs())+"公里"  + mes2;
+				messages = messages + "超出里程/Extra Km:" + Integer.toString(note.getOverKMs())+"公里"  + mes2;
 			}
 			if (note.getFeeOverKMs() > 0) {
-				messages = messages + "超里程费/Extra Km Fee：" + note.getFeeOverKMs() +"元" + mes2;
+				messages = messages + "超里程费/Extra Km Fee:" + note.getFeeOverKMs() +"元" + mes2;
+				feeIncludeTax += note.getFeeOverKMs();
 			}
-			messages = messages + "服务时长/Service Time：" + Double.toString(note.getDoServiceTime())+"小时" + mes2;
+			messages = messages + "服务时长/Service Time:" + Double.toString(note.getDoServiceTime())+"小时" + mes2;
 			if (note.getOverHours() > 0) {
-				messages = messages + "超出时长/Extra Time：" + Integer.toString(note.getOverHours())+"小时" + mes2;
+				messages = messages + "超出时长/Extra Time:" + Integer.toString(note.getOverHours())+"小时" + mes2;
 			}
 			if (note.getFeeOverTime() > 0) {
 				messages = messages + "超时间费/Extra Time Fee：" + note.getFeeOverTime() +"元" + mes2;
+				feeIncludeTax += note.getFeeOverTime();
 			}
-			messages = messages + "基本费/Basic Fee:       " + note.getFeePrice() +"元"+ mes2;
+			if (balanceType.equals("001") || balanceType.equals("007")){
+				messages = messages + "基本费/Basic Fee:       " + note.getFeePrice() +"元"+ mes2;
+			}
+			feeIncludeTax += note.getFeePrice();
+			feeTax = feeIncludeTax - reserve2(feeIncludeTax/taxRate);
 			if (note.getFeeBridge() > 0)
 				if (bridgeFeeType == 0) {
 					messages = messages + "路桥费/Toll Fee:        " + reserve2(note.getFeeBridge()*taxRate)+"元" + mes2;
+					feeTax += reserve2(note.getFeeBridge()*taxOnly);
 				} else {
 					messages = messages + "路桥费/Toll Fee:        " + note.getFeeBridge()+"元" + mes2;
 				}
 			if (note.getFeePark() > 0)
 				if (bridgeFeeType == 0) {
 					messages = messages + "停车费/Parking Fee:     " + reserve2(note.getFeePark()*taxRate)+"元" + mes2;
+					feeTax += reserve2(note.getFeePark()*taxOnly);
 				} else {
 					messages = messages + "停车费/Parking Fee:     " + note.getFeePark()+"元" + mes2;
 				}
 			if (note.getFeeHotel() > 0)
 				if (outFeeType == 0) {
 					messages = messages + "住宿费/Hotel Expense:   " + reserve2(note.getFeeHotel()*taxRate)+"元" + mes2;
+					feeTax += reserve2(note.getFeeHotel()*taxOnly);
 				} else {
 					messages = messages + "住宿费/Hotel Expense:   " + note.getFeeHotel()+"元" + mes2;
 				}
 			if (note.getFeeLunch() > 0)
 				if (outFeeType == 0) {
 					messages = messages + "餐费/Meal Fee:          " + reserve2(note.getFeeLunch()*taxRate)+"元" + mes2;
+					feeTax += reserve2(note.getFeeLunch()*taxOnly);
 				} else {
 					messages = messages + "餐费/Meal Fee:          " + note.getFeeLunch()+"元" + mes2;
 				}
 			if (note.getFeeOther() > 0) {
 				messages = messages + "其他费/Other Charges:   " + reserve2(note.getFeeOther()*taxRate)+"元" + mes2;
+				feeTax += reserve2(note.getFeeOther()*taxOnly);
 			}
 			if (note.getFeeBack() > 0) {
 				messages = messages + "修正费/Adjuested Price: " + -note.getFeeBack()+"元" + mes2;
 			}
+			if (balanceType.equals("001") || balanceType.equals("007")){
+				messages = messages + "(税费/Tax:" + reserve2(feeTax) +"元)" + mes2;
+			}
 			if(noteInfo.getInvoiceType().equals("SD")){
-				int int_all = (int)noteInfo.getFeeTotal();
+				int int_all = ((int)(noteInfo.getFeeTotal()/10))*10;
 				noteInfo.setFeeTotal(int_all);
-				messages = messages + "总费用/Total Price：" 	+ Double.toString(int_all)+"元" + mes2;
+				if (balanceType.equals("001") || balanceType.equals("007")){
+					messages = messages + "总费用/Total Price:" 	+ Double.toString(int_all)+"元" + mes2;
+				}
 			} else {
 				double all = reserve2(noteInfo.getFeeTotal());
 				noteInfo.setFeeTotal(all);
-				messages = messages + "总费用/Total Price：" 	+ Double.toString(all)+"元" + mes2;
+				if (balanceType.equals("001") || balanceType.equals("007")){
+					messages = messages + "总费用/Total Price:" 	+ Double.toString(all)+"元" + mes2;
+				}
 			}
-			messages = messages + "客户签名/Customer Signature：" + mes2 + mes2 + mes2;
+			
+			messages = messages + "客户签名/Customer Signature:" + mes2 + mes2 + mes2;
 			messages = messages + "___________________________" + mes2 + mes2
 					+ mes2;
 		} catch (NotFoundException e) {
@@ -486,7 +513,7 @@ public class PrintActivity extends Activity {
 		tv_alterPrice.setText(-noteInfo.getFeeBack()+"元");
 		tv_all.setText(noteInfo.getFeeTotal() + "元");
 		if(noteInfo.getInvoiceType().equals("SD")){
-			int int_all = (int)noteInfo.getFeeTotal();
+			int int_all = ((int)(noteInfo.getFeeTotal()/10))*10;
 			tv_all.setText(int_all+"元");
 		} else {
 			double all = reserve2(noteInfo.getFeeTotal());

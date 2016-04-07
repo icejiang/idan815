@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,9 @@ public class OrderDetail extends Activity {
 	private TextView outFeeType;
 	private TextView bridgeFeetype;
 	private TextView company;
+	private TextView startRoute;
+	private TextView addStart;
+	private RelativeLayout addLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,13 @@ public class OrderDetail extends Activity {
 		setContentView(R.layout.order_detail);
 		ActivityControler.addActivity(this);
 		position = getIntent().getIntExtra(MainActivity.POSITION, 0);
-		taskInfo = iDanApp.getInstance().getTasklist().get(position);
+		if (iDanApp.getInstance().getTasklist().size() != 0){
+			taskInfo = iDanApp.getInstance().getTasklist().get(position);
+		} else {
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), MainActivity.class);
+			startActivity(intent);
+		}
 		getInfoValue.setTaskRead(iDanApp.getInstance().getEMPLOYEEID(), taskInfo.TaskID());
 		findview();
 		setData();
@@ -82,14 +92,16 @@ public class OrderDetail extends Activity {
 			myStateInfo.setCurrentTask(taskInfo);
 			myStateInfo.setPosition(position);
 			myGetStateInfo.setStateinfo(myStateInfo);
-		} catch (Exception e1) {
+		} catch (Exception e1) {	
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		if (taskInfo.getRouteNoteCount()>0){
+			addLayout.setVisibility(View.GONE);
 			tv_start.setVisibility(View.GONE);
 			tv_finish.setVisibility(View.VISIBLE);
 		} else {
+			addLayout.setVisibility(View.VISIBLE);
 			tv_start.setVisibility(View.VISIBLE);
 			tv_finish.setVisibility(View.GONE);
 		}
@@ -98,6 +110,11 @@ public class OrderDetail extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Log.i("jxb", startRoute.getText().toString());
+				if (startRoute.getText().toString().equals("")){
+					
+				
+				
 				final EditText editText = new EditText(OrderDetail.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(OrderDetail.this)
@@ -129,6 +146,64 @@ public class OrderDetail extends Activity {
 											intent.setClass(OrderDetail.this,
 													InService.class);
 											startActivity(intent);
+										}
+									}
+								}).show();
+				} else {
+					String input = startRoute.getText().toString();
+					Log.i("jxb", "input = "+startRoute.getText().toString());
+					myStateInfo.setCurrentKMS(input);
+					noteInfo = new NoteInfo();
+					noteInfo.setRouteBegin(input);
+					putDataIntoNote();
+					myStateInfo.setCurrentNote(noteInfo);
+					myGetStateInfo.setStateinfo(myStateInfo);
+					Intent intent = new Intent();
+					intent.setClass(OrderDetail.this,
+							InService.class);
+					startActivity(intent);
+				}
+
+			}
+		});
+		addStart.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.i("jxb", "click");
+				final EditText editText = new EditText(OrderDetail.this);
+				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+				new AlertDialog.Builder(OrderDetail.this)
+						.setTitle("请填写起始路码")
+						.setView(editText)
+						.setPositiveButton(
+								"确认",
+								new android.content.DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+										String input = editText.getText()
+												.toString();
+										if (input.equals("")) {
+											Toast.makeText(
+													getApplicationContext(),
+													"路码不能为空",
+													Toast.LENGTH_SHORT).show();
+										} else {
+//											myStateInfo.setCurrentKMS(input);
+//											noteInfo = new NoteInfo();
+//											noteInfo.setRouteBegin(input);
+//											putDataIntoNote();
+//											myStateInfo.setCurrentNote(noteInfo);
+//											myGetStateInfo.setStateinfo(myStateInfo);
+//											Intent intent = new Intent();
+//											intent.setClass(OrderDetail.this,
+//													InService.class);
+//											startActivity(intent);
+											
+											startRoute.setText(input);
 										}
 									}
 								}).show();
@@ -213,6 +288,9 @@ public class OrderDetail extends Activity {
 		tv_start = (TextView) findViewById(R.id.tv_start);
 		tv_finish = (TextView) findViewById(R.id.tv_finish);
 		company = (TextView) findViewById(R.id.detail_company);
+		startRoute = (TextView) findViewById(R.id.detail_startRoute);
+		addStart = (TextView) findViewById(R.id.detail_addStart);
+		addLayout = (RelativeLayout) findViewById(R.id.detail_addLayout);
 	}
 	
 	private void setData(){
@@ -285,6 +363,7 @@ public class OrderDetail extends Activity {
 		noteInfo.setDriverName(taskInfo.DriverName());
 //		noteInfo.setFeeBridge(taskInfo.);
 		noteInfo.setFeePrice(taskInfo.SalePrice());
+		noteInfo.setSaleName(taskInfo.Salesman());
 		// id/code
 		noteInfo.setPlanID(taskInfo.TaskCode());
 		noteInfo.setOnBoardAddress(taskInfo.PickupAddress());
@@ -301,10 +380,13 @@ public class OrderDetail extends Activity {
 		noteInfo.setOutfeetype(taskInfo.getOutfeetype());
 		noteInfo.setBridgefeetype(taskInfo.getBridgefeetype());
 		noteInfo.setInvoiceTaxRate(taskInfo.getInvoiceTaxRate());
-		noteInfo.setFeeBridge(taskInfo.getFeeBridge());
-		noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
+		if (today.equals(taskInfo.ServiceBegin())){
+			noteInfo.setFeeBridge(taskInfo.getFeeBridge());
+			noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
+		}
 		noteInfo.setInvoiceType(taskInfo.InvoiceType());
 		noteInfo.setCustomerCompany(taskInfo.getCustomerCompany());
+		noteInfo.setBalanceType(taskInfo.getBalancetype());
 	}
 	
 	

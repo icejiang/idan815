@@ -2,6 +2,8 @@ package com.dazhong.idan;
 
 import java.io.Serializable;
 
+import android.util.Log;
+
 public class NoteInfo implements Serializable {
 	/**
 	 * 
@@ -31,6 +33,10 @@ public class NoteInfo implements Serializable {
 	 * 司机姓名
 	 */
 	private String DriverName;
+	/**
+	 * 业务员姓名
+	 */
+	private String SaleName;
 	/**
 	 * 停车费
 	 * */
@@ -154,7 +160,7 @@ public class NoteInfo implements Serializable {
 	/**
 	 * 业务类型
 	 * */
-	private int ServiceType;
+	private String ServiceType;
 	/**
 	 * 业务类型名称
 	 * */
@@ -167,6 +173,12 @@ public class NoteInfo implements Serializable {
 	private String balanceTypeName;
 	private String invoiceType;
 	
+	public String getSaleName() {
+		return SaleName;
+	}
+	public void setSaleName(String saleName) {
+		SaleName = saleName;
+	}
 	/**
 	 * 结算方式
 	 * */
@@ -226,11 +238,11 @@ public class NoteInfo implements Serializable {
 		this.bridgefeetype = bridgefeetype;
 	}
 	
-	public int getServiceType() {
+	public String getServiceType() {
 		return ServiceType;
 	}
 
-	public void setServiceType(int serviceType) {
+	public void setServiceType(String serviceType) {
 		ServiceType = serviceType;
 	}
 
@@ -534,7 +546,7 @@ public class NoteInfo implements Serializable {
 			int serviceTime, int overKMs, int overHours, int feeChoice,
 			double feeOverCal, String serviceRoute, String customerCompany,
 			String customerName, double feePark,int doservicekms,int doservicetime,
-			String taskID,double feeback,int servicetype,String servicetypename) {
+			String taskID,double feeback,String servicetype,String servicetypename) {
 		super();
 		CarID = carID;
 		CarNumber = carNumber;
@@ -578,6 +590,17 @@ public class NoteInfo implements Serializable {
 	 * 上传到服务器的格式
 	 * */
 	public String toUploadNote() {
+		Log.i("jxb", "NoteInfo [" + NoteID + "," + TaskID + "," + CarID + ","
+				+ CarNumber + "," + DriverID + "," + DriverName + ","
+				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
+				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
+				+ FeeTotal + "," + LeaveAddress.replace(",", "$$") + ","
+				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
+				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
+				+ DoServiceKms + "," + DoServiceTime + "," + OverKMs + ","
+				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
+				+ ServiceRoute.replace(",", "$$") + "," 
+				+ FeePark+","+NoteDate.replaceAll("-", "") + "]");
 		return "NoteInfo [" + NoteID + "," + TaskID + "," + CarID + ","
 				+ CarNumber + "," + DriverID + "," + DriverName + ","
 				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther

@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
 		ActivityControler.addActivity(this);
 
 		findView();
+		uploadNotes();
 		tv_title.setText(iDanApp.getInstance().getUSERNAME());
 		mAdapter = new MyAdapter(this);
 		mListView.setAdapter(mAdapter);
@@ -86,6 +87,8 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		tv_addStart.setVisibility(View.VISIBLE);
+		tv_addEnd.setVisibility(View.GONE);
 		if(stateinfo.getIsOutDoor()){
 			tv_addStart.setVisibility(View.VISIBLE);
 			tv_addEnd.setVisibility(View.GONE);
@@ -352,6 +355,28 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	private void uploadNotes(){
+		ArrayList<NoteInfo> saveNotes = getStateInfo.getInstance(MainActivity.this).getNoteInfo();
+		if (saveNotes == null ){
+			Log.i("jxb", "saveNOtes ¿Õ");
+			return;
+		}
+		if (saveNotes.size() == 0 ){
+			Log.i("jxb", "saveNOtes 0");
+			return;
+		}
+		if (saveNotes != null && saveNotes.size() != 0){
+			int k = 100;
+			for (int i = 0 ; i < saveNotes.size() ; i++){
+				k = getInfoValue.InsertNote(saveNotes.get(i).toUploadNote());
+				Log.i("jxb", "k(¹ã²¥) = "+k);
+			}
+			if (k == 0 || k == 1){
+				getStateInfo.getInstance(MainActivity.this).deleteFile();
+			} 
+		}
+	}
+	
 	class MyAdapter extends BaseAdapter {
 
 		private LayoutInflater mInflater = null;
