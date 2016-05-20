@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
 	private List<TaskInfo> tasklist = null;
 	private SlidingMenu menu;
 	private MyAdapter mAdapter;
+	private NoteInfo pauseNote;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
 		try {
 			stateinfo = getStateInfo.getInstance(getApplicationContext())
 					.getStateinfo();
+			pauseNote = stateinfo.getPauseNote();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -312,6 +314,7 @@ public class MainActivity extends Activity {
 		try {
 			stateinfo = getStateInfo.getInstance(getApplicationContext())
 					.getStateinfo();
+			pauseNote = stateinfo.getPauseNote();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -449,6 +452,10 @@ public class MainActivity extends Activity {
 			holder.company.setText(taskInfo.getCustomerCompany());
 			if (taskInfo.getRouteNoteCount() > 0){
 				holder.isDone.setVisibility(View.VISIBLE);
+				holder.isDone.setText("已完成");
+			} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())) {
+				holder.isDone.setVisibility(View.VISIBLE);
+				holder.isDone.setText("暂停中");
 			} else {
 				holder.isDone.setVisibility(View.GONE);
 			}

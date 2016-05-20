@@ -82,7 +82,7 @@ public class AddPay extends Activity {
 		}
 //		et_alter.setText(noteInfo.getFeeBack()+"");
 		et_record.setText(noteInfo.getServiceRoute());
-		tv_all.setText(noteInfo.getFeeTotal()+"");
+		tv_all.setText(reserve2(noteInfo.getFeeTotal())+"");
 		
 		all = noteInfo.getFeeTotal();
 		final double taxRate = 1 + noteInfo.getInvoiceTaxRate();

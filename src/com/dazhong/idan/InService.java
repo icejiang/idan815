@@ -52,6 +52,7 @@ public class InService extends Activity {
 	private TextView tv_other;
 	private TextView tv_record;
 	private TextView tv_add;
+	private Button bt_pause;
 	public final static int REQUEST_CODE = 2;
 	
 	@Override
@@ -118,6 +119,37 @@ public class InService extends Activity {
 				}).show();
 			}
 		});
+		
+		bt_pause.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				final EditText editText = new EditText(InService.this);
+				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+				new AlertDialog.Builder(InService.this).setTitle("请填写当前路码").
+				setView(editText).setPositiveButton("暂停业务", new android.content.DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						String input = editText.getText().toString();
+						if(input.equals("")){
+							Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
+						} else {
+							noteInfo.setPauseStart(Integer.parseInt(input));
+							myStateInfo.setPauseNote(noteInfo);
+							myGetStateInfo.setStateinfo(myStateInfo);
+							Intent intent = new Intent();
+							intent.setClass(InService.this, MainActivity.class);
+							startActivity(intent);
+						}
+						
+					}
+				}).show();
+				
+			}
+		});
+		
 		placeNum.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -190,6 +222,7 @@ public class InService extends Activity {
 		tv_other = (TextView) findViewById(R.id.service_other);
 		tv_record = (TextView) findViewById(R.id.service_record);
 		tv_add = (TextView) findViewById(R.id.service_addRecord);
+		bt_pause = (Button) findViewById(R.id.bt_pause);
 	}
 	
 	private void setData(){
@@ -222,6 +255,18 @@ public class InService extends Activity {
 			} else {
 				tv_hotel.setText(price_hotel+"元");
 			}
+		}
+		Double price_meals = noteInfo.getFeeLunch();
+		if (price_meals > 0) {
+			tv_meals.setText(reserve2(price_meals*taxRate)+"元");
+		}
+		Double price_park = noteInfo.getFeePark();
+		if (price_park > 0) {
+			tv_parking.setText(reserve2(price_park*taxRate)+"元");
+		}
+		Double price_other = noteInfo.getFeeOther();
+		if (price_other > 0) {
+			tv_other.setText(reserve2(price_other*taxRate)+"元");
 		}
 	}
 	

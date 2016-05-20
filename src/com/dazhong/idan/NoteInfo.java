@@ -165,6 +165,14 @@ public class NoteInfo implements Serializable {
 	 * 业务类型名称
 	 * */
 	private String ServiceTypeName;
+	/**
+	 * 开始暂停时的路码
+	 * */
+	private int pauseStart = 0;
+	/**
+	 * 结束暂停时的路码
+	 * */
+	private int pauseEnd = 0;
 	
 	private int outfeetype;
 	private int bridgefeetype;
@@ -173,6 +181,24 @@ public class NoteInfo implements Serializable {
 	private String balanceTypeName;
 	private String invoiceType;
 	
+	
+	
+	public int getPauseEnd(){
+	  return this.pauseEnd;
+	}
+	  
+	public int getPauseStart(){
+	  return this.pauseStart;
+	}
+	
+	public void setPauseEnd(int paramInt){
+	  this.pauseEnd = paramInt;
+	}
+	  
+	public void setPauseStart(int paramInt){
+	  this.pauseStart = paramInt;
+	}
+	  
 	public String getSaleName() {
 		return SaleName;
 	}
@@ -594,23 +620,23 @@ public class NoteInfo implements Serializable {
 				+ CarNumber + "," + DriverID + "," + DriverName + ","
 				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
 				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
-				+ FeeTotal + "," + LeaveAddress.replace(",", "$$") + ","
-				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
+				+ FeeTotal + "," + LeaveAddress.replace(",", ".") + ","
+				+ OnBoardAddress.replace(",", ".") + "," + RouteBegin + ","
 				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
 				+ DoServiceKms + "," + DoServiceTime + "," + OverKMs + ","
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
-				+ ServiceRoute.replace(",", "$$") + "," 
+				+ ServiceRoute.replace(",", ".") + "," 
 				+ FeePark+","+NoteDate.replaceAll("-", "") + "]");
 		return "NoteInfo [" + NoteID + "," + TaskID + "," + CarID + ","
 				+ CarNumber + "," + DriverID + "," + DriverName + ","
 				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
 				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
-				+ FeeTotal + "," + LeaveAddress.replace(",", "$$") + ","
-				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
+				+ FeeTotal + "," + LeaveAddress.replace(",", ".") + ","
+				+ OnBoardAddress.replace(",", ".") + "," + RouteBegin + ","
 				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
 				+ DoServiceKms + "," + DoServiceTime + "," + OverKMs + ","
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
-				+ ServiceRoute.replace(",", "$$") + "," 
+				+ ServiceRoute.replace(",", ".") + "," 
 				+ FeePark+","+NoteDate.replaceAll("-", "") + "]";
 	}
 
@@ -620,8 +646,8 @@ public class NoteInfo implements Serializable {
 				+ CarNumber + "," + DriverID + "," + DriverName + ","
 				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
 				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
-				+ FeeTotal + "," + LeaveAddress.replace(",", "$$") + ","
-				+ OnBoardAddress.replace(",", "$$") + "," + RouteBegin + ","
+				+ FeeTotal + "," + LeaveAddress.replace(",", ".") + ","
+				+ OnBoardAddress.replace(",", ".") + "," + RouteBegin + ","
 				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
 				+ ServiceKMs + "," + ServiceTime + "," + OverKMs + ","
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","

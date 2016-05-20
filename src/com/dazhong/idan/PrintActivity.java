@@ -140,7 +140,7 @@ public class PrintActivity extends Activity {
 					if (k == 0 || k == 1) {
 						// do nothing
 					} else {
-							getStateInfo.getInstance(PrintActivity.this).saveNoteInfo(noteInfo);
+//							getStateInfo.getInstance(PrintActivity.this).saveNoteInfo(noteInfo);
 							Log.i("jxb", "±£´æ³É¹¦");
 							
 						}

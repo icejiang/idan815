@@ -36,7 +36,7 @@ public abstract class getInfoValue {
 		String sInfo;
 		try {
 			sInfo = getDZService.getServiceConnect(note, "InsertRouteNote");
-			System.out.println(sInfo);
+			Log.i("jxb", " k1 = "+sInfo);
 			iInsertResult = Integer.parseInt(sInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

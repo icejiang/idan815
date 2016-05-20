@@ -56,6 +56,8 @@ public class StateInfo implements Serializable {
 	private int position;
 	//是否是出场路码  true-出场  false-进场
 	private boolean isOutDoor = true;
+	//暂停的路单
+	private NoteInfo PauseNote = null;
 
 	public boolean getIsOutDoor(){
 		return isOutDoor;
@@ -130,7 +132,7 @@ public class StateInfo implements Serializable {
 			TaskInfo currentTask, NoteInfo currentNote, int pageOfTask,
 			int pageOfNoteHistory, String currentKMS, int timeOfTaskOneDay,
 			String timeInCar, String timeOffCar, String today,
-			String beginKMsOfToday, String endKMsOfToday) {
+			String beginKMsOfToday, String endKMsOfToday,NoteInfo pauseNote) {
 		super();
 		CurrentState = currentState;
 		CurrentPerson = currentPerson;
@@ -145,13 +147,14 @@ public class StateInfo implements Serializable {
 		Today = today;
 		BeginKMsOfToday = beginKMsOfToday;
 		EndKMsOfToday = endKMsOfToday;
+		PauseNote = pauseNote;
 	}
 
 	@Override
 	public String toString() {
 		return "StateInfo [CurrentState=" + CurrentState + ", CurrentPerson="
 				+ CurrentPerson + ", CurrentTask=" + CurrentTask
-				+ ", CurrentNote=" + CurrentNote + ", PageOfTask=" + PageOfTask
+				+ ", CurrentNote=" + CurrentNote +", PauseNote= " + this.PauseNote +  ", PageOfTask=" + PageOfTask
 				+ ", PageOfNoteHistory=" + PageOfNoteHistory + ", CurrentKMS="
 				+ CurrentKMS + ", TimeOfTaskOneDay=" + TimeOfTaskOneDay
 				+ ", TimeInCar=" + TimeInCar + ", TimeOffCar=" + TimeOffCar
@@ -303,4 +306,11 @@ public class StateInfo implements Serializable {
 		PrinterName = printerName;
 	}
 
+	public NoteInfo getPauseNote(){
+	   return this.PauseNote;
+	}
+	
+	public void setPauseNote(NoteInfo paramNoteInfo){
+	   this.PauseNote = paramNoteInfo;
+	}
 }

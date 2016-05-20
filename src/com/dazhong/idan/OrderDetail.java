@@ -67,6 +67,8 @@ public class OrderDetail extends Activity {
 	private TextView startRoute;
 	private TextView addStart;
 	private RelativeLayout addLayout;
+	private TextView tv_pause;
+	private NoteInfo pauseNote;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class OrderDetail extends Activity {
 		try {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
+			pauseNote = myStateInfo.getPauseNote();
 			myStateInfo.setCurrentState(11);
 			myStateInfo.setCurrentTask(taskInfo);
 			myStateInfo.setPosition(position);
@@ -100,10 +103,17 @@ public class OrderDetail extends Activity {
 			addLayout.setVisibility(View.GONE);
 			tv_start.setVisibility(View.GONE);
 			tv_finish.setVisibility(View.VISIBLE);
+			tv_pause.setVisibility(View.GONE);
+		} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())){
+			addLayout.setVisibility(View.GONE);
+			tv_start.setVisibility(View.GONE);
+			tv_finish.setVisibility(View.GONE);
+			tv_pause.setVisibility(View.VISIBLE);
 		} else {
 			addLayout.setVisibility(View.VISIBLE);
 			tv_start.setVisibility(View.VISIBLE);
 			tv_finish.setVisibility(View.GONE);
+			tv_pause.setVisibility(View.GONE);
 		}
 		tv_start.setOnClickListener(new OnClickListener() {
 			
@@ -113,8 +123,6 @@ public class OrderDetail extends Activity {
 				Log.i("jxb", startRoute.getText().toString());
 				if (startRoute.getText().toString().equals("")){
 					
-				
-				
 				final EditText editText = new EditText(OrderDetail.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(OrderDetail.this)
@@ -166,6 +174,44 @@ public class OrderDetail extends Activity {
 
 			}
 		});
+		tv_pause.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				final EditText editText = new EditText(OrderDetail.this);
+				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+				new AlertDialog.Builder(OrderDetail.this)
+						.setTitle("请填写当前路码")
+						.setView(editText)
+						.setPositiveButton(
+								"继续本次业务",
+								new android.content.DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										String input = editText.getText().toString();
+										if (input.equals("")) {
+											Toast.makeText(
+													getApplicationContext(),
+													"路码不能为空",
+													Toast.LENGTH_SHORT).show();
+										} else {
+											pauseNote.setPauseEnd(Integer.parseInt(input));
+											myStateInfo.setCurrentNote(pauseNote);
+											myStateInfo.setPauseNote(null);
+											myGetStateInfo.setStateinfo(myStateInfo);
+											Intent intent = new Intent();
+											intent.setClass(OrderDetail.this, InService.class);
+											startActivity(intent);
+										}
+									}
+
+								}).show();
+
+			}
+		});
+		
 		addStart.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -291,6 +337,7 @@ public class OrderDetail extends Activity {
 		startRoute = (TextView) findViewById(R.id.detail_startRoute);
 		addStart = (TextView) findViewById(R.id.detail_addStart);
 		addLayout = (RelativeLayout) findViewById(R.id.detail_addLayout);
+		tv_pause = (TextView) findViewById(R.id.tv_pause);
 	}
 	
 	private void setData(){
@@ -380,7 +427,7 @@ public class OrderDetail extends Activity {
 		noteInfo.setOutfeetype(taskInfo.getOutfeetype());
 		noteInfo.setBridgefeetype(taskInfo.getBridgefeetype());
 		noteInfo.setInvoiceTaxRate(taskInfo.getInvoiceTaxRate());
-		if (today.equals(taskInfo.ServiceBegin())){
+		if (!today.equals(taskInfo.ServiceEnd())){
 			noteInfo.setFeeBridge(taskInfo.getFeeBridge());
 			noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
 		}
