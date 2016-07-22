@@ -173,16 +173,25 @@ public class NoteInfo implements Serializable {
 	 * 结束暂停时的路码
 	 * */
 	private int pauseEnd = 0;
-	
 	private int outfeetype;
 	private int bridgefeetype;
 	private double invoiceTaxRate;
 	private String balanceType;
 	private String balanceTypeName;
 	private String invoiceType;
+	/**
+	 * 是否暂停过
+	 * */
+	private boolean hasPaused = false;
 	
-	
-	
+	public boolean isHasPaused() {
+		return hasPaused;
+	}
+
+	public void setHasPaused(boolean hasPaused) {
+		this.hasPaused = hasPaused;
+	}
+
 	public int getPauseEnd(){
 	  return this.pauseEnd;
 	}
@@ -616,18 +625,7 @@ public class NoteInfo implements Serializable {
 	 * 上传到服务器的格式
 	 * */
 	public String toUploadNote() {
-		Log.i("jxb", "NoteInfo [" + NoteID + "," + TaskID + "," + CarID + ","
-				+ CarNumber + "," + DriverID + "," + DriverName + ","
-				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
-				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
-				+ FeeTotal + "," + LeaveAddress.replace(",", ".") + ","
-				+ OnBoardAddress.replace(",", ".") + "," + RouteBegin + ","
-				+ RouteEnd + "," + ServiceBegin + "," + ServiceEnd + ","
-				+ DoServiceKms + "," + DoServiceTime + "," + OverKMs + ","
-				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
-				+ ServiceRoute.replace(",", ".") + "," 
-				+ FeePark+","+NoteDate.replaceAll("-", "") + "]");
-		return "NoteInfo [" + NoteID + "," + TaskID + "," + CarID + ","
+		String noteString = "NoteInfo [" + NoteID + "," + TaskID + "," + CarID + ","
 				+ CarNumber + "," + DriverID + "," + DriverName + ","
 				+ FeeBridge + "," + FeeHotel + "," + FeeLunch + "," + FeeOther
 				+ "," + FeeOverKMs + "," + FeeOverTime + "," + FeePrice + ","
@@ -638,6 +636,8 @@ public class NoteInfo implements Serializable {
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
 				+ ServiceRoute.replace(",", ".") + "," 
 				+ FeePark+","+NoteDate.replaceAll("-", "") + "]";
+		Log.i("jxb", noteString);
+		return noteString.replace("&", "-");
 	}
 
 	@Override

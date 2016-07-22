@@ -136,26 +136,28 @@ public class PrintActivity extends Activity {
 					}
 					mBTService.PrintCharacters(message);
 					int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
+					// int k = 2;
 					Log.i("jxb", "k = " + k);
 					if (k == 0 || k == 1) {
 						// do nothing
 					} else {
-//							getStateInfo.getInstance(PrintActivity.this).saveNoteInfo(noteInfo);
-							Log.i("jxb", "保存成功");
-							
-						}
-						Toast.makeText(
-								PrintActivity.this,
-								PrintActivity.this.getResources().getString(
-										R.string.str_printok), 2000).show();
-					} else {
-						Toast.makeText(
-								PrintActivity.this,
-								PrintActivity.this.getResources().getString(
-										R.string.str_printfail), 2000).show();
+						getStateInfo.getInstance(PrintActivity.this)
+								.saveNoteInfo(noteInfo);
+						Log.i("jxb", "保存成功");
 					}
-					iv_return.setVisibility(View.GONE);
-					iv_home.setVisibility(View.VISIBLE);
+					Toast.makeText(
+							PrintActivity.this,
+							PrintActivity.this.getResources().getString(
+									R.string.str_printok), 2000).show();
+				} else {
+					Log.i("jxb", noteInfo.toUploadNote());
+					Toast.makeText(
+							PrintActivity.this,
+							PrintActivity.this.getResources().getString(
+									R.string.str_printfail), 2000).show();
+				}
+				iv_return.setVisibility(View.GONE);
+				iv_home.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -373,6 +375,8 @@ public class PrintActivity extends Activity {
 			messages = messages + "用车客人/Guest Name:" + note.getCustomerName() + mes2;
 			messages = messages + "上车时间/Boarding Time:" + note.getServiceBegin() + mes2;
 			messages = messages + "下车时间/Alighting Time:"  + note.getServiceEnd() + mes2;
+			messages = messages + "上车路码/Boarding Km:"  + note.getRouteBegin() + mes2;
+			messages = messages + "下车路码/Alighting Km:"  + note.getRouteEnd() + mes2;
 			messages = messages + "上车地址/Boarding Location:" + mes1;
 			messages = messages + note.getOnBoardAddress() + mes2;
 			messages = messages + "下车地址/Alighting Location:" + mes1;

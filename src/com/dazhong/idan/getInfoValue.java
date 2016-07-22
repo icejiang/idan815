@@ -357,9 +357,14 @@ public abstract class getInfoValue {
 						"BalanceType"));
 				taskinfo.setBalancetypename(getDZService.getInfoValue(sinf,
 						"BalanceTypeName"));
+				taskinfo.setContacter(getDZService.getInfoValue(sinf,
+						"Contacter"));
+				taskinfo.setContacterNum(getDZService.getInfoValue(sinf,
+						"ContacterPhone"));
 				taskinfo.setInvoiceTaxRate(Double.parseDouble(getDZService.getInfoValue(sinf, "InvoiceTaxRate")));
 				taskinfo.setOutfeetype(Integer.parseInt(getDZService.getInfoValue(sinf,"OutFeeType")));
 				taskinfo.setBridgefeetype(Integer.parseInt(getDZService.getInfoValue(sinf,"BridgeFeeType")));
+				taskinfo.setIsUpdate(getDZService.getInfoValue(sinf,"IsUpdate"));
 				// System.out.println(taskinfo.toString());
 				listTasks.add(taskinfo);
 			}

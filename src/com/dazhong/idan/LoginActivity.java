@@ -1,7 +1,10 @@
 package com.dazhong.idan;
 
 import java.util.List;
+import java.util.Set;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +36,7 @@ public class LoginActivity extends Activity {
 	private iDanApp idanapp = null;
 	private String today;
 	private boolean logok = false;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,6 @@ public class LoginActivity extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		
 		
 		idanapp = iDanApp.getInstance();
 		ActivityControler.addActivity(this);
@@ -288,6 +292,20 @@ public class LoginActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		JPushInterface.onResume(LoginActivity.this);
+		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		JPushInterface.onPause(LoginActivity.this);
+		super.onPause();
 	}
 
 }

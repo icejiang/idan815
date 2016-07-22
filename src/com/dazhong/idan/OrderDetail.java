@@ -69,6 +69,8 @@ public class OrderDetail extends Activity {
 	private RelativeLayout addLayout;
 	private TextView tv_pause;
 	private NoteInfo pauseNote;
+	private TextView contacter;
+	private TextView contacterNum;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -293,6 +295,15 @@ public class OrderDetail extends Activity {
 				// TODO Auto-generated method stub
 				callNum(salesmanNum.getText().toString());
 			}});
+		contacterNum.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callNum(contacterNum.getText().toString());
+				
+			}
+		});
 	}
 	
 	private void callNum(String phoneno){
@@ -338,6 +349,8 @@ public class OrderDetail extends Activity {
 		addStart = (TextView) findViewById(R.id.detail_addStart);
 		addLayout = (RelativeLayout) findViewById(R.id.detail_addLayout);
 		tv_pause = (TextView) findViewById(R.id.tv_pause);
+		contacter = (TextView) findViewById(R.id.detail_contacter);
+		contacterNum = (TextView) findViewById(R.id.detail_contacterNum);
 	}
 	
 	private void setData(){
@@ -382,6 +395,8 @@ public class OrderDetail extends Activity {
 		} else {
 			outFeeType.setText("·ñ");
 		}
+		contacter.setText(taskInfo.getContacter());
+		contacterNum.setText(taskInfo.getContacterNum());
 	}
 	
 	private void putDataIntoNote(){

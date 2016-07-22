@@ -59,6 +59,21 @@ public class TaskInfo  implements Serializable {
 	private double bridgeFee;
 	private String customerName;
 	private int routeNoteCount;
+	private String contacter;
+	private String contacterNum;
+	
+	/**
+	 * 业务是新增还是修改  1-新增 0-修改
+	 * */
+	private String isUpdate;
+	
+	public String getIsUpdate(){
+		return this.isUpdate;
+	}
+	
+	public void setIsUpdate(String isUpdate){
+		this.isUpdate = isUpdate;
+	}
 	
 	/**
 	 * 上传次数： >0表示订单已完成
@@ -174,7 +189,7 @@ public class TaskInfo  implements Serializable {
 		this.salepricecal=salePricecal;
 	}
 	/**
-	 * 阅读标记
+	 * 阅读标记  1-已读 0-未读
 	 * */
 	public int getReadmark() {
 		return Readmark;
@@ -331,6 +346,28 @@ public class TaskInfo  implements Serializable {
 	public String PlannerTel()
 	{
 		return plannertel;
+	}
+	/**
+	 * 联系人
+	 */
+	public String getContacter()
+	{
+		return this.contacter;
+	}
+	public void setContacter(String contacter)
+	{
+		this.contacter = contacter;
+	}
+	/**
+	 * 联系人电话
+	 */
+	public String getContacterNum()
+	{
+		return this.contacterNum;
+	}
+	public void setContacterNum(String contacterNum)
+	{
+		this.contacterNum = contacterNum;
 	}
 	/**
 	 * 住宿费

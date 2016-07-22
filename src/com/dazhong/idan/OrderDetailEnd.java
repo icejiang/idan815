@@ -130,6 +130,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		int totalMile = Integer.parseInt(noteInfo.getRouteEnd())-Integer.parseInt(noteInfo.getRouteBegin())-(noteInfo.getPauseEnd()-noteInfo.getPauseStart());
 		mile.setText(totalMile+"公里");
 		noteInfo.setDoServiceKms(totalMile);
+		noteInfo.setRouteEnd((Integer.parseInt(noteInfo.getRouteBegin())+totalMile)+"");
 		DateFormat df = new SimpleDateFormat("HH:mm");
 		int hour = 0;
 		try {
@@ -376,6 +377,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						}
 						int totalMile = Integer.parseInt(routeEnd)-Integer.parseInt(routeBegin)-(noteInfo.getPauseEnd()-noteInfo.getPauseStart());
 						noteInfo.setDoServiceKms(totalMile);
+						noteInfo.setRouteEnd((Integer.parseInt(noteInfo.getRouteBegin())+totalMile)+"");
 						mile.setText(totalMile+"公里");
 						int serviceMile = noteInfo.getServiceKMs();
 						double lastExtraMilePrice = noteInfo.getFeeOverKMs();

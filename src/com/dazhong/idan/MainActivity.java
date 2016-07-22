@@ -2,20 +2,29 @@ package com.dazhong.idan;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.zip.Inflater;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import android.R.color;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,13 +61,16 @@ public class MainActivity extends Activity {
 	private SlidingMenu menu;
 	private MyAdapter mAdapter;
 	private NoteInfo pauseNote;
+	private static final int MSG_SET_ALIAS = 1001;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("jxb", "create");
 		setContentView(R.layout.business_list);
 		idanapp = iDanApp.getInstance();
 		tasklist = idanapp.getTasklist();
+		JPushInterface.init(getApplicationContext());
 		try {
 			stateinfo = getStateInfo.getInstance(getApplicationContext())
 					.getStateinfo();
@@ -68,6 +80,7 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 			Toast.makeText(this.getApplicationContext(), R.string.error, 2000);
 		}
+		mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, stateinfo.getUserAccount()));
 		ActivityControler.addActivity(this);
 
 		findView();
@@ -309,6 +322,7 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		Log.i("jxb", "resume");
 //		menu.toggle();
 		setStatus();
 		try {
@@ -413,6 +427,7 @@ public class MainActivity extends Activity {
 			return position;
 		}
 
+		@SuppressLint("NewApi")
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
@@ -450,12 +465,29 @@ public class MainActivity extends Activity {
 			holder.name.setText(taskInfo.Customer());
 			holder.type.setText(taskInfo.ServiceTypeName());
 			holder.company.setText(taskInfo.getCustomerCompany());
+			String isUpdate = taskInfo.getIsUpdate();
+			int readmark = taskInfo.getReadmark();
+			Log.i("jxb", "readmark = "+readmark+"  isupdate = "+isUpdate);
 			if (taskInfo.getRouteNoteCount() > 0){
 				holder.isDone.setVisibility(View.VISIBLE);
 				holder.isDone.setText("已完成");
+				holder.isDone.setBackgroundColor(Color.parseColor("#009944"));
 			} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())) {
 				holder.isDone.setVisibility(View.VISIBLE);
 				holder.isDone.setText("暂停中");
+				holder.isDone.setBackgroundColor(Color.parseColor("#eb6100"));
+				
+//				holder.isDone.setBackground(getResources().getColor(R.color.colorYellow));
+			} else if (readmark == 1) {
+				holder.isDone.setVisibility(View.GONE);
+			} else if (readmark == 0) {
+				holder.isDone.setVisibility(View.VISIBLE);
+				holder.isDone.setBackground(getResources().getDrawable(R.drawable.bg_red));
+				if (isUpdate.equals("0")){
+					holder.isDone.setText("新增");
+				} else {
+					holder.isDone.setText("修改");
+				}
 			} else {
 				holder.isDone.setVisibility(View.GONE);
 			}
@@ -473,4 +505,67 @@ public class MainActivity extends Activity {
 		public TextView company;
 		public TextView isDone;
 	}
+	
+	private final Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case MSG_SET_ALIAS:
+				Log.d("jxb", "Set alias in handler.");
+				JPushInterface.setAliasAndTags(getApplicationContext(), (String) msg.obj, null, mAliasCallback);
+				break;
+				
+//	            case MSG_SET_TAGS:
+//	                Log.d("jxb", "Set tags in handler.");
+//	                JPushInterface.setAliasAndTags(getApplicationContext(), null, (Set<String>) msg.obj, mTagsCallback);
+//	                break;
+				
+			default:
+				Log.i("jxb", "Unhandled msg - " + msg.what);
+			}
+		}
+	};
+	
+	private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+            case 0:
+                logs = "Set tag and alias success";
+                Log.i("jxb", logs);
+                break;
+                
+            case 6002:
+                logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                Log.i("jxb", logs);
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                break;
+            
+            default:
+                logs = "Failed with errorCode = " + code;
+                Log.e("jxb", logs);
+            }
+            
+//            ExampleUtil.showToast(logs, getApplicationContext());
+        }
+	    
+	};
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        Intent home = new Intent(Intent.ACTION_MAIN);
+	        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        home.addCategory(Intent.CATEGORY_HOME);
+	        startActivity(home);
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+		
+	};
+	
 }

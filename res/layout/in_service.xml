@@ -29,7 +29,7 @@
             android:background="@android:color/transparent"
             android:text="暂停业务"
             android:textColor="#ffffff"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textSize="18dp" />
 
     </RelativeLayout>

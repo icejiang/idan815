@@ -155,7 +155,7 @@
         android:layout_height="20dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_red"
+        android:background="#009944"
         android:gravity="center"
         android:text="已完成"
         android:textColor="#ffffff" />

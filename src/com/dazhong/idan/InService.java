@@ -27,6 +27,7 @@ public class InService extends Activity {
 //	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
 	private NoteInfo noteInfo;
+	private NoteInfo pauseNote;
 	public static String INPUT_TOTAL_KEY = "INPUT_TOTAL";
 	
 	private TextView onboard;
@@ -67,6 +68,7 @@ public class InService extends Activity {
 			myStateInfo = myGetStateInfo.getStateinfo();
 			taskInfo = myStateInfo.getCurrentTask();
 			noteInfo = myStateInfo.getCurrentNote();
+			pauseNote = myStateInfo.getPauseNote();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,7 +77,11 @@ public class InService extends Activity {
 		myStateInfo.setCurrentState(13);
 		myStateInfo.setCurrentNote(noteInfo);
 		myGetStateInfo.setStateinfo(myStateInfo);
-		
+		if (null != pauseNote || noteInfo.isHasPaused() ){
+			bt_pause.setVisibility(View.GONE);
+		} else {
+			bt_pause.setVisibility(View.VISIBLE);
+		}
 		
 		btn_end.setOnClickListener(new OnClickListener() {
 			
@@ -137,6 +143,7 @@ public class InService extends Activity {
 							Toast.makeText(getApplicationContext(), "路码不能为空", Toast.LENGTH_SHORT).show();
 						} else {
 							noteInfo.setPauseStart(Integer.parseInt(input));
+							noteInfo.setHasPaused(true);
 							myStateInfo.setPauseNote(noteInfo);
 							myGetStateInfo.setStateinfo(myStateInfo);
 							Intent intent = new Intent();

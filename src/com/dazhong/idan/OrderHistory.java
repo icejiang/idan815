@@ -148,7 +148,7 @@ class MyAdapter extends BaseAdapter{
 			NoteInfo noteInfo = noteList.get(position);
 			holder.date.setText(noteInfo.getNoteDate());
 			holder.id.setText(noteInfo.getNoteID());
-			holder.sum.setText(noteInfo.getFeePrice()+"Ԫ");
+			holder.sum.setText(noteInfo.getFeeTotal()+"Ԫ");
 			return convertView;
 		}
 		
