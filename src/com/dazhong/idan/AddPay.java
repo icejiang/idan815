@@ -95,7 +95,7 @@ public class AddPay extends Activity {
 				// TODO Auto-generated method stub
 				Log.i("jxb", "s = "+s+"; count = "+count);
 				Double fee = 0.0;
-				if (s.toString().equals("")||s == null){
+				if (s.toString().equals("")||s == null || s.toString().equals(".")){
 					Log.i("jxb", "kongkongkong");
 					all  = all - noteInfo.getFeeBridge()*taxRate;
 					noteInfo.setFeeBridge(0);	
@@ -126,7 +126,7 @@ public class AddPay extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				Double fee = 0.0;
-				if (s.toString().equals("")||s == null){
+				if (s.toString().equals("")||s == null || s.toString().equals(".")){
 					Log.i("jxb", "kongkongkong");
 					all  = all - noteInfo.getFeePark()*taxRate;
 					noteInfo.setFeePark(0);	
@@ -158,7 +158,7 @@ public class AddPay extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				Double fee = 0.0;
-				if (s.toString().equals("")||s == null){
+				if (s.toString().equals("")||s == null || s.toString().equals(".")){
 					all  = all - noteInfo.getFeeLunch()*taxRate;
 					noteInfo.setFeeLunch(0);	
 				} else {
@@ -189,7 +189,7 @@ public class AddPay extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				Double fee = 0.0;
-				if (s.toString().equals("")||s == null){
+				if (s.toString().equals("")||s == null || s.toString().equals(".")){
 					all  = all - noteInfo.getFeeHotel()*taxRate;
 					noteInfo.setFeeHotel(0);	
 				} else {
@@ -220,7 +220,7 @@ public class AddPay extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				Double fee = 0.0;
-				if (s.toString().equals("")||s == null){
+				if (s.toString().equals("")||s == null || s.toString().equals(".")){
 					all  = all - noteInfo.getFeeOther()*taxRate;
 					noteInfo.setFeeOther(0);	
 				} else {
@@ -251,7 +251,7 @@ public class AddPay extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				Double fee = 0.0;
-				if (s.toString().equals("")||s == null){
+				if (s.toString().equals("")||s == null || s.toString().equals(".")){
 					all  = all + noteInfo.getFeeBack();
 					noteInfo.setFeeBack(0);	
 				} else {
@@ -283,7 +283,7 @@ public class AddPay extends Activity {
 			public void onClick(View v) {
 
 				String alter = et_alter.getText().toString();
-				if (!alter.equals("")&&!(alter == null)){
+				if (!alter.equals("")&&!(alter == null)&&!alter.equals(".")){
 					double price_all = noteInfo.getFeeTotal();
 					price_all += noteInfo.getFeeBack();
 					if(Double.valueOf(alter)>price_all){

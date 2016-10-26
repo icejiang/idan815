@@ -1,19 +1,26 @@
 package com.dazhong.idan;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Environment;
 import android.util.Log;
 
 public class NetWorkReceiver extends BroadcastReceiver {
 
+	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"zhongxing/";
+//	private String spaceName = "mytest"; //´¢´æ¿Õ¼äÃû
+	private String spaceName = "driverapp";
+	
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
 		Log.i("jxb", "111111111111------");
+		PictureUtil util = new PictureUtil();
 		ConnectivityManager connManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connManager!=null) { 
 			
@@ -32,6 +39,7 @@ public class NetWorkReceiver extends BroadcastReceiver {
 					int k = 100;
 					for (int i = 0 ; i < saveNotes.size() ; i++){
 						k = getInfoValue.InsertNote(saveNotes.get(i).toUploadNote());
+						util.uploadPic(spaceName, rootDir+ saveNotes.get(i).getNoteID() + ".jpg", saveNotes.get(i).getNoteID());
 						Log.i("jxb", "k(¹ã²¥) = "+k);
 					}
 					if (k == 0 || k == 1){

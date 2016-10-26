@@ -101,22 +101,22 @@ public class OrderDetail extends Activity {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		if (taskInfo.getRouteNoteCount()>0){
-			addLayout.setVisibility(View.GONE);
-			tv_start.setVisibility(View.GONE);
-			tv_finish.setVisibility(View.VISIBLE);
-			tv_pause.setVisibility(View.GONE);
-		} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())){
-			addLayout.setVisibility(View.GONE);
-			tv_start.setVisibility(View.GONE);
-			tv_finish.setVisibility(View.GONE);
-			tv_pause.setVisibility(View.VISIBLE);
-		} else {
-			addLayout.setVisibility(View.VISIBLE);
-			tv_start.setVisibility(View.VISIBLE);
-			tv_finish.setVisibility(View.GONE);
-			tv_pause.setVisibility(View.GONE);
-		}
+//		if (taskInfo.getRouteNoteCount()>0){
+//			addLayout.setVisibility(View.GONE);
+//			tv_start.setVisibility(View.GONE);
+//			tv_finish.setVisibility(View.VISIBLE);
+//			tv_pause.setVisibility(View.GONE);
+//		} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())){
+//			addLayout.setVisibility(View.GONE);
+//			tv_start.setVisibility(View.GONE);
+//			tv_finish.setVisibility(View.GONE);
+//			tv_pause.setVisibility(View.VISIBLE);
+//		} else {
+//			addLayout.setVisibility(View.VISIBLE);
+//			tv_start.setVisibility(View.VISIBLE);
+//			tv_finish.setVisibility(View.GONE);
+//			tv_pause.setVisibility(View.GONE);
+//		}
 		tv_start.setOnClickListener(new OnClickListener() {
 			
 			@Override

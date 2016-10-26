@@ -294,7 +294,7 @@ public class InService extends Activity {
 				int bridgeFeeType = noteInfo.getBridgefeetype();
 				int outFeeType = noteInfo.getOutfeetype();
 				double taxRate = 1 + noteInfo.getInvoiceTaxRate();
-				if (!road.equals("")) {
+				if (!road.equals("") && !road.equals(".")) {
 					if (bridgeFeeType == 0){
 						Double fee = reserve2(Double.valueOf(road)*taxRate);
 						tv_bridge.setText(fee + "Ԫ");
@@ -303,7 +303,7 @@ public class InService extends Activity {
 					}
 					noteInfo.setFeeBridge(Double.valueOf(road));
 				}
-				if (!parking.equals("")) {
+				if (!parking.equals("") && !parking.equals(".")) {
 					if (bridgeFeeType == 0){
 						Double fee = reserve2(Double.valueOf(parking)*taxRate);
 						tv_parking.setText(fee + "Ԫ");
@@ -312,7 +312,7 @@ public class InService extends Activity {
 					}
 					noteInfo.setFeePark(Double.valueOf(parking));
 				}
-				if (!meals.equals("")) {
+				if (!meals.equals("") && !meals.equals(".")) {
 					if (outFeeType == 0){
 						Double fee = reserve2(Double.valueOf(meals)*taxRate);
 						tv_meals.setText(fee + "Ԫ");
@@ -321,7 +321,7 @@ public class InService extends Activity {
 					}
 					noteInfo.setFeeLunch(Double.valueOf(meals));
 				}
-				if (!hotel.equals("")) {
+				if (!hotel.equals("") && !hotel.equals(".")) {
 					if (outFeeType == 0){
 						Double fee = reserve2(Double.valueOf(hotel)*taxRate);
 						tv_hotel.setText(fee + "Ԫ");
@@ -330,7 +330,7 @@ public class InService extends Activity {
 					}
 					noteInfo.setFeeHotel(Double.valueOf(hotel));
 				}
-				if (!other.equals("")) {
+				if (!other.equals("") && !other.equals(".")) {
 					Double fee = reserve2(Double.valueOf(other)*taxRate);
 					tv_other.setText(fee + "Ԫ");
 					noteInfo.setFeeOther(Double.valueOf(other));

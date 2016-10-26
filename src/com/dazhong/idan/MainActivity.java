@@ -1,5 +1,6 @@
 package com.dazhong.idan;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +21,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.text.InputType;
@@ -62,6 +64,9 @@ public class MainActivity extends Activity {
 	private MyAdapter mAdapter;
 	private NoteInfo pauseNote;
 	private static final int MSG_SET_ALIAS = 1001;
+	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"zhongxing/";
+//	private String spaceName = "mytest"; //储存空间名
+	private String spaceName = "driverapp";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -278,7 +283,8 @@ public class MainActivity extends Activity {
 		String serviceVer = getInfoValue.getVersion("123");
 		String curVersion = FileUtil.getInstance().getVersion(context);
 		Log.i("jxb", "serviceVersion = "+serviceVer+"   curVersion = "+curVersion);
-		if(!serviceVer.equals(curVersion) && !serviceVer.equals("")){
+		if(serviceVer!=null && !serviceVer.equals(curVersion) && !serviceVer.equals("")){
+//		if(!serviceVer.equals(curVersion) && !serviceVer.equals("")){
 			new AlertDialog.Builder(MainActivity.this).setTitle("程序有更新,是否立即更新？").
 				setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 					
@@ -386,6 +392,8 @@ public class MainActivity extends Activity {
 			int k = 100;
 			for (int i = 0 ; i < saveNotes.size() ; i++){
 				k = getInfoValue.InsertNote(saveNotes.get(i).toUploadNote());
+				PictureUtil util = new PictureUtil();
+				util.uploadPic(spaceName, rootDir+ saveNotes.get(i).getNoteID() + ".jpg", saveNotes.get(i).getNoteID());
 				Log.i("jxb", "k(广播) = "+k);
 			}
 			if (k == 0 || k == 1){

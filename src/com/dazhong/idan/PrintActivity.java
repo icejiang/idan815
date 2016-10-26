@@ -22,8 +22,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +41,7 @@ public class PrintActivity extends Activity {
 	private BlueToothService mBTService = null;
 	private Set<BluetoothDevice> devices;
 
-	private TextView print_confirm;
+	private Button print_confirm;
 	private TextView tv_base;
 	private TextView tv_road;
 	private TextView tv_parking;
@@ -62,8 +64,7 @@ public class PrintActivity extends Activity {
 	private TextView extraMile;
 	private TextView route_id;
 	private TextView record;
-	private ImageView iv_return;
-	private ImageView iv_home;
+	private Button bt_home;
 	private boolean blueinit;
 	private NoteInfo noteInfo;
 	private TaskInfo taskInfo;
@@ -95,18 +96,7 @@ public class PrintActivity extends Activity {
 		setData();
 		registerBoradcastReceiver();;
 		
-		iv_return.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (mBTService != null) {
-					mBTService.DisConnected();
-					mBTService = null;
-				}
-				PrintActivity.this.finish();
-			}
-		});
-		iv_home.setOnClickListener(new OnClickListener() {
+		bt_home.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -135,16 +125,16 @@ public class PrintActivity extends Activity {
 						return;
 					}
 					mBTService.PrintCharacters(message);
-					int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
-					// int k = 2;
-					Log.i("jxb", "k = " + k);
-					if (k == 0 || k == 1) {
-						// do nothing
-					} else {
-						getStateInfo.getInstance(PrintActivity.this)
-								.saveNoteInfo(noteInfo);
-						Log.i("jxb", "保存成功");
-					}
+//					int k = getInfoValue.InsertNote(noteInfo.toUploadNote());
+//					// int k = 2;
+//					Log.i("jxb", "k = " + k);
+//					if (k == 0 || k == 1) {
+//						// do nothing
+//					} else {
+//						getStateInfo.getInstance(PrintActivity.this)
+//								.saveNoteInfo(noteInfo);
+//						Log.i("jxb", "上传失败,路单已保存");
+//					}
 					Toast.makeText(
 							PrintActivity.this,
 							PrintActivity.this.getResources().getString(
@@ -156,8 +146,6 @@ public class PrintActivity extends Activity {
 							PrintActivity.this.getResources().getString(
 									R.string.str_printfail), 2000).show();
 				}
-				iv_return.setVisibility(View.GONE);
-				iv_home.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -530,7 +518,7 @@ public class PrintActivity extends Activity {
 	}
 
 	private void findView() {
-		print_confirm = (TextView) findViewById(R.id.print_confirm);
+		print_confirm = (Button) findViewById(R.id.print_confirm);
 		tv_base = (TextView) findViewById(R.id.tv_base_print);
 		tv_road = (TextView) findViewById(R.id.tv_road_print);
 		tv_parking = (TextView) findViewById(R.id.tv_parking_print);
@@ -552,8 +540,7 @@ public class PrintActivity extends Activity {
 		tv_beyondMile = (TextView) findViewById(R.id.tv_beyond_mile);
 		tv_beyondTime = (TextView) findViewById(R.id.tv_beyond_time);
 		route_id = (TextView) findViewById(R.id.print_routeID);
-		iv_return = (ImageView) findViewById(R.id.return_print);
-		iv_home = (ImageView) findViewById(R.id.home_print);
+		bt_home = (Button) findViewById(R.id.print_mainactivity);
 		record = (TextView) findViewById(R.id.print_record);
 		tv_alterPrice = (TextView) findViewById(R.id.tv_alter_price);
 		company = (TextView) findViewById(R.id.print_company);
@@ -595,6 +582,16 @@ public class PrintActivity extends Activity {
         }
         return false;
     }
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+		}
+
+		return true;
+
+	}
 
 	
 	

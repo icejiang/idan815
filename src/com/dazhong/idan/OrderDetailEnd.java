@@ -251,7 +251,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			break;
 		case R.id.tv_print:
 			Intent intent3 = new Intent();
-			intent3.setClass(getApplicationContext(), PrintActivity.class);
+//			intent3.setClass(getApplicationContext(), PrintActivity.class);
+			intent3.setClass(getApplicationContext(), SignatureActivity.class);
 			startActivity(intent3);
 			break;
 //		case R.id.tv_add_record:
@@ -312,7 +313,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						tv_record.setText(record);
 						noteInfo.setServiceRoute(record);
 					}
-					if (!road.equals("")) {
+					if (!road.equals("") && !road.equals(".")) {
+						Log.i("jxb", "road = "+road);
 						if (bridgeFeeType == 0){
 							Double fee = reserve2(Double.valueOf(road)*taxRate);
 							all  = all - noteInfo.getFeeBridge()*taxRate + fee;
@@ -322,7 +324,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						}
 						noteInfo.setFeeBridge(Double.valueOf(road));
 					}
-					if (!parking.equals("")) {
+					if (!parking.equals("") && !parking.equals(".")) {
 						if (bridgeFeeType == 0){
 							Double fee = reserve2(Double.valueOf(parking)*taxRate);
 							all  = all - noteInfo.getFeePark()*taxRate + fee;
@@ -332,7 +334,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						}
 						noteInfo.setFeePark(Double.valueOf(parking));
 					}
-					if (!meals.equals("")) {
+					if (!meals.equals("") && !meals.equals(".")) {
 						if (outFeeType == 0){
 							Double fee = reserve2(Double.valueOf(meals)*taxRate);
 							all  = all - noteInfo.getFeeLunch()*taxRate + fee;
@@ -342,7 +344,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						}
 						noteInfo.setFeeLunch(Double.valueOf(meals));
 					}
-					if (!hotel.equals("")) {
+					if (!hotel.equals("") && !hotel.equals(".")) {
 						if (outFeeType == 0){
 							Double fee = reserve2(Double.valueOf(hotel)*taxRate);
 							all  = all - noteInfo.getFeeHotel()*taxRate + fee;
@@ -352,13 +354,13 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						}
 						noteInfo.setFeeHotel(Double.valueOf(hotel));
 					}
-					if (!other.equals("")) {
+					if (!other.equals("") && !other.equals(".")) {
 						Double fee = reserve2(Double.valueOf(other)*taxRate);
 						all  = all - noteInfo.getFeeOther()*taxRate + fee;
 						tv_other.setText(fee + "Ԫ");
 						noteInfo.setFeeOther(Double.valueOf(other));
 					}
-					if (!alter.equals("")) {
+					if (!alter.equals("") && !alter.equals(".")) {
 //						all -= Double.valueOf(alter);
 						all = all + noteInfo.getFeeBack() - Double.valueOf(alter);
 						tv_alter.setText("-"+Double.valueOf(alter) + "Ԫ");

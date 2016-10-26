@@ -183,6 +183,18 @@ public class NoteInfo implements Serializable {
 	 * 是否暂停过
 	 * */
 	private boolean hasPaused = false;
+	/**
+	 * 签名地址
+	 * */
+	private String pictureAddress;
+	
+	public String getPictureAddress() {
+		return pictureAddress;
+	}
+
+	public void setPictureAddress(String pictureAddress) {
+		this.pictureAddress = pictureAddress;
+	}
 	
 	public boolean isHasPaused() {
 		return hasPaused;
@@ -635,7 +647,7 @@ public class NoteInfo implements Serializable {
 				+ DoServiceKms + "," + DoServiceTime + "," + OverKMs + ","
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
 				+ ServiceRoute.replace(",", ".") + "," 
-				+ FeePark+","+NoteDate.replaceAll("-", "") + "]";
+				+ FeePark+","+NoteDate.replaceAll("-", "")+"," +pictureAddress+ "]";
 		Log.i("jxb", noteString);
 		return noteString.replace("&", "-");
 	}
