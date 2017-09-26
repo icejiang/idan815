@@ -160,10 +160,10 @@ public class MainActivity extends Activity {
 				final EditText editText = new EditText(MainActivity.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(MainActivity.this)
-						.setTitle("请填写出场路码")
+						.setTitle(getResources().getString(R.string.str_route_out))
 						.setView(editText)
 						.setPositiveButton(
-								"确定",
+								getResources().getString(R.string.str_sure),
 								new android.content.DialogInterface.OnClickListener() {
 
 									@Override
@@ -186,6 +186,7 @@ public class MainActivity extends Activity {
 												myStateInfo
 														.setBeginKMsOfToday(input);
 												myStateInfo.setIsOutDoor(false);
+												Log.i("jxb", myStateInfo.getBeginKMsOfToday()+" begin");
 												myGetStateInfo
 														.setStateinfo(myStateInfo);
 												tv_addStart
@@ -204,6 +205,9 @@ public class MainActivity extends Activity {
 			}
 		});
 		tv_addEnd.setOnClickListener(myClickListener);
+		if (tasklist.size() != 0){
+			stateinfo.setCurrentTask(tasklist.get(0));
+		}
 		stateinfo.setCurrentState(1);
 		getStateInfo.getInstance(getApplicationContext()).setStateinfo(stateinfo);
 
@@ -216,10 +220,10 @@ public class MainActivity extends Activity {
 			final EditText editText = new EditText(MainActivity.this);
 			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 			new AlertDialog.Builder(MainActivity.this)
-					.setTitle("请填写进场路码")
+					.setTitle(getResources().getString(R.string.str_route_in))
 					.setView(editText)
 					.setPositiveButton(
-							"确定",
+							getResources().getString(R.string.str_sure),
 							new android.content.DialogInterface.OnClickListener() {
 
 								@Override
@@ -245,33 +249,36 @@ public class MainActivity extends Activity {
 											tv_addEnd.setVisibility(View.GONE);
 											tv_addStart
 													.setVisibility(View.VISIBLE);
+											if (null == myStateInfo.getCurrentTask()){
+												Toast.makeText(getApplicationContext(), "当前没有需要上传路码的路单", 2000).show();
+												return;
+											}
+//											if (myStateInfo.getCurrentNote()!=null) {
+												int iR;
+												String routecode = "[";
+												routecode = routecode
+														+ myStateInfo.getCurrentPerson().getPersonID() + ",";
+												routecode = routecode + myStateInfo.getCurrentTask().CarID()
+														+ ",";
+												routecode = routecode + myStateInfo.getToday() + ",";
+												routecode = routecode + myStateInfo.getBeginKMsOfToday() + ",";
+												routecode = routecode + myStateInfo.getEndKMsOfToday();
+												routecode = routecode + "]";
+												Log.i("jxb", "routecode = "+routecode);
+												iR = getInfoValue.UploadRouteCode(routecode);
+												if (iR == 0)
+													Toast.makeText(getApplicationContext(), "路码上传成功！", 2000).show();
+												else{
+													Log.i("jxb", "ir = "+iR);
+													Toast.makeText(getApplicationContext(), "上传路码出错！", 2000).show();
+												}
+												
+//											}
 										} catch (Exception e1) {
 											// TODO Auto-generated catch block
 											e1.printStackTrace();
+											Log.d("jxb", e1.toString());
 										}
-									}
-									Log.i("jxb", "TimeOfTaskOneDay = "+stateinfo.getTimeOfTaskOneDay());
-//									CarID().length() = "+stateinfo.getCurrentTask().CarID().length());
-									if (stateinfo.getCurrentNote()!=null) {
-										int iR;
-										String routecode = "[";
-										routecode = routecode
-												+ stateinfo.getCurrentPerson().getPersonID() + ",";
-										routecode = routecode + stateinfo.getCurrentTask().CarID()
-												+ ",";
-										routecode = routecode
-												+ stateinfo.getCurrentNote().getNoteDate()
-												.replaceAll("-", "") + ",";
-										routecode = routecode + stateinfo.getBeginKMsOfToday() + ",";
-										routecode = routecode + stateinfo.getEndKMsOfToday();
-										routecode = routecode + "]";
-										Log.i("jxb", "routecode = "+routecode);
-										iR = getInfoValue.UploadRouteCode(routecode);
-										if (iR == 0)
-											Toast.makeText(getApplicationContext(), "路码上传成功！", 2000).show();
-										else
-											Toast.makeText(getApplicationContext(), "上传路码出错！", 2000).show();
-										
 									}
 								}
 							}).show();
@@ -285,8 +292,8 @@ public class MainActivity extends Activity {
 		Log.i("jxb", "serviceVersion = "+serviceVer+"   curVersion = "+curVersion);
 		if(serviceVer!=null && !serviceVer.equals(curVersion) && !serviceVer.equals("")){
 //		if(!serviceVer.equals(curVersion) && !serviceVer.equals("")){
-			new AlertDialog.Builder(MainActivity.this).setTitle("程序有更新,是否立即更新？").
-				setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+			new AlertDialog.Builder(MainActivity.this).setTitle(getResources().getString(R.string.str_version_title)).
+				setPositiveButton(getResources().getString(R.string.str_sure), new android.content.DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -295,7 +302,7 @@ public class MainActivity extends Activity {
 						MainActivity.this.startActivity(it);
 						
 					}
-				}).setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+				}).setNegativeButton(getResources().getString(R.string.str_cancel), new android.content.DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -475,14 +482,13 @@ public class MainActivity extends Activity {
 			holder.company.setText(taskInfo.getCustomerCompany());
 			String isUpdate = taskInfo.getIsUpdate();
 			int readmark = taskInfo.getReadmark();
-			Log.i("jxb", "readmark = "+readmark+"  isupdate = "+isUpdate);
-			if (taskInfo.getRouteNoteCount() > 0){
+			if (taskInfo.getRouteNoteCount() > 0 && taskInfo.ServiceType() != 7){
 				holder.isDone.setVisibility(View.VISIBLE);
-				holder.isDone.setText("已完成");
+				holder.isDone.setText(getResources().getString(R.string.str_finished));
 				holder.isDone.setBackgroundColor(Color.parseColor("#009944"));
 			} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())) {
 				holder.isDone.setVisibility(View.VISIBLE);
-				holder.isDone.setText("暂停中");
+				holder.isDone.setText(getResources().getString(R.string.str_paused));
 				holder.isDone.setBackgroundColor(Color.parseColor("#eb6100"));
 				
 //				holder.isDone.setBackground(getResources().getColor(R.color.colorYellow));
@@ -492,9 +498,9 @@ public class MainActivity extends Activity {
 				holder.isDone.setVisibility(View.VISIBLE);
 				holder.isDone.setBackground(getResources().getDrawable(R.drawable.bg_red));
 				if (isUpdate.equals("0")){
-					holder.isDone.setText("新增");
+					holder.isDone.setText(getResources().getString(R.string.str_new));
 				} else {
-					holder.isDone.setText("修改");
+					holder.isDone.setText(getResources().getString(R.string.str_alter));
 				}
 			} else {
 				holder.isDone.setVisibility(View.GONE);

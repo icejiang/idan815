@@ -55,13 +55,57 @@ public class TaskInfo  implements Serializable {
 	private boolean done=false;
 	private int outfeetype;
 	private int bridgefeetype;
-	private double invoiceTaxRate;
 	private double bridgeFee;
 	private String customerName;
 	private int routeNoteCount;
 	private String contacter;
 	private String contacterNum;
+	private double invoiceTaxRate;
+	private double actualRentNoTax;
+	private double exceedMileFeeNoTax;
+	private double exceedTimeFeeNoTax;
+	private String businessSource;
 	
+	public String getBusinessSource() {
+		return businessSource;
+	}
+
+	public void setBusinessSource(String bussinessSource) {
+		this.businessSource = bussinessSource;
+	}
+
+	public double getActualRentNoTax() {
+		return actualRentNoTax;
+	}
+
+	public void setActualRentNoTax(double actualRentNoTax) {
+		this.actualRentNoTax = actualRentNoTax;
+	}
+
+	public double getExceedMileFeeNoTax() {
+		return exceedMileFeeNoTax;
+	}
+
+	public void setExceedMileFeeNoTax(double exceedMileFeeNoTax) {
+		this.exceedMileFeeNoTax = exceedMileFeeNoTax;
+	}
+
+	public double getExceedTimeFeeNoTax() {
+		return exceedTimeFeeNoTax;
+	}
+
+	public void setExceedTimeFeeNoTax(double exceedTimeFeeNoTax) {
+		this.exceedTimeFeeNoTax = exceedTimeFeeNoTax;
+	}
+	private String textString; //测试用
+	
+	public String getTextString() {
+		return textString;
+	}
+
+	public void setTextString(String textString) {
+		this.textString = textString;
+	}
 	/**
 	 * 业务是新增还是修改  1-新增 0-修改
 	 * */

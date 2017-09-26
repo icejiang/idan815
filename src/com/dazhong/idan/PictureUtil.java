@@ -10,9 +10,14 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.json.JSONObject;
 
+import android.R.anim;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -37,14 +42,22 @@ public class PictureUtil {
 //	 private String spaceName = "mytest";
 	private String spaceName = "driverapp";
 	private static final String rootDir = Environment.getExternalStorageDirectory() + File.separator + "zhongxing/";
+	private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;  
 	
 	
 	/**保存截图的方法*/
-	public boolean saveScreen(View view,String noteId){
+	public boolean saveScreen(Activity activity,View view,String noteId){
 		//判断sdcard是否可用
 		if(!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
 			return false;
 		}
+		
+		if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+	              != PackageManager.PERMISSION_GRANTED) {
+	          //申请WRITE_EXTERNAL_STORAGE权限
+	          ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+	                  WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+	      }
 		File file  = new File(rootDir);
 		if(!file.exists()){
 			file.mkdir();
@@ -52,11 +65,14 @@ public class PictureUtil {
 		view.setDrawingCacheEnabled(true);
 		view.buildDrawingCache();
 		Bitmap bitmap = view.getDrawingCache();
+		String id = noteId.replace("*", "");
+		Log.i("jxb", "id = "+id);
 		try {
-			bitmap.compress(CompressFormat.JPEG, 100, new FileOutputStream(new File(rootDir + noteId + ".jpg")));
+			bitmap.compress(CompressFormat.JPEG, 100, new FileOutputStream(new File(rootDir + id + ".jpg")));
 			return true;
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			Log.i("jxb", "图片保存出错："+ e);
 			return false;
 		}finally{
 			view.setDrawingCacheEnabled(false);

@@ -6,12 +6,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.dazhong.idan.InService.LocationReceiver;
+
 import android.R.integer;
 import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -49,6 +54,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private TextView extraTime_price;
 	private TextView routeID;
 	private TextView tv_alter;
+//	private TextView routeAuto;
 	
 	private Bundle mBundle;
 	private int mileInt;
@@ -58,6 +64,8 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private int position;
 	private StateInfo myStateInfo;
 	private getStateInfo myGetStateInfo;
+	
+//	private DistanceReceiver distanceReceiver;
 	
 	public static String NOTEKEY = "NOTEKEY";
 	public static String TASKKEY = "TASKKEY";
@@ -87,6 +95,11 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		tv_addPay.setOnClickListener(this);
 		tv_print.setOnClickListener(this);
 //		tv_addRecord.setOnClickListener(this);
+		
+//		distanceReceiver = new DistanceReceiver();
+//		IntentFilter intentfilter = new IntentFilter();
+//		intentfilter.addAction("com.dazhong.idan.distanceCallback");
+//		registerReceiver(distanceReceiver, intentfilter);
 
 		
 	}
@@ -116,7 +129,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		extraTime_price = (TextView) findViewById(R.id.tv_extraTime);
 		routeID = (TextView) findViewById(R.id.route_titleID);
 		tv_alter = (TextView) findViewById(R.id.tv_alter);
-		
+//		routeAuto = (TextView) findViewById(R.id.route_auto);
 	}
 	
 	private void setView(){
@@ -152,22 +165,23 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		Double taxRate = 1 + noteInfo.getInvoiceTaxRate(); //税率
 		int serviceMile = noteInfo.getServiceKMs();
 		int serviceHour = noteInfo.getServiceTime();
-		Double price_all = noteInfo.getFeePrice();
+		Double price_all = noteInfo.getActualRentNoTax()*taxRate;
 		Double price_extraMile = 0.0;
 		Double price_extraTime = 0.0;
 		int feeChoice = noteInfo.getFeeChoice();
 		if(serviceMile<totalMile){
 			extraMile.setText((totalMile - serviceMile)+"公里" );
-			price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
+			price_extraMile = reserve2((totalMile - serviceMile)*(taskInfo.getExceedMileFeeNoTax()*taxRate));
 			noteInfo.setFeeOverKMs(price_extraMile);
 			noteInfo.setOverKMs(totalMile-serviceMile);
 			extraMile_price.setText(price_extraMile+"元");
 		}
 		if(hour > serviceHour){
 			extraTime.setText((hour - serviceHour)+"小时");
-			price_extraTime = (hour - serviceHour)*(taskInfo.SalePricePerHour());
+			price_extraTime = (hour - serviceHour)*(taskInfo.getExceedTimeFeeNoTax()*taxRate);
 			noteInfo.setFeeOverTime(price_extraTime);
 			noteInfo.setOverHours(hour-serviceHour);
 			extraTime_price.setText(price_extraTime+"元");
@@ -181,7 +195,6 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 				price_all += price_extraTime;
 			}
 		}
-		Double taxRate = 1 + noteInfo.getInvoiceTaxRate();
 		Double price_bridge = noteInfo.getFeeBridge();
 		if (price_bridge > 0){
 			if(noteInfo.getBridgefeetype() == 0){
@@ -235,8 +248,10 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			price_all = reserve2(price_all);
 			tv_all.setText(price_all+"元");
 		}
-		tv_base.setText(noteInfo.getFeePrice()+"元");
+		tv_base.setText(reserve2(noteInfo.getActualRentNoTax()*taxRate)+"元");
 		tv_record.setText(noteInfo.getServiceRoute());
+		
+//		routeAuto.setText("自动测距："+noteInfo.getRouteAuto());
 	}
 	
 	
@@ -250,34 +265,11 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 			startActivityForResult(intent1, REQUEST_CODE);
 			break;
 		case R.id.tv_print:
+//			unregisterReceiver(distanceReceiver);
 			Intent intent3 = new Intent();
-//			intent3.setClass(getApplicationContext(), PrintActivity.class);
 			intent3.setClass(getApplicationContext(), SignatureActivity.class);
 			startActivity(intent3);
 			break;
-//		case R.id.tv_add_record:
-//			final EditText editText = new EditText(OrderDetailEnd.this);
-//			new AlertDialog.Builder(OrderDetailEnd.this)
-//					.setTitle("请填写营运记录")
-//					.setView(editText)
-//					.setPositiveButton(
-//							"确定",
-//							new android.content.DialogInterface.OnClickListener() {
-//
-//								@Override
-//								public void onClick(DialogInterface dialog,
-//										int which) {
-//
-//									String input = editText.getText()
-//											.toString();
-//									tv_record.setText(input);
-//									noteInfo.setServiceRoute(input);
-//									myStateInfo.setCurrentNote(noteInfo);
-//									myGetStateInfo.setStateinfo(myStateInfo);
-//								}
-//
-//							}).show();
-//			break;
 		default:
 			break;
 		}
@@ -388,7 +380,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						double price_extraMile = 0;
 						if(serviceMile<totalMile){
 							extraMile.setText((totalMile - serviceMile)+"公里" );
-							price_extraMile = (totalMile - serviceMile)*(taskInfo.SalePricePerKM());
+							price_extraMile = reserve2((totalMile - serviceMile)*(taskInfo.getExceedMileFeeNoTax()*taxRate));
 							noteInfo.setFeeOverKMs(price_extraMile);
 							noteInfo.setOverKMs(totalMile-serviceMile);
 							extraMile_price.setText(price_extraMile+"元");
@@ -424,7 +416,7 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 						all = reserve2(all);
 						tv_all.setText(all+"元");
 					}
-					tv_base.setText(noteInfo.getFeePrice()+"元");
+					tv_base.setText(reserve2(noteInfo.getActualRentNoTax()*taxRate)+"元");
 					myStateInfo.setCurrentNote(noteInfo);
 					myGetStateInfo.setStateinfo(myStateInfo);
 				} else {
@@ -457,7 +449,18 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	}
 	
 	
-	
+	/*public class DistanceReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			Bundle bundle = intent.getExtras();
+			int content = bundle.getInt("distanceAuto");
+			Log.i("jxb", "distance:"+content);
+			routeAuto.setText("自动测距："+content);
+		}
+		
+	}*/
 	
 	
 	

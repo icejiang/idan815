@@ -53,9 +53,6 @@ public class LoginActivity extends Activity {
 		idanapp = iDanApp.getInstance();
 		ActivityControler.addActivity(this);
 		today = getInfoValue.getNowDate();
-		// UpdateManager mUpdateManager = new UpdateManager(LoginActivity.this);
-		// // 注意此处不能传入getApplicationContext();会报错，因为只有是一个Activity才可以添加窗体
-		// mUpdateManager.checkUpdateInfo();
 		btn_login = (Button) findViewById(R.id.login);
 		logname = (EditText) findViewById(R.id.editText1);
 		password = (EditText) findViewById(R.id.editText2);
@@ -106,7 +103,7 @@ public class LoginActivity extends Activity {
 						}
 						PageJump();
 					} else {
-						Toast.makeText(getApplicationContext(), "登录失败",
+						Toast.makeText(getApplicationContext(), "账号或密码错误,登录失败",
 								Toast.LENGTH_SHORT).show();
 						;
 					}
@@ -124,7 +121,7 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				new AlertDialog.Builder(LoginActivity.this).setTitle("请拨打客服电话查询，是否立即拨打？").
-				setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+				setPositiveButton(getResources().getString(R.string.str_sure), new android.content.DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -132,7 +129,7 @@ public class LoginActivity extends Activity {
 						startActivity(intent);
 						
 					}
-				}).setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+				}).setNegativeButton(getResources().getString(R.string.str_cancel), new android.content.DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

@@ -141,6 +141,7 @@ class MyAdapter extends BaseAdapter{
 				holder.date = (TextView) convertView.findViewById(R.id.history_date);
 				holder.id = (TextView) convertView.findViewById(R.id.history_id);
 				holder.sum = (TextView) convertView.findViewById(R.id.history_sum);
+				holder.check = (TextView) convertView.findViewById(R.id.history_routecheck);
 				convertView.setTag(holder);
 			}else {
 				holder = (ViewHolder) convertView.getTag();
@@ -149,6 +150,7 @@ class MyAdapter extends BaseAdapter{
 			holder.date.setText(noteInfo.getNoteDate());
 			holder.id.setText(noteInfo.getNoteID());
 			holder.sum.setText(noteInfo.getFeeTotal()+"Ԫ");
+			holder.check.setText(noteInfo.getRouteCheck());
 			return convertView;
 		}
 		
@@ -158,7 +160,8 @@ class MyAdapter extends BaseAdapter{
 	{  
 		public TextView date;  
 		public TextView id;  
-		public TextView sum;  
+		public TextView sum;
+		public TextView check;
 	}
 	
 }

@@ -43,10 +43,45 @@
     <string name="str_hasnodevice">没有蓝牙设备!</string>
     <string name="str_scanover">扫描完毕!</string>
     <string name="chose">请选择</string>
-<string name="str_noinitdevice">没有可用的打印机，请重新选择！</string>
-<string name="str_initdevicefail">连接打印机失败</string>
-<string name="str_initdeviceok">连接打印机成功</string>
-<string name="str_closed">蓝牙没有打开</string>
-<string name="str_printfail">打印失败，请重新连接打印机！</string>
-<string name="str_printok">路单打印完成！</string>
+    <string name="str_noinitdevice">没有可用的打印机，请重新选择！</string>
+    <string name="str_initdevicefail">连接打印机失败</string>
+    <string name="str_initdeviceok">连接打印机成功</string>
+    <string name="str_closed">蓝牙没有打开</string>
+    <string name="str_printfail">打印失败，请重新连接打印机！</string>
+    <string name="str_printok">路单打印完成！</string>
+    <string name="str_notice_alterpay">修正金额大于路单总价,请确认输入</string>
+    <string name="str_routebegin">请填写起始路码</string>
+    <string name="str_routeend">请填写结束路码</string>
+    <string name="str_next">填写下一步</string>
+    <string name="str_confirmbegin">确认并开始业务</string>
+    <string name="str_notice_emptypas">密码不能为空</string>
+    <string name="str_routecontinue">请填写当前路码</string>
+    <string name="str_notecontinue">继续本次业务</string>
+    <string name="str_notice_emptyroute">路码不能为空</string>
+    <string name="str_notice_lessroute">结束路码小于起始路码，请确认输入</string>
+    <string name="str_confirm">确认</string>
+    <string name="str_hour">小时</string>
+    <string name="str_mile">公里</string>
+    <string name="str_yes">是</string>
+    <string name="str_no">否</string>
+    <string name="str_yuan">元</string>
+    <string name="str_pause">暂停业务</string>
+    <string name="str_sure">确定</string>
+    <string name="str_cancel">取消</string>
+    <string name="str_route_in">请填写进场路码</string>
+    <string name="str_route_out">请填写出场路码</string>
+    <string name="str_version_title">程序有更新,是否立即更新？</string>
+    <string name="str_finished">已完成</string>
+    <string name="str_paused">暂停中</string>
+    <string name="str_new">新增</string>
+    <string name="str_alter">修改</string>
+    <string name="version_havenew">程序有更新,是否立即更新？</string>
+    <string name="add_pay">添加费用</string>
+    <string name="total_pay">合计费用</string>
+    <string name="pay_brige">路桥费:</string>
+    
+    
+    
+   
+
 </resources>

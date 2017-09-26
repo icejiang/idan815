@@ -2,12 +2,16 @@ package com.dazhong.idan;
 
 import java.io.File;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +34,9 @@ public class SignatureActivity extends Activity implements OnClickListener{
 	private String spaceName = "driverapp";
 	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"zhongxing/";
 	
+//	private Checkp
+//	Manifest.permission.
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -48,6 +55,13 @@ public class SignatureActivity extends Activity implements OnClickListener{
 		tv_cancel.setOnClickListener(this);
 		tv_confirm.setOnClickListener(this);
 		iv_return.setOnClickListener(this);
+		
+		int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+		if (permission != PackageManager.PERMISSION_GRANTED) {
+			Activity activty=this;
+			ActivityCompat.requestPermissions(activty,new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},101);
+			return;
+		}
 	}
 	
 
@@ -58,7 +72,8 @@ public class SignatureActivity extends Activity implements OnClickListener{
 		iv_return = (ImageView) findViewById(R.id.return_sign);
 	}
 
-
+	
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -83,18 +98,22 @@ public class SignatureActivity extends Activity implements OnClickListener{
 										int which) {
 
 									PictureUtil util = new PictureUtil();
+									signaturePaint.isSigned();
 									// if (saveScreen(signaturePaint)){
-									if (util.saveScreen(signaturePaint,
+									if (util.saveScreen(SignatureActivity.this,signaturePaint,
 											noteInfo.getNoteID())) {
 										util.uploadPic(spaceName,
-												rootDir + noteInfo.getNoteID()
+												rootDir + noteInfo.getNoteID().replace("*", "")
 														+ ".jpg",
 												noteInfo.getNoteID());
 										String address = "http://obxkbrg0h.bkt.clouddn.com/"
 												+ noteInfo.getNoteID();
-										// String address =
-										// "http://o9zlqc13f.bkt.clouddn.com/"+noteInfo.getNoteID();
-										noteInfo.setPictureAddress(address);
+										//没签字则上传地址为空
+										if (signaturePaint.isSigned()){
+											noteInfo.setPictureAddress(address);
+										} else {
+											noteInfo.setPictureAddress("");
+										}
 										int k = getInfoValue
 												.InsertNote(noteInfo
 														.toUploadNote());
@@ -108,9 +127,6 @@ public class SignatureActivity extends Activity implements OnClickListener{
 											Log.i("jxb", "上传失败,路单已保存");
 										}
 										Intent intent = new Intent();
-//										intent.setClass(
-//												getApplicationContext(),
-//												MainActivity.class);
 										intent.setClass(getApplicationContext(), PrintActivity.class);
 										startActivity(intent);
 									} else {

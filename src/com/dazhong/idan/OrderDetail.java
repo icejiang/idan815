@@ -1,8 +1,12 @@
 package com.dazhong.idan;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.baidu.trace.OnEntityListener;
+import com.baidu.trace.OnStartTraceListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,6 +14,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -72,6 +78,18 @@ public class OrderDetail extends Activity {
 	private TextView contacter;
 	private TextView contacterNum;
 	
+	 /**
+     * 开启轨迹服务监听器
+     */
+    private OnStartTraceListener startTraceListener = null;
+    /**
+     * Entity监听器
+     */
+    private OnEntityListener entityListener = null;
+    private TrackUploadHandler mHandler = null;
+    private BaiduUtil baiduUtil;
+    private myApplication trackApp;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -89,6 +107,7 @@ public class OrderDetail extends Activity {
 		getInfoValue.setTaskRead(iDanApp.getInstance().getEMPLOYEEID(), taskInfo.TaskID());
 		findview();
 		setData();
+		mHandler = new TrackUploadHandler(this);
 		try {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
@@ -101,22 +120,23 @@ public class OrderDetail extends Activity {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-//		if (taskInfo.getRouteNoteCount()>0){
-//			addLayout.setVisibility(View.GONE);
-//			tv_start.setVisibility(View.GONE);
-//			tv_finish.setVisibility(View.VISIBLE);
-//			tv_pause.setVisibility(View.GONE);
-//		} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())){
-//			addLayout.setVisibility(View.GONE);
-//			tv_start.setVisibility(View.GONE);
-//			tv_finish.setVisibility(View.GONE);
-//			tv_pause.setVisibility(View.VISIBLE);
-//		} else {
-//			addLayout.setVisibility(View.VISIBLE);
-//			tv_start.setVisibility(View.VISIBLE);
-//			tv_finish.setVisibility(View.GONE);
-//			tv_pause.setVisibility(View.GONE);
-//		}
+		Log.i("jxb", "serviceType = "+taskInfo.ServiceType());
+		if (taskInfo.getRouteNoteCount()>0 && taskInfo.ServiceType() != 7){
+			addLayout.setVisibility(View.GONE);
+			tv_start.setVisibility(View.GONE);
+			tv_finish.setVisibility(View.VISIBLE);
+			tv_pause.setVisibility(View.GONE);
+		} else if (null != pauseNote && pauseNote.getTaskID().equals(taskInfo.TaskID())){
+			addLayout.setVisibility(View.GONE);
+			tv_start.setVisibility(View.GONE);
+			tv_finish.setVisibility(View.GONE);
+			tv_pause.setVisibility(View.VISIBLE);
+		} else {
+			addLayout.setVisibility(View.VISIBLE);
+			tv_start.setVisibility(View.VISIBLE);
+			tv_finish.setVisibility(View.GONE);
+			tv_pause.setVisibility(View.GONE);
+		}
 		tv_start.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -128,10 +148,10 @@ public class OrderDetail extends Activity {
 				final EditText editText = new EditText(OrderDetail.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(OrderDetail.this)
-						.setTitle("请填写起始路码")
+						.setTitle(getResources().getString(R.string.str_routebegin))
 						.setView(editText)
 						.setPositiveButton(
-								"确认并开始业务",
+								getResources().getString(R.string.str_confirmbegin),
 								new android.content.DialogInterface.OnClickListener() {
 
 									@Override
@@ -143,13 +163,24 @@ public class OrderDetail extends Activity {
 										if (input.equals("")) {
 											Toast.makeText(
 													getApplicationContext(),
-													"路码不能为空",
+													getResources().getString(R.string.str_notice_emptyroute),
 													Toast.LENGTH_SHORT).show();
 										} else {
+											baiduUtil = new BaiduUtil();
+											trackApp = (myApplication) getApplicationContext();
+											
+											initOnStartTraceListener();
+//											initOnEntityListener();
+											baiduUtil.startTrace(trackApp, startTraceListener);
+											trackApp.getClient().queryRealtimeLoc(trackApp.getServiceId(), entityListener);
+											int startTime = (int) (System.currentTimeMillis() / 1000);
+											
 											myStateInfo.setCurrentKMS(input);
 											noteInfo = new NoteInfo();
 											noteInfo.setRouteBegin(input);
+											noteInfo.setStartTime(startTime);
 											putDataIntoNote();
+											myStateInfo.setCurrentNote(null);
 											myStateInfo.setCurrentNote(noteInfo);
 											myGetStateInfo.setStateinfo(myStateInfo);
 											Intent intent = new Intent();
@@ -183,10 +214,10 @@ public class OrderDetail extends Activity {
 				final EditText editText = new EditText(OrderDetail.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(OrderDetail.this)
-						.setTitle("请填写当前路码")
+						.setTitle(getResources().getString(R.string.str_routecontinue))
 						.setView(editText)
 						.setPositiveButton(
-								"继续本次业务",
+								getResources().getString(R.string.str_notecontinue),
 								new android.content.DialogInterface.OnClickListener() {
 
 									@Override
@@ -196,7 +227,7 @@ public class OrderDetail extends Activity {
 										if (input.equals("")) {
 											Toast.makeText(
 													getApplicationContext(),
-													"路码不能为空",
+													getResources().getString(R.string.str_notice_emptyroute),
 													Toast.LENGTH_SHORT).show();
 										} else {
 											pauseNote.setPauseEnd(Integer.parseInt(input));
@@ -222,10 +253,10 @@ public class OrderDetail extends Activity {
 				final EditText editText = new EditText(OrderDetail.this);
 				editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 				new AlertDialog.Builder(OrderDetail.this)
-						.setTitle("请填写起始路码")
+						.setTitle(getResources().getString(R.string.str_routebegin))
 						.setView(editText)
 						.setPositiveButton(
-								"确认",
+								getResources().getString(R.string.str_confirm),
 								new android.content.DialogInterface.OnClickListener() {
 
 									@Override
@@ -237,20 +268,9 @@ public class OrderDetail extends Activity {
 										if (input.equals("")) {
 											Toast.makeText(
 													getApplicationContext(),
-													"路码不能为空",
+													getResources().getString(R.string.str_notice_emptyroute),
 													Toast.LENGTH_SHORT).show();
 										} else {
-//											myStateInfo.setCurrentKMS(input);
-//											noteInfo = new NoteInfo();
-//											noteInfo.setRouteBegin(input);
-//											putDataIntoNote();
-//											myStateInfo.setCurrentNote(noteInfo);
-//											myGetStateInfo.setStateinfo(myStateInfo);
-//											Intent intent = new Intent();
-//											intent.setClass(OrderDetail.this,
-//													InService.class);
-//											startActivity(intent);
-											
 											startRoute.setText(input);
 										}
 									}
@@ -373,8 +393,8 @@ public class OrderDetail extends Activity {
 			flightLayout.setVisibility(View.VISIBLE);
 			flightNum.setText(flightNumber);
 		}
-		serviceTime.setText(taskInfo.SaleTime()+"小时");
-		serviceMile.setText(taskInfo.SaleKMs()+"公里");
+		serviceTime.setText(taskInfo.SaleTime()+getResources().getString(R.string.str_hour));
+		serviceMile.setText(taskInfo.SaleKMs()+getResources().getString(R.string.str_mile));
 		dispatcher.setText(taskInfo.Planner());
 		dispatcherNum.setText(taskInfo.PlannerTel());
 		salesman.setText(taskInfo.Salesman());
@@ -386,14 +406,14 @@ public class OrderDetail extends Activity {
 		carType.setText(taskInfo.CarType());
 		payments.setText(taskInfo.getBalancetypename());
 		if(taskInfo.getBridgefeetype() == 1){
-			bridgeFeetype.setText("是");
+			bridgeFeetype.setText(getResources().getString(R.string.str_yes));
 		} else {
-			bridgeFeetype.setText("否");
+			bridgeFeetype.setText(getResources().getString(R.string.str_no));
 		}
 		if(taskInfo.getOutfeetype() == 1){
-			outFeeType.setText("是");
+			outFeeType.setText(getResources().getString(R.string.str_yes));
 		} else {
-			outFeeType.setText("否");
+			outFeeType.setText(getResources().getString(R.string.str_no));
 		}
 		contacter.setText(taskInfo.getContacter());
 		contacterNum.setText(taskInfo.getContacterNum());
@@ -442,13 +462,23 @@ public class OrderDetail extends Activity {
 		noteInfo.setOutfeetype(taskInfo.getOutfeetype());
 		noteInfo.setBridgefeetype(taskInfo.getBridgefeetype());
 		noteInfo.setInvoiceTaxRate(taskInfo.getInvoiceTaxRate());
-		if (!today.equals(taskInfo.ServiceEnd())){
+//		if (!today.equals(taskInfo.ServiceEnd())){
+//			noteInfo.setFeeBridge(taskInfo.getFeeBridge());
+//			noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
+//		}
+		if (!taskInfo.ServiceBegin().equals(taskInfo.ServiceEnd()) && today.equals(taskInfo.ServiceEnd())){
+			//do nothing
+		} else {
 			noteInfo.setFeeBridge(taskInfo.getFeeBridge());
 			noteInfo.setFeeHotel(taskInfo.SaleHotelFee());
 		}
 		noteInfo.setInvoiceType(taskInfo.InvoiceType());
 		noteInfo.setCustomerCompany(taskInfo.getCustomerCompany());
 		noteInfo.setBalanceType(taskInfo.getBalancetype());
+		noteInfo.setTaskCode(taskInfo.TaskCode());
+		noteInfo.setActualRentNoTax(taskInfo.getActualRentNoTax());
+		noteInfo.setExceedMileFeeNoTax(taskInfo.getExceedMileFeeNoTax());
+		noteInfo.setExceedTimeFeeNoTax(taskInfo.getExceedTimeFeeNoTax());
 	}
 	
 	
@@ -463,5 +493,46 @@ public class OrderDetail extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 	
+	
+	/**
+     * 初始化OnStartTraceListener
+     */
+    private void initOnStartTraceListener() {
+    	
+		if (null == startTraceListener) {
+			// 初始化startTraceListener
+			startTraceListener = new OnStartTraceListener() {
+
+				// 开启轨迹服务回调接口（arg0 : 消息编码，arg1 : 消息内容，详情查看类参考）
+				public void onTraceCallback(int arg0, String arg1) {
+					// TODO Auto-generated method stub
+					 mHandler.obtainMessage(arg0, "开启轨迹服务回调接口消息 [消息编码 : " + arg0 + "，消息内容 : " + arg1 + "]").sendToTarget();
+				}
+
+				// 轨迹服务推送接口（用于接收服务端推送消息，arg0 : 消息类型，arg1 : 消息内容，详情查看类参考）
+				public void onTracePushCallback(byte arg0, String arg1) {
+					// TODO Auto-generated method stub
+				}
+
+			};
+		}
+    }
+    
+	
+	static class TrackUploadHandler extends Handler {
+        WeakReference<OrderDetail> trackUpload;
+
+        TrackUploadHandler(OrderDetail trackUploadFragment) {
+            trackUpload = new WeakReference<OrderDetail>(trackUploadFragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+        	OrderDetail tu = trackUpload.get();
+//            Toast.makeText(tu.trackApp, (String) msg.obj, Toast.LENGTH_LONG).show();
+            Log.i("jxb", (String) msg.obj);
+
+        }
+    }
 	
 }

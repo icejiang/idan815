@@ -179,6 +179,34 @@ public class NoteInfo implements Serializable {
 	private String balanceType;
 	private String balanceTypeName;
 	private String invoiceType;
+	private double actualRentNoTax;
+	private double exceedMileFeeNoTax;
+	private double exceedTimeFeeNoTax;
+	
+	public double getActualRentNoTax() {
+		return actualRentNoTax;
+	}
+
+	public void setActualRentNoTax(double actualRentNoTax) {
+		this.actualRentNoTax = actualRentNoTax;
+	}
+
+	public double getExceedMileFeeNoTax() {
+		return exceedMileFeeNoTax;
+	}
+
+	public void setExceedMileFeeNoTax(double exceedMileFeeNoTax) {
+		this.exceedMileFeeNoTax = exceedMileFeeNoTax;
+	}
+
+	public double getExceedTimeFeeNoTax() {
+		return exceedTimeFeeNoTax;
+	}
+
+	public void setExceedTimeFeeNoTax(double exceedTimeFeeNoTax) {
+		this.exceedTimeFeeNoTax = exceedTimeFeeNoTax;
+	}
+
 	/**
 	 * 是否暂停过
 	 * */
@@ -187,7 +215,55 @@ public class NoteInfo implements Serializable {
 	 * 签名地址
 	 * */
 	private String pictureAddress;
+	/**
+	 * 路单是否审核
+	 * */
+	private String routeCheck = "";
+	/**
+	 * 调度单号
+	 * */
+	private String taskCode;
+	/**
+	 * 开始时间
+	 * */
+	private int startTime;
+	/**
+	 * 百度测距的路码
+	 * */
+	private int routeAuto = -1;
 	
+	public int getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+
+	public int getRouteAuto() {
+		return routeAuto;
+	}
+
+	public void setRouteAuto(int routeAuto) {
+		this.routeAuto = routeAuto;
+	}
+	
+	public String getTaskCode() {
+		return taskCode;
+	}
+
+	public void setTaskCode(String taskCode) {
+		this.taskCode = taskCode;
+	}
+
+	public String getRouteCheck() {
+		return routeCheck;
+	}
+
+	public void setRouteCheck(String routeCheck) {
+		this.routeCheck = routeCheck;
+	}
+
 	public String getPictureAddress() {
 		return pictureAddress;
 	}
@@ -647,8 +723,10 @@ public class NoteInfo implements Serializable {
 				+ DoServiceKms + "," + DoServiceTime + "," + OverKMs + ","
 				+ OverHours + "," + FeeChoice + "," + FeeOverCal + ","
 				+ ServiceRoute.replace(",", ".") + "," 
-				+ FeePark+","+NoteDate.replaceAll("-", "")+"," +pictureAddress+ "]";
-		Log.i("jxb", noteString);
+				+ FeePark+","+NoteDate.replaceAll("-", "")+"," +pictureAddress+","+taskCode
+				+","+routeAuto
+				+"]";
+		Log.i("jxb", "上传路单："+noteString);
 		return noteString.replace("&", "-");
 	}
 

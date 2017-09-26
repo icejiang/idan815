@@ -72,8 +72,8 @@ public class MenuLeftFragment extends LinearLayout{
 					String curVersion = FileUtil.getInstance().getVersion(mContext);
 					Log.i("jxb", "serviceVersion = "+serviceVer+"   curVersion = "+curVersion);
 					if(!serviceVer.equals(curVersion)){
-						new AlertDialog.Builder(mContext).setTitle("程序有更新,是否立即更新？").
-							setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+						new AlertDialog.Builder(mContext).setTitle(getResources().getString(R.string.version_havenew)).
+							setPositiveButton(getResources().getString(R.string.str_sure), new android.content.DialogInterface.OnClickListener() {
 								
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
@@ -82,7 +82,7 @@ public class MenuLeftFragment extends LinearLayout{
 									mContext.startActivity(it);
 									
 								}
-							}).setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+							}).setNegativeButton(getResources().getString(R.string.str_cancel), new android.content.DialogInterface.OnClickListener() {
 								
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
@@ -92,7 +92,7 @@ public class MenuLeftFragment extends LinearLayout{
 							}).show();
 					} else {
 						new AlertDialog.Builder(mContext).setTitle("当前版本"+curVersion+",程序已是最新版本").
-							setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+							setPositiveButton(getResources().getString(R.string.str_sure), new android.content.DialogInterface.OnClickListener() {
 								
 								@Override
 								public void onClick(DialogInterface dialog, int which) {

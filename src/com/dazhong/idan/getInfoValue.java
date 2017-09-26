@@ -23,7 +23,7 @@ public abstract class getInfoValue {
 	 * 获取当前日期
 	 * */
 	public static String getNowDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		return sdf.format(now);
 	}
@@ -83,6 +83,7 @@ public abstract class getInfoValue {
 	public static int UploadRouteCode(String routecode) {
 		int iur = 0;
 		String sInfo = "";
+		Log.i("jxb", "routecode = "+routecode);
 		if (routecode.length() == 0)
 			return -1;
 		try {
@@ -91,6 +92,7 @@ public abstract class getInfoValue {
 			if (sInfo == "")
 				return -1;
 			iur = Integer.parseInt(sInfo);
+			Log.i("jxb","路码上传流程正常");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -160,6 +162,8 @@ public abstract class getInfoValue {
 						"DriverName"));
 				noteinfo.setFeeBridge(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "BridgeFee")));
+				noteinfo.setFeePark(Double.parseDouble(getDZService
+						.getInfoValue(sinf, "StopFee")));
 				noteinfo.setFeeHotel(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "OutFee")));
 				noteinfo.setFeeOther(Double.parseDouble(getDZService
@@ -199,7 +203,12 @@ public abstract class getInfoValue {
 						"RouteNoteDate"));
 				noteinfo.setServiceTypeName(getDZService.getInfoValue(sinf,
 						"JobTypeName"));
-				// System.out.println(noteinfo.toString());
+				noteinfo.setCustomerCompany(getDZService.getInfoValue(sinf,
+						"CustomerName"));
+				noteinfo.setSaleName(getDZService.getInfoValue(sinf, "EmployeeName"));
+				noteinfo.setBalanceTypeName(getDZService.getInfoValue(sinf, "BalanceTypeName"));
+				noteinfo.setRouteCheck(getDZService.getInfoValue(sinf,"StatusName"));
+//				 System.out.println(noteinfo.toString());
 				listNotes.add(noteinfo);
 			}
 			System.out.println("task count:" + listNotes.size());
@@ -258,8 +267,10 @@ public abstract class getInfoValue {
 			sInfo = getDZService.getServiceConnect(employeeid, sf, "1",
 					"GetDispatchInfo");
 			// System.out.println(sInfo);
-			if (sInfo == null)
+			if (sInfo == null){
+				Log.i("jxb", "sinfo = null");
 				return null;
+			}
 			listInfo = getDZService.getInfoValue(sInfo);
 			if (listInfo == null)
 				return null;
@@ -321,8 +332,10 @@ public abstract class getInfoValue {
 						sinf, "AvailableMile")));
 				taskinfo.setSaleprice(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "ActualRent")));
+//				taskinfo.setSaleprice(630.0027);
 				taskinfo.setSalepriceperkm(Double.parseDouble(getDZService
 						.getInfoValue(sinf, "ExceedMileFee")));
+//				taskinfo.setSalepriceperkm(3.996);
 				taskinfo.setSalepriceperhour(Integer.parseInt(getDZService
 						.getInfoValue(sinf, "ExceedTimeFee")));
 				taskinfo.setSalesman(getDZService.getInfoValue(sinf,
@@ -365,6 +378,10 @@ public abstract class getInfoValue {
 				taskinfo.setOutfeetype(Integer.parseInt(getDZService.getInfoValue(sinf,"OutFeeType")));
 				taskinfo.setBridgefeetype(Integer.parseInt(getDZService.getInfoValue(sinf,"BridgeFeeType")));
 				taskinfo.setIsUpdate(getDZService.getInfoValue(sinf,"IsUpdate"));
+				taskinfo.setActualRentNoTax(Double.parseDouble(getDZService.getInfoValue(sinf, "ActualRentNoTax")));
+				taskinfo.setExceedMileFeeNoTax(Double.parseDouble(getDZService.getInfoValue(sinf, "ExceedMileFeeNoTax")));
+				taskinfo.setExceedTimeFeeNoTax(Double.parseDouble(getDZService.getInfoValue(sinf, "ExceedTimeFeeNoTax")));
+//				taskinfo.setTextString(getDZService.getInfoValue(sinf,"abcdad"));
 				// System.out.println(taskinfo.toString());
 				listTasks.add(taskinfo);
 			}
@@ -372,6 +389,7 @@ public abstract class getInfoValue {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.i("jxb", "error: "+e.toString());
 		}
 
 		return listTasks;

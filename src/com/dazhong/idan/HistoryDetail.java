@@ -32,6 +32,9 @@ public class HistoryDetail extends Activity {
 	private TextView startRoute;
 	private TextView endRoute;
 	private ImageView iv_return;
+	private TextView company;
+	private TextView saleman;
+	private TextView balancename;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,9 @@ public class HistoryDetail extends Activity {
 		iv_return = (ImageView) findViewById(R.id.return_historydetail);
 		startRoute = (TextView) findViewById(R.id.history_startRoute);
 		endRoute = (TextView) findViewById(R.id.history_endRoute);
+		company = (TextView) findViewById(R.id.history_company);
+		saleman = (TextView) findViewById(R.id.history_salename);
+		balancename = (TextView) findViewById(R.id.history_balancename);
 	}
 	
 	private void setView(NoteInfo noteInfo){
@@ -85,23 +91,26 @@ public class HistoryDetail extends Activity {
 		pickupTime.setText(noteInfo.getServiceBegin());
 		leaveTime.setText(noteInfo.getServiceEnd());
 		type.setText(noteInfo.getServiceTypeName());
-		mile.setText(noteInfo.getDoServiceKms()+"公里");
-		time.setText(noteInfo.getDoServiceTime()+"小时");
-		extraMile.setText(noteInfo.getOverKMs()+"公里");
-		extraTime.setText(noteInfo.getOverHours()+"小时");
+		mile.setText(noteInfo.getDoServiceKms()+getResources().getString(R.string.str_mile));
+		time.setText(noteInfo.getDoServiceTime()+getResources().getString(R.string.str_hour));
+		extraMile.setText(noteInfo.getOverKMs()+getResources().getString(R.string.str_mile));
+		extraTime.setText(noteInfo.getOverHours()+getResources().getString(R.string.str_hour));
 		record.setText(noteInfo.getServiceRoute());
-		cost_base.setText(noteInfo.getFeePrice()+"元");
-		cost_bridge.setText(noteInfo.getFeeBridge()+"元");
-		cost_parking.setText(noteInfo.getFeePark()+"元");
-		cost_meal.setText(noteInfo.getFeeLunch()+"元");
-		cost_hotel.setText(noteInfo.getFeeHotel()+"元");
-		cost_extraMile.setText(noteInfo.getFeeOverKMs()+"元");
-		cost_extraTime.setText(noteInfo.getFeeOverTime()+"元");
-		cost_other.setText(noteInfo.getFeeOther()+"元");
-		cost_alter.setText(noteInfo.getFeeBack()+"元");
-		cost_all.setText(noteInfo.getFeeTotal()+"元");
+		cost_base.setText(noteInfo.getFeePrice()+getResources().getString(R.string.str_yuan));
+		cost_bridge.setText(noteInfo.getFeeBridge()+getResources().getString(R.string.str_yuan));
+		cost_parking.setText(noteInfo.getFeePark()+getResources().getString(R.string.str_yuan));
+		cost_meal.setText(noteInfo.getFeeLunch()+getResources().getString(R.string.str_yuan));
+		cost_hotel.setText(noteInfo.getFeeHotel()+getResources().getString(R.string.str_yuan));
+		cost_extraMile.setText(noteInfo.getFeeOverKMs()+getResources().getString(R.string.str_yuan));
+		cost_extraTime.setText(noteInfo.getFeeOverTime()+getResources().getString(R.string.str_yuan));
+		cost_other.setText(noteInfo.getFeeOther()+getResources().getString(R.string.str_yuan));
+		cost_alter.setText(noteInfo.getFeeBack()+getResources().getString(R.string.str_yuan));
+		cost_all.setText(noteInfo.getFeeTotal()+getResources().getString(R.string.str_yuan));
 		startRoute.setText(noteInfo.getRouteBegin());
 		endRoute.setText(noteInfo.getRouteEnd());
+		company.setText(noteInfo.getCustomerCompany());
+		saleman.setText(noteInfo.getSaleName());
+		balancename.setText(noteInfo.getBalanceTypeName());
 	}
 	
 }

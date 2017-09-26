@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -37,6 +38,14 @@ public class SignatureView extends View {
 	    paint.setStrokeWidth(STROKE_WIDTH);
 	  }
 
+	  public boolean isSigned(){
+		  if (path.isEmpty()) {
+			  return false;
+		  } else {
+			  return true;
+		  }
+	  }
+	  
 	  /**
 	   * Erases the signature.
 	   */
