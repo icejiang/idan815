@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class AddPay extends Activity {
 	private NoteInfo noteInfo;
 	private TextView tv_all;
 	private Double all;
+	private RelativeLayout layout_all;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,12 @@ public class AddPay extends Activity {
 //		et_alter.setText(noteInfo.getFeeBack()+"");
 		et_record.setText(noteInfo.getServiceRoute());
 		tv_all.setText(reserve2(noteInfo.getFeeTotal())+"");
+		String balanceType = noteInfo.getBalanceType();
+		if (balanceType.equals("001") || balanceType.equals("007")
+				|| balanceType.equals("015") || balanceType.equals("016")) {
+		} else {
+			layout_all.setVisibility(View.GONE);
+		}
 		
 		all = noteInfo.getFeeTotal();
 		final double taxRate = 1 + noteInfo.getInvoiceTaxRate();
@@ -339,6 +348,7 @@ public class AddPay extends Activity {
 		et_routeOff = (EditText) findViewById(R.id.route_off);
 		et_record = (EditText) findViewById(R.id.record);
 		tv_all = (TextView) findViewById(R.id.pay_tv_all);
+		layout_all = (RelativeLayout) findViewById(R.id.layout_all);
 	}
 	
 	@Override

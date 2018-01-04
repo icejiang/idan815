@@ -250,7 +250,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void setNewDayState() {
-		stateinfo.setToday(today);
+		stateinfo.setToday(getInfoValue.getNowDate());
 		stateinfo.setTimeOfTaskOneDay(0);
 		stateinfo.setBeginKMsOfToday("0");
 		stateinfo.setCurrentState(1);

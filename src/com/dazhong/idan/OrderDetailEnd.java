@@ -9,6 +9,7 @@ import java.util.Date;
 import com.dazhong.idan.InService.LocationReceiver;
 
 import android.R.integer;
+import android.R.layout;
 import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,6 +26,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +68,10 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 	private StateInfo myStateInfo;
 	private getStateInfo myGetStateInfo;
 	
+	private LinearLayout layout_basic;
+	private LinearLayout layout_overmile;
+	private LinearLayout layout_overtime;
+	private RelativeLayout layout_total;
 //	private DistanceReceiver distanceReceiver;
 	
 	public static String NOTEKEY = "NOTEKEY";
@@ -129,6 +136,10 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		extraTime_price = (TextView) findViewById(R.id.tv_extraTime);
 		routeID = (TextView) findViewById(R.id.route_titleID);
 		tv_alter = (TextView) findViewById(R.id.tv_alter);
+		layout_basic = (LinearLayout) findViewById(R.id.layout_basic);
+		layout_overmile = (LinearLayout) findViewById(R.id.layout_overmile);
+		layout_overtime = (LinearLayout) findViewById(R.id.layout_overtime);
+		layout_total = (RelativeLayout) findViewById(R.id.layout_total);
 //		routeAuto = (TextView) findViewById(R.id.route_auto);
 	}
 	
@@ -243,7 +254,13 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		if(noteInfo.getInvoiceType().equals("SD")){
 			int all = 0;
 			all = ((int)(price_all/10))*10;
-			tv_all.setText(all+"元");
+			double feeprice = noteInfo.getFeePrice();
+			if(all<feeprice){
+				feeprice = ((int)(feeprice/10))*10;
+				tv_all.setText(feeprice+"元");
+			} else {
+				tv_all.setText(all+"元");
+			}
 		} else {
 			price_all = reserve2(price_all);
 			tv_all.setText(price_all+"元");
@@ -251,6 +268,16 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 		tv_base.setText(reserve2(noteInfo.getActualRentNoTax()*taxRate)+"元");
 		tv_record.setText(noteInfo.getServiceRoute());
 		
+		String balanceType = noteInfo.getBalanceType();
+		Log.i("jxb", "balanceType = "+balanceType);
+		if (balanceType.equals("001") || balanceType.equals("007")
+				|| balanceType.equals("015") || balanceType.equals("016")) {
+		} else {
+			layout_basic.setVisibility(View.GONE);
+			layout_overmile.setVisibility(View.GONE);
+			layout_overtime.setVisibility(View.GONE);
+			layout_total.setVisibility(View.GONE);
+		}
 //		routeAuto.setText("自动测距："+noteInfo.getRouteAuto());
 	}
 	
@@ -411,7 +438,13 @@ public class OrderDetailEnd extends Activity implements OnClickListener {
 					noteInfo.setFeeTotal(all);
 					if(noteInfo.getInvoiceType().equals("SD")){
 						int int_all = ((int)(all/10))*10;
-						tv_all.setText(int_all+"元");
+						double feeprice = noteInfo.getFeePrice();
+						if(int_all<feeprice){
+							feeprice = ((int)(feeprice/10))*10;
+							tv_all.setText(feeprice+"元");
+						} else {
+							tv_all.setText(int_all+"元");
+						}
 					} else {
 						all = reserve2(all);
 						tv_all.setText(all+"元");

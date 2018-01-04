@@ -338,7 +338,7 @@
             android:layout_height="wrap_content"
              >
 			<LinearLayout
-                android:id="@+id/layout0"
+                android:id="@+id/layout0_basic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -366,7 +366,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp"
-                android:layout_below="@+id/layout0"
+                android:layout_below="@+id/layout0_basic"
                 android:orientation="horizontal" > >
 
                 <TextView
@@ -581,6 +581,7 @@
             android:background="#000000" />
 
         <RelativeLayout
+            android:id="@+id/layout_all_print"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 

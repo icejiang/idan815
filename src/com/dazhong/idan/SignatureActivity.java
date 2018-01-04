@@ -32,7 +32,7 @@ public class SignatureActivity extends Activity implements OnClickListener{
 	
 //	private String spaceName = "mytest";
 	private String spaceName = "driverapp";
-	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"zhongxing/";
+	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"DZpicture/";
 	
 //	private Checkp
 //	Manifest.permission.
@@ -102,10 +102,11 @@ public class SignatureActivity extends Activity implements OnClickListener{
 									// if (saveScreen(signaturePaint)){
 									if (util.saveScreen(SignatureActivity.this,signaturePaint,
 											noteInfo.getNoteID())) {
-										util.uploadPic(spaceName,
-												rootDir + noteInfo.getNoteID().replace("*", "")
-														+ ".jpg",
-												noteInfo.getNoteID());
+//										util.uploadPic(spaceName,
+//												rootDir + noteInfo.getNoteID().replace("*", "")
+//														+ ".jpg",
+//												noteInfo.getNoteID());
+										util.uploadExistPic();
 										String address = "http://obxkbrg0h.bkt.clouddn.com/"
 												+ noteInfo.getNoteID();
 										//没签字则上传地址为空

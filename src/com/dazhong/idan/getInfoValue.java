@@ -208,6 +208,7 @@ public abstract class getInfoValue {
 				noteinfo.setSaleName(getDZService.getInfoValue(sinf, "EmployeeName"));
 				noteinfo.setBalanceTypeName(getDZService.getInfoValue(sinf, "BalanceTypeName"));
 				noteinfo.setRouteCheck(getDZService.getInfoValue(sinf,"StatusName"));
+				noteinfo.setFeeBack(Double.parseDouble(getDZService.getInfoValue(sinf, "DiscountAmount")));
 //				 System.out.println(noteinfo.toString());
 				listNotes.add(noteinfo);
 			}

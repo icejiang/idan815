@@ -3,11 +3,13 @@ package com.dazhong.idan;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.List;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.R.anim;
@@ -41,7 +43,7 @@ public class PictureUtil {
 	private static long delayTimes = 3029414400l;
 //	 private String spaceName = "mytest";
 	private String spaceName = "driverapp";
-	private static final String rootDir = Environment.getExternalStorageDirectory() + File.separator + "zhongxing/";
+	private static final String rootDir = Environment.getExternalStorageDirectory() + File.separator + "DZpicture/";
 	private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;  
 	
 	
@@ -81,6 +83,69 @@ public class PictureUtil {
 	}
 	
 	
+	public void uploadExistPic() {
+		File file = new File(rootDir);
+		if (!file.exists()) {
+			Log.i("jxb", "图片文件夹不存在");
+//			return;
+		}
+		File[] subFile = file.listFiles();
+		if (subFile == null || subFile.length == 0) {
+			Log.i("jxb", "图片文件夹为空");
+			return;
+		}
+		try {
+			// 1:第一种方式 构造上传策略
+			JSONObject _json = new JSONObject();
+			_json.put("deadline", delayTimes);// 有效时间为一个小时
+			_json.put("scope", spaceName);
+			String _encodedPutPolicy = UrlSafeBase64.encodeToString(_json
+					.toString().getBytes());
+			byte[] _sign = HmacSHA1Encrypt(_encodedPutPolicy, SecretKey);
+			String _encodedSign = UrlSafeBase64.encodeToString(_sign);
+			final String _uploadToken = AccessKey + ':' + _encodedSign + ':'
+					+ _encodedPutPolicy;
+			Log.i("jxb", "taken = "+_uploadToken);
+			UploadManager uploadManager = new UploadManager();
+			for (int iFileLenth = 0; iFileLenth < subFile.length; iFileLenth++) {
+				if (!subFile[iFileLenth].isDirectory()) {
+					String fileName = subFile[iFileLenth].getName();
+					if (fileName.trim().toLowerCase().endsWith(".jpg")) {
+						uploadManager.put(rootDir + fileName,
+								fileName.substring(0, fileName.length() - 4),
+								_uploadToken, new UpCompletionHandler() {
+									@Override
+									public void complete(String key,
+											ResponseInfo info,
+											JSONObject response) {
+										if (info.isOK()) {
+											Log.i("jxb", "existUpload Success");
+											try {
+												String name = response
+														.getString("key");
+												File file = new File(rootDir
+														+ name + ".jpg");
+												file.delete();
+												Log.i("jxb", "delete picture name = " + name);
+											} catch (JSONException e) {
+												e.printStackTrace();
+											}
+										} else {
+											Log.i("jxb", "existUpload Fail");
+										}
+									}
+
+								}, null);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 	/**
      * 上传
      *
@@ -106,16 +171,25 @@ public class PictureUtil {
                         @Override
                         public void complete(String key, ResponseInfo info,
                                              JSONObject response) {
-                       	 Log.i("jxb", key + ",\r\n " + info + ",\r\n " + response+" 图片反馈");
-                       	 if (null != response){
-                       		 File file = new File(path);
-                       		 file.delete();
+                       	 if (info.isOK()){
+                       		Log.i("jxb", "Upload Success");
+                       		try {
+								String name = response.getString("key");
+								File file = new File(rootDir+name+".jpg");
+								file.delete();
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                       	 } else {
+                       		Log.i("jxb", "Upload Fail");
                        	 }
                         }
 
 						
                     }, null);
         } catch (Exception e) {
+        	Log.i("jxb", "上传图片出错："+e.toString());
             e.printStackTrace();
         }
     }

@@ -50,8 +50,7 @@ public class myApplication extends Application {
     
     private TrackHandler mHandler = null;
 	
-	
-	@Override
+		@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
@@ -62,8 +61,8 @@ public class myApplication extends Application {
         mContext = getApplicationContext();
         TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         // 手机IMEI码
-        entityName = telephonyManager.getDeviceId();
-
+//        entityName = telephonyManager.getDeviceId();
+        entityName = "xiaomi";
         // 采集周期
         int gatherInterval = 5;
         // 打包周期

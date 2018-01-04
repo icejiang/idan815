@@ -27,6 +27,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +75,11 @@ public class PrintActivity extends Activity {
 	private int position;
 	private TextView tv_alterPrice;
 	private TextView company;
+	
+	private LinearLayout layout_basic;
+	private LinearLayout layout_overmile;
+	private LinearLayout layout_overtime;
+	private RelativeLayout layout_all;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -515,6 +522,15 @@ public class PrintActivity extends Activity {
 		route_id.setText(noteInfo.getNoteID());
 		record.setText(noteInfo.getServiceRoute());
 		company.setText(noteInfo.getCustomerCompany());
+		String balanceType = noteInfo.getBalanceType();
+		if (balanceType.equals("001") || balanceType.equals("007")
+				|| balanceType.equals("015") || balanceType.equals("016")) {
+		} else {
+			layout_basic.setVisibility(View.GONE);
+			layout_overmile.setVisibility(View.GONE);
+			layout_overtime.setVisibility(View.GONE);
+			layout_all.setVisibility(View.GONE);
+		}
 	}
 
 	private void findView() {
@@ -544,6 +560,10 @@ public class PrintActivity extends Activity {
 		record = (TextView) findViewById(R.id.print_record);
 		tv_alterPrice = (TextView) findViewById(R.id.tv_alter_price);
 		company = (TextView) findViewById(R.id.print_company);
+		layout_basic = (LinearLayout) findViewById(R.id.layout0_basic);
+		layout_all = (RelativeLayout) findViewById(R.id.layout_all_print);
+		layout_overmile = (LinearLayout) findViewById(R.id.beyond_mile);
+		layout_overtime = (LinearLayout) findViewById(R.id.beyond_time);
 	}
 	
 	private Double reserve2(Double x){

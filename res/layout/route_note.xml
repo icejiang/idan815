@@ -283,7 +283,7 @@
             android:layout_height="wrap_content"
              >
 			<LinearLayout
-                android:id="@+id/layout0"
+                android:id="@+id/layout_basic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -307,7 +307,7 @@
                 android:id="@+id/layout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout0"
+                android:layout_below="@+id/layout_basic"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -423,7 +423,7 @@
                     android:textSize="16dp" />
             </LinearLayout>
              <LinearLayout
-                android:id="@+id/layout5"
+                android:id="@+id/layout_overmile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -446,11 +446,11 @@
                     android:textSize="16dp" />
             </LinearLayout>
              <LinearLayout
-                android:id="@+id/layout6"
+                android:id="@+id/layout_overtime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/layout5"
+                android:layout_below="@+id/layout_overmile"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -473,7 +473,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/layout6"
+                android:layout_below="@+id/layout_overtime"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -515,6 +515,7 @@
             android:background="#000000" />
 
         <RelativeLayout
+            android:id="@+id/layout_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 

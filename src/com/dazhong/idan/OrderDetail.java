@@ -107,7 +107,7 @@ public class OrderDetail extends Activity {
 		getInfoValue.setTaskRead(iDanApp.getInstance().getEMPLOYEEID(), taskInfo.TaskID());
 		findview();
 		setData();
-		mHandler = new TrackUploadHandler(this);
+//		mHandler = new TrackUploadHandler(this);
 		try {
 			myGetStateInfo = getStateInfo.getInstance(getApplicationContext());
 			myStateInfo = myGetStateInfo.getStateinfo();
@@ -166,13 +166,13 @@ public class OrderDetail extends Activity {
 													getResources().getString(R.string.str_notice_emptyroute),
 													Toast.LENGTH_SHORT).show();
 										} else {
-											baiduUtil = new BaiduUtil();
-											trackApp = (myApplication) getApplicationContext();
+//											baiduUtil = new BaiduUtil();
+//											trackApp = (myApplication) getApplicationContext();
 											
-											initOnStartTraceListener();
+//											initOnStartTraceListener();
 //											initOnEntityListener();
-											baiduUtil.startTrace(trackApp, startTraceListener);
-											trackApp.getClient().queryRealtimeLoc(trackApp.getServiceId(), entityListener);
+//											baiduUtil.startTrace(trackApp, startTraceListener);
+//											trackApp.getClient().queryRealtimeLoc(trackApp.getServiceId(), entityListener);
 											int startTime = (int) (System.currentTimeMillis() / 1000);
 											
 											myStateInfo.setCurrentKMS(input);

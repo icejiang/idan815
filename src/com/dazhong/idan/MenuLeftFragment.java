@@ -26,7 +26,7 @@ public class MenuLeftFragment extends LinearLayout{
 	private List<String> mDatas = Arrays
             .asList("个人信息", "打印设置","历史订单","修改密码","检查版本","退出");
     private ListAdapter mAdapter;
-	
+    private UpdateManager updateManager;
 	
 	public MenuLeftFragment(Context context) {
 		super(context);
@@ -68,19 +68,22 @@ public class MenuLeftFragment extends LinearLayout{
 					mContext.startActivity(intent3);
 					break;
 				case 4:
+//					PictureUtil util = new PictureUtil();
+//					util.uploadExistPic();
 					String serviceVer = getInfoValue.getVersion("123");
 					String curVersion = FileUtil.getInstance().getVersion(mContext);
 					Log.i("jxb", "serviceVersion = "+serviceVer+"   curVersion = "+curVersion);
+					updateManager = new UpdateManager(mContext);
 					if(!serviceVer.equals(curVersion)){
 						new AlertDialog.Builder(mContext).setTitle(getResources().getString(R.string.version_havenew)).
 							setPositiveButton(getResources().getString(R.string.str_sure), new android.content.DialogInterface.OnClickListener() {
 								
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dz-zc.com/dzapp.apk"));   
-									it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");   
-									mContext.startActivity(it);
-									
+//									Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dz-zc.com/dzapp.apk"));   
+//									it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");   
+//									mContext.startActivity(it);
+									updateManager.showDownloadDialog();
 								}
 							}).setNegativeButton(getResources().getString(R.string.str_cancel), new android.content.DialogInterface.OnClickListener() {
 								

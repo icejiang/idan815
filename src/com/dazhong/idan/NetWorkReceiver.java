@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class NetWorkReceiver extends BroadcastReceiver {
 
-	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"zhongxing/";
+	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"DZpicture/";
 //	private String spaceName = "mytest"; //´¢´æ¿Õ¼äÃû
 	private String spaceName = "driverapp";
 	

@@ -64,9 +64,10 @@ public class MainActivity extends Activity {
 	private MyAdapter mAdapter;
 	private NoteInfo pauseNote;
 	private static final int MSG_SET_ALIAS = 1001;
-	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"zhongxing/";
+	private static final String rootDir = Environment.getExternalStorageDirectory()+File.separator+"DZpicture/";
 //	private String spaceName = "mytest"; //´¢´æ¿Õ¼äÃû
 	private String spaceName = "driverapp";
+	private UpdateManager updateManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,7 @@ public class MainActivity extends Activity {
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		menu.setMenu(R.layout.left_menu);
 		
+		updateManager = new UpdateManager(this);
 		checkVersion(this);
 		
 		iv_return.setOnClickListener(new OnClickListener() {
@@ -297,10 +299,10 @@ public class MainActivity extends Activity {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dz-zc.com/dzapp.apk"));   
-						it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");   
-						MainActivity.this.startActivity(it);
-						
+//						Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dz-zc.com/dzapp.apk"));   
+//						it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");   
+//						MainActivity.this.startActivity(it);
+						updateManager.showDownloadDialog();
 					}
 				}).setNegativeButton(getResources().getString(R.string.str_cancel), new android.content.DialogInterface.OnClickListener() {
 					
